@@ -7,6 +7,7 @@
 //
 
 #import "AMAppDelegate.h"
+#import "AMTypes.h"
 
 @interface AMAppDelegate ()
 
