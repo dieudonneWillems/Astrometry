@@ -19,8 +19,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    AMUnit *m = malloc(sizeof(AMUnit));
-    AMCreateSingularBaseUnit(m, @"metre", @"m");
+    AMUnit *m = AMCreateSingularBaseUnit(@"metre", @"m");
     AMQuantity *L = malloc(sizeof(AMQuantity));
     AMCreateQuantity(L, @"length", @"L");
     AMMeasure *measure = malloc(sizeof(AMMeasure));

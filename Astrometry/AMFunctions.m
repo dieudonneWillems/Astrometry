@@ -13,7 +13,8 @@
 
 #pragma mark Unit creation and destruction
 
-void AMCreateSingularBaseUnit(AMUnit *unit, NSString *name, NSString *symbol) {
+AMUnit* AMCreateSingularBaseUnit(NSString *name, NSString *symbol) {
+    AMUnit *unit = malloc(sizeof(AMUnit));
     const char *cname = [name cStringUsingEncoding:NSUTF8StringEncoding];
     unit->name = malloc(sizeof(char)*((int)[name length]+1));
     strcpy(unit->name, cname);
@@ -25,53 +26,61 @@ void AMCreateSingularBaseUnit(AMUnit *unit, NSString *name, NSString *symbol) {
     unit->definition.factor = 1;
     unit->definition.offset = 0;
     unit->definition.type = AMSingularUnit;
+    return unit;
 }
 
-void AMCreateSingularUnit(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *baseunit, double factor){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateSingularUnit(NSString *name, NSString *symbol, AMUnit *baseunit, double factor){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.factor = factor;
     unit->definition.unit1 = baseunit;
+    return unit;
 }
 
-void AMCreateUnitMultipleOrSubMultiple(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *baseunit, double factor){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateUnitMultipleOrSubMultiple(NSString *name, NSString *symbol, AMUnit *baseunit, double factor){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMUnitMultipleOrSubMultiple;
     unit->definition.factor = factor;
     unit->definition.unit1 = baseunit;
+    return unit;
 }
 
-void AMCreateUnitMultiplication(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *term1, AMUnit *term2){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateUnitMultiplication(NSString *name, NSString *symbol, AMUnit *term1, AMUnit *term2){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMUnitMultiplication;
     unit->definition.unit1 = term1;
     unit->definition.unit2 = term2;
+    return unit;
 }
 
-void AMCreateUnitDivision(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *numerator, AMUnit *denominator){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateUnitDivision(NSString *name, NSString *symbol, AMUnit *numerator, AMUnit *denominator){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMUnitDivision;
     unit->definition.unit1 = numerator;
     unit->definition.unit2 = denominator;
+    return unit;
 }
 
-void AMCreateUnitExponentiation(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *base, double exponent){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateUnitExponentiation(NSString *name, NSString *symbol, AMUnit *base, double exponent){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMUnitExponentiation;
     unit->definition.unit1 = base;
     unit->definition.factor = exponent;
+    return unit;
 }
 
-void AMCreateRatioScale(AMUnit *unit, NSString *name, NSString *symbol){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateRatioScale(NSString *name, NSString *symbol){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMRatioScale;
+    return unit;
 }
 
-void AMCreateIntervalScale(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *baseScale, double factor,double offset){
-    AMCreateSingularBaseUnit(unit, name, symbol);
+AMUnit* AMCreateIntervalScale(NSString *name, NSString *symbol, AMUnit *baseScale, double factor,double offset){
+    AMUnit* unit = AMCreateSingularBaseUnit(name, symbol);
     unit->definition.type = AMIntervalScale;
     unit->definition.unit1 = baseScale;
     unit->definition.factor = factor;
     unit->definition.offset = offset;
+    return unit;
 }
 
 void AMFreeUnit(AMUnit *unit){

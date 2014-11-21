@@ -13,19 +13,19 @@
 
 #pragma mark Unit creation and destruction
 
-void AMCreateSingularBaseUnit(AMUnit *unit, NSString *name, NSString *symbol);
+AMUnit* AMCreateSingularBaseUnit(NSString *name, NSString *symbol);
 
-void AMCreateSingularUnit(AMUnit *unit, NSString *name, NSString *symbol,AMUnit *baseunit, double factor);
+AMUnit* AMCreateSingularUnit(NSString *name, NSString *symbol,AMUnit *baseunit, double factor);
 
-void AMCreateUnitMultipleOrSubMultiple(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *baseunit, double factor);
+AMUnit* AMCreateUnitMultipleOrSubMultiple(NSString *name, NSString *symbol, AMUnit *baseunit, double factor);
 
-void AMCreateUnitMultiplication(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *term1, AMUnit *term2);
+AMUnit* AMCreateUnitMultiplication(NSString *name, NSString *symbol, AMUnit *term1, AMUnit *term2);
 
-void AMCreateUnitExponentiation(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *base, double exponent);
+AMUnit* AMCreateUnitExponentiation(NSString *name, NSString *symbol, AMUnit *base, double exponent);
 
-void AMCreateRatioScale(AMUnit *unit, NSString *name, NSString *symbol);
+AMUnit* AMCreateRatioScale(NSString *name, NSString *symbol);
 
-void AMCreateIntervalScale(AMUnit *unit, NSString *name, NSString *symbol, AMUnit *baseScale, double factor,double offset);
+AMUnit* AMCreateIntervalScale(NSString *name, NSString *symbol, AMUnit *baseScale, double factor,double offset);
 
 void AMFreeUnit(AMUnit *unit);
 
