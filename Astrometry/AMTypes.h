@@ -17,12 +17,14 @@ typedef enum __unittypes__{
     AMUnitMultiplication,
     AMUnitDivision,
     AMUnitExponentiation,
-    AMScale
+    AMIntervalScale,
+    AMRatioScale,
+    AMOrdinalScale
 } AMUnitType;
 
 typedef struct {
     AMUnitType type;
-    double factor;
+    double factor; // factor or exponent in unit exponentiation
     double offset;
     struct __unit__ *unit1; // definition unit or term1 in multiplication, or numerator in division,
                             // or base unit in exponentiation.
@@ -43,6 +45,8 @@ typedef struct {
 typedef struct {
     AMQuantity *quantity;
     double numericalValue;
+    double positiveError;
+    double negativeError;
     AMUnit *unit;
 } AMMeasure;
 
@@ -55,9 +59,9 @@ typedef enum {
 
 typedef struct {
     AMCoordinateSystem coordinateSystem;
-    double longitude;
-    double latitude;
-    AMUnit *unit;
+    AMMeasure longitude;
+    AMMeasure latitude;
+    AMMeasure distance;
 } AMSphericalCoordinates;
 
 typedef struct {

@@ -12,6 +12,7 @@
 		0244E4631A1E182A000242D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4621A1E182A000242D3 /* Images.xcassets */; };
 		0244E4661A1E182A000242D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4641A1E182A000242D3 /* MainMenu.xib */; };
 		0244E4721A1E182A000242D3 /* AstrometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4711A1E182A000242D3 /* AstrometryTests.m */; };
+		0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E47E1A1E2BBA000242D3 /* AMFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,8 @@
 		0244E4701A1E182A000242D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0244E4711A1E182A000242D3 /* AstrometryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AstrometryTests.m; sourceTree = "<group>"; };
 		0244E47C1A1E1EBE000242D3 /* AMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTypes.h; sourceTree = "<group>"; };
+		0244E47D1A1E2BBA000242D3 /* AMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctions.h; sourceTree = "<group>"; };
+		0244E47E1A1E2BBA000242D3 /* AMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				0244E47C1A1E1EBE000242D3 /* AMTypes.h */,
+				0244E47D1A1E2BBA000242D3 /* AMFunctions.h */,
+				0244E47E1A1E2BBA000242D3 /* AMFunctions.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0244E4611A1E182A000242D3 /* main.m in Sources */,
+				0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
