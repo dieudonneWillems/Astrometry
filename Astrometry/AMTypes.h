@@ -59,9 +59,9 @@ typedef enum {
 
 typedef struct {
     AMCoordinateSystem coordinateSystem;
-    AMMeasure longitude;
-    AMMeasure latitude;
-    AMMeasure distance;
+    AMMeasure *longitude;
+    AMMeasure *latitude;
+    AMMeasure *distance;
 } AMSphericalCoordinates;
 
 typedef struct {

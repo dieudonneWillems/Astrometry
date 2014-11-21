@@ -128,6 +128,20 @@ void AMFreeMeasure(AMMeasure *measure){
 }
 
 
+#pragma mark Spherical Coordinates creation and destruction
+
+void AMCreateSphericalCoordinates(AMSphericalCoordinates *coordinates,AMCoordinateSystem coordinateSystem,AMMeasure *longitude,AMMeasure *latitude,AMMeasure *distance){
+    coordinates->coordinateSystem = coordinateSystem;
+    coordinates->longitude = longitude;
+    coordinates->latitude = latitude;
+    coordinates->distance = distance;
+}
+
+void AMFreeSphericalCoordinates(AMSphericalCoordinates *coordinates){
+    free(coordinates);
+}
+
+
 #pragma mark String functions - creating strings from data types
 
 NSString* NSStringFromUnit(AMUnit unit){
@@ -202,6 +216,13 @@ NSString* NSStringFromMeasure(AMMeasure measure){
             NSStringFromQuantity(*measure.quantity),
             NSStringFromDoubleValue(measure.numericalValue, measure.positiveError, measure.negativeError),
             NSStringFromUnit(*measure.unit)];
+}
+
+NSString* NSStringFromSphericalCoordinates(AMSphericalCoordinates coordinates){
+    if(coordinates.distance==NULL){
+        return [NSString stringWithFormat:@"(%@,%@)",NSStringFromMeasure(*coordinates.longitude),NSStringFromMeasure(*coordinates.latitude)];
+    }
+    return [NSString stringWithFormat:@"(%@,%@,%@)",NSStringFromMeasure(*coordinates.longitude),NSStringFromMeasure(*coordinates.latitude),NSStringFromMeasure(*coordinates.distance)];
 }
 
 @end

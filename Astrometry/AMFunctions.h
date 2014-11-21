@@ -48,6 +48,13 @@ void AMCreateMeasureWithPositiveAndNegativeError(AMMeasure *measure,AMQuantity *
 void AMFreeMeasure(AMMeasure *measure);
 
 
+#pragma mark Spherical Coordinates creation and destruction
+
+void AMCreateSphericalCoordinates(AMSphericalCoordinates *coordinates,AMCoordinateSystem coordinateSystem,AMMeasure *longitude,AMMeasure *latitude,AMMeasure *distance);
+
+void AMFreeSphericalCoordinates(AMSphericalCoordinates *coordinates);
+
+
 #pragma mark String functions - creating strings from data types
 
 NSString* NSStringFromUnit(AMUnit unit);
@@ -55,5 +62,7 @@ NSString* NSStringFromUnit(AMUnit unit);
 NSString* NSStringFromQuantity(AMQuantity quantity);
 
 NSString* NSStringFromMeasure(AMMeasure measure);
+
+NSString* NSStringFromSphericalCoordinates(AMSphericalCoordinates coordinates);
 
 @end
