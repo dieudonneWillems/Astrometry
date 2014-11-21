@@ -7,6 +7,8 @@
 //
 
 #import "AMAppDelegate.h"
+#import "AMTypes.h"
+#import "AMFunctions.h"
 
 @interface AMAppDelegate ()
 
@@ -17,6 +19,16 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    AMUnit *m = malloc(sizeof(AMUnit));
+    AMCreateSingularBaseUnit(m, @"metre", @"m");
+    AMQuantity *L = malloc(sizeof(AMQuantity));
+    AMCreateQuantity(L, @"length", @"L");
+    AMMeasure *measure = malloc(sizeof(AMMeasure));
+    AMCreateMeasureWithError(measure, L, 12.02337,0.012, m);
+    NSLog(@"Length: %@",NSStringFromMeasure(*measure));
+    AMFreeUnit(m);
+    AMFreeQuantity(L);
+    AMFreeMeasure(measure);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

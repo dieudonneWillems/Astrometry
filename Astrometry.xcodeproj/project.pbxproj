@@ -12,6 +12,7 @@
 		0244E4631A1E182A000242D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4621A1E182A000242D3 /* Images.xcassets */; };
 		0244E4661A1E182A000242D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4641A1E182A000242D3 /* MainMenu.xib */; };
 		0244E4721A1E182A000242D3 /* AstrometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4711A1E182A000242D3 /* AstrometryTests.m */; };
+		0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E47E1A1E2BBA000242D3 /* AMFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,9 @@
 		0244E46B1A1E182A000242D3 /* AstrometryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstrometryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0244E4701A1E182A000242D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0244E4711A1E182A000242D3 /* AstrometryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AstrometryTests.m; sourceTree = "<group>"; };
+		0244E47C1A1E1EBE000242D3 /* AMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTypes.h; sourceTree = "<group>"; };
+		0244E47D1A1E2BBA000242D3 /* AMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctions.h; sourceTree = "<group>"; };
+		0244E47E1A1E2BBA000242D3 /* AMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,7 @@
 		0244E45A1A1E182A000242D3 /* Astrometry */ = {
 			isa = PBXGroup;
 			children = (
+				0244E47B1A1E1E89000242D3 /* Model */,
 				0244E45D1A1E182A000242D3 /* AMAppDelegate.h */,
 				0244E45E1A1E182A000242D3 /* AMAppDelegate.m */,
 				0244E4621A1E182A000242D3 /* Images.xcassets */,
@@ -109,6 +114,16 @@
 				0244E4701A1E182A000242D3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0244E47B1A1E1E89000242D3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0244E47C1A1E1EBE000242D3 /* AMTypes.h */,
+				0244E47D1A1E2BBA000242D3 /* AMFunctions.h */,
+				0244E47E1A1E2BBA000242D3 /* AMFunctions.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0244E4611A1E182A000242D3 /* main.m in Sources */,
+				0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,6 +414,7 @@
 				0244E4771A1E182A000242D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0244E4781A1E182A000242D3 /* Build configuration list for PBXNativeTarget "AstrometryTests" */ = {
 			isa = XCConfigurationList;
@@ -406,6 +423,7 @@
 				0244E47A1A1E182A000242D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
