@@ -13,6 +13,11 @@
 		0244E4661A1E182A000242D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4641A1E182A000242D3 /* MainMenu.xib */; };
 		0244E4721A1E182A000242D3 /* AstrometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4711A1E182A000242D3 /* AstrometryTests.m */; };
 		0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E47E1A1E2BBA000242D3 /* AMFunctions.m */; };
+		0244E4821A20C4F9000242D3 /* OmCenFORS.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4811A20C4F9000242D3 /* OmCenFORS.xml */; };
+		0244E4861A20CC18000242D3 /* AMCatalogueReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4851A20CC18000242D3 /* AMCatalogueReader.m */; };
+		0244E4891A20CC87000242D3 /* AMCatalogue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4881A20CC87000242D3 /* AMCatalogue.m */; };
+		0244E48C1A20E4CD000242D3 /* AMUnitAndQuantityStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */; };
+		0244E48F1A212591000242D3 /* AMPropertyKeyStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,15 @@
 		0244E47C1A1E1EBE000242D3 /* AMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTypes.h; sourceTree = "<group>"; };
 		0244E47D1A1E2BBA000242D3 /* AMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctions.h; sourceTree = "<group>"; };
 		0244E47E1A1E2BBA000242D3 /* AMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctions.m; sourceTree = "<group>"; };
+		0244E4811A20C4F9000242D3 /* OmCenFORS.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OmCenFORS.xml; sourceTree = "<group>"; };
+		0244E4841A20CC18000242D3 /* AMCatalogueReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueReader.h; sourceTree = "<group>"; };
+		0244E4851A20CC18000242D3 /* AMCatalogueReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueReader.m; sourceTree = "<group>"; };
+		0244E4871A20CC87000242D3 /* AMCatalogue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogue.h; sourceTree = "<group>"; };
+		0244E4881A20CC87000242D3 /* AMCatalogue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogue.m; sourceTree = "<group>"; };
+		0244E48A1A20E4CD000242D3 /* AMUnitAndQuantityStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUnitAndQuantityStack.h; sourceTree = "<group>"; };
+		0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUnitAndQuantityStack.m; sourceTree = "<group>"; };
+		0244E48D1A212591000242D3 /* AMPropertyKeyStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPropertyKeyStack.h; sourceTree = "<group>"; };
+		0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPropertyKeyStack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +94,8 @@
 		0244E45A1A1E182A000242D3 /* Astrometry */ = {
 			isa = PBXGroup;
 			children = (
+				0244E4801A20C4A7000242D3 /* Catalogues */,
+				0244E4831A20CBED000242D3 /* Catalogue */,
 				0244E47B1A1E1E89000242D3 /* Model */,
 				0244E45D1A1E182A000242D3 /* AMAppDelegate.h */,
 				0244E45E1A1E182A000242D3 /* AMAppDelegate.m */,
@@ -122,8 +138,31 @@
 				0244E47C1A1E1EBE000242D3 /* AMTypes.h */,
 				0244E47D1A1E2BBA000242D3 /* AMFunctions.h */,
 				0244E47E1A1E2BBA000242D3 /* AMFunctions.m */,
+				0244E48A1A20E4CD000242D3 /* AMUnitAndQuantityStack.h */,
+				0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */,
+				0244E48D1A212591000242D3 /* AMPropertyKeyStack.h */,
+				0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		0244E4801A20C4A7000242D3 /* Catalogues */ = {
+			isa = PBXGroup;
+			children = (
+				0244E4811A20C4F9000242D3 /* OmCenFORS.xml */,
+			);
+			name = Catalogues;
+			sourceTree = "<group>";
+		};
+		0244E4831A20CBED000242D3 /* Catalogue */ = {
+			isa = PBXGroup;
+			children = (
+				0244E4871A20CC87000242D3 /* AMCatalogue.h */,
+				0244E4881A20CC87000242D3 /* AMCatalogue.m */,
+				0244E4841A20CC18000242D3 /* AMCatalogueReader.h */,
+				0244E4851A20CC18000242D3 /* AMCatalogueReader.m */,
+			);
+			name = Catalogue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +247,7 @@
 			files = (
 				0244E4631A1E182A000242D3 /* Images.xcassets in Resources */,
 				0244E4661A1E182A000242D3 /* MainMenu.xib in Resources */,
+				0244E4821A20C4F9000242D3 /* OmCenFORS.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,9 +265,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0244E4861A20CC18000242D3 /* AMCatalogueReader.m in Sources */,
 				0244E4611A1E182A000242D3 /* main.m in Sources */,
 				0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */,
+				0244E48C1A20E4CD000242D3 /* AMUnitAndQuantityStack.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
+				0244E4891A20CC87000242D3 /* AMCatalogue.m in Sources */,
+				0244E48F1A212591000242D3 /* AMPropertyKeyStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,43 @@
+<catalogue>
+    <name>Deep FORS1 BR photometry of ω Centauri</name>
+    <description>This catalog is based on a deep photometric survey performed in the field of the stellar system omega Centauri with FORS1@VLT, during 6 nights on 2005 March and April. It consists in a mosaic of eight partially overlapping filed covering a wide area from 6' to 26' from the cluster center. The magnitudes of more than 70,000 stars have been measured in the B and R photometric bands. The limiting magnitude is R<24 and the positional accuracy is better than 0.2" for ~99% of the stars.</description>
+    <file src="~/Catalogues/J_ApJ_654_915/fors1.dat">
+        <line>
+            <parameter>
+                <key>type</key>
+                <value>star</value>
+            </parameter>
+            <parameter>
+                <key>ID</key>
+                <value>OCF <field start="3" end="7" trim="yes"/></value>
+            </parameter>
+            <measure>
+                <quantity>Bessel B magnitude</quantity>
+                <value><field start="10" end="16"/></value>
+                <error><field start="20" end="25"/></error>
+                <unit>magnitude</unit>
+            </measure>
+            <measure>
+                <quantity>Bessel R magnitude</quantity>
+                <value><field start="28" end="34"/></value>
+                <error><field start="38" end="43"/></error>
+                <unit>magnitude</unit>
+            </measure>
+            <spherical-coordinates>
+                <coordinate-system type="Equatorial">
+                    <equinox>J2000</equinox>
+                </coordinate-system>
+                <measure>
+                    <quantity>Right ascension</quantity>
+                    <value><field start="46" end="57"/></value>
+                    <unit>degree</unit>
+                </measure>
+                <measure>
+                    <quantity>Declination</quantity>
+                    <value><field start="60" end="71"/></value>
+                    <unit>degree</unit>
+                </measure>
+            </spherical-coordinates>
+        </line>
+    </file>
+</catalogue>

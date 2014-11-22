@@ -71,12 +71,14 @@ typedef struct {
 typedef struct {
     AMPropertyKey *key;
     char *value;
-} AMProperty;
+} AMStringProperty;
 
 typedef struct {
     AMSphericalCoordinates *position;
-    AMMeasure *measures;
-    AMProperty *properties;
+    AMMeasure **measures;
+    AMStringProperty **properties;
+    int nmeasures;
+    int nproperties;
 } AMCelestialObject;
 
 typedef struct {

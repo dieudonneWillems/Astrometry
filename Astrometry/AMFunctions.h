@@ -32,27 +32,52 @@ void AMFreeUnit(AMUnit *unit);
 
 #pragma mark Quantity creation and destruction
 
-void AMCreateQuantity(AMQuantity *quantity, NSString *name, NSString *symbol);
+AMQuantity* AMCreateQuantity(NSString *name, NSString *symbol);
 
 void AMFreeQuantity(AMQuantity *quantity);
 
 
 #pragma mark Measure creation and destruction
 
-void AMCreateMeasure(AMMeasure *measure,AMQuantity *quantity, double numericalValue, AMUnit *unit);
+AMMeasure* AMCreateMeasure(AMQuantity *quantity, double numericalValue, AMUnit *unit);
 
-void AMCreateMeasureWithError(AMMeasure *measure,AMQuantity *quantity, double numericalValue, double error, AMUnit *unit);
+AMMeasure* AMCreateMeasureWithError(AMQuantity *quantity, double numericalValue, double error, AMUnit *unit);
 
-void AMCreateMeasureWithPositiveAndNegativeError(AMMeasure *measure,AMQuantity *quantity, double numericalValue, double poserror,double negerror, AMUnit *unit);
+AMMeasure* AMCreateMeasureWithPositiveAndNegativeError(AMQuantity *quantity, double numericalValue, double poserror,double negerror, AMUnit *unit);
 
 void AMFreeMeasure(AMMeasure *measure);
 
 
 #pragma mark Spherical Coordinates creation and destruction
 
-void AMCreateSphericalCoordinates(AMSphericalCoordinates *coordinates,AMCoordinateSystem coordinateSystem,AMMeasure *longitude,AMMeasure *latitude,AMMeasure *distance);
+AMSphericalCoordinates* AMCreateSphericalCoordinates(AMCoordinateSystem coordinateSystem,AMMeasure *longitude,AMMeasure *latitude,AMMeasure *distance);
 
 void AMFreeSphericalCoordinates(AMSphericalCoordinates *coordinates);
+
+
+#pragma mark Property key creation and destruction
+
+AMPropertyKey* AMCreatePropertyKey(NSString* keyName);
+
+void AMFreePropertyKey(AMPropertyKey* key);
+
+
+#pragma mark Property creation and destruction
+
+AMStringProperty* AMCreateProperty(AMPropertyKey* key, NSString* value);
+
+void AMFreeProperty(AMStringProperty* property);
+
+
+#pragma mark Celestial Object creation and destruction
+
+AMCelestialObject* AMCreateCelestialObject();
+
+void AMAddPropertyToCelectialObject(AMCelestialObject* celestialObject,AMPropertyKey *key,NSString *value);
+
+void AMAddMeasureToCelestialObject(AMCelestialObject* celestialObject, AMMeasure *measure);
+
+void AMFreeCelestialObject(AMCelestialObject *celestialObject);
 
 
 #pragma mark String functions - creating strings from data types
@@ -63,6 +88,10 @@ NSString* NSStringFromQuantity(AMQuantity quantity);
 
 NSString* NSStringFromMeasure(AMMeasure measure);
 
+NSString* NSStringFromProperty(AMStringProperty* property);
+
 NSString* NSStringFromSphericalCoordinates(AMSphericalCoordinates coordinates);
+
+NSString* NSStringFromCelestialObject(AMCelestialObject object);
 
 @end
