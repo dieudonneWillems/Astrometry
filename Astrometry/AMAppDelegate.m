@@ -8,7 +8,11 @@
 
 #import "AMAppDelegate.h"
 #import "AMTypes.h"
-#import "AMFunctions.h"
+#import "AMUnit.h"
+#import "AMQuantity.h"
+#import "AMScalarMeasure.h"
+#import "AMCatalogue.h"
+#import "AMCatalogueReader.h"
 
 @interface AMAppDelegate ()
 
@@ -18,17 +22,21 @@
 @implementation AMAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
-    AMUnit *m = malloc(sizeof(AMUnit));
-    AMCreateSingularBaseUnit(m, @"metre", @"m");
-    AMQuantity *L = malloc(sizeof(AMQuantity));
-    AMCreateQuantity(L, @"length", @"L");
-    AMMeasure *measure = malloc(sizeof(AMMeasure));
-    AMCreateMeasureWithError(measure, L, 12.02337,0.012, m);
-    NSLog(@"Length: %@",NSStringFromMeasure(*measure));
-    AMFreeUnit(m);
-    AMFreeQuantity(L);
-    AMFreeMeasure(measure);
+    AMUnit *m = [[AMUnit alloc] initSingularBaseUnitWithName:@"metre" andSymbol:@"m"];
+    AMQuantity *L = [[AMQuantity alloc] initWithName:@"length" andSymbol:@"L"];
+    AMScalarMeasure *measure = [[AMScalarMeasure alloc] initWithQuantity:L numericalValue:12.023443 positiveError:0.0123 negativeError:0.023 andUnit:m];
+    
+    NSLog(@"Length: %@",measure);
+    
+    
+    NSError *error = nil;
+    AMCatalogue *catalogue = [AMCatalogueReader readCatalogueFromXMLFile:@"~/Development/Astrometry/Astrometry/OMCenFORS.xml" error:&error];
+    
+    if(error){
+        NSLog(@"Could not read catalogue file: %@",error);
+    }else{
+        NSLog(@"Read catalogue\n%@",catalogue);
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

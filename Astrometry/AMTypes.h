@@ -22,78 +22,14 @@ typedef enum __unittypes__{
     AMOrdinalScale
 } AMUnitType;
 
-typedef struct {
-    AMUnitType type;
-    double factor; // factor or exponent in unit exponentiation
-    double offset;
-    struct __unit__ *unit1; // definition unit or term1 in multiplication, or numerator in division,
-                            // or base unit in exponentiation.
-    struct __unit__ *unit2; // term2 unit in multiplication or denominator in division.
-} AMUnitDefinition;
-
-typedef struct __unit__{
-    char *name;
-    char *symbol;
-    AMUnitDefinition definition;
-} AMUnit;
-
-typedef struct {
-    char *name;
-    char *symbol;
-} AMQuantity;
-
-typedef struct {
-    AMQuantity *quantity;
-    double numericalValue;
-    double positiveError;
-    double negativeError;
-    AMUnit *unit;
-} AMMeasure;
-
 typedef enum {
     AMEquatortialCoordinateSystem,
     AMGalacticCoordinateSystem,
     AMElipticCoordinateSystem,
     AMHorizontalCoordinateSytem
-} AMCoordinateSystem;
+} AMCoordinateSystemType;
 
-typedef struct {
-    AMCoordinateSystem coordinateSystem;
-    AMMeasure longitude;
-    AMMeasure latitude;
-    AMMeasure distance;
-} AMSphericalCoordinates;
 
-typedef struct {
-    char *key;
-} AMPropertyKey;
-
-typedef struct {
-    AMPropertyKey *key;
-    char *value;
-} AMProperty;
-
-typedef struct {
-    AMSphericalCoordinates *position;
-    AMMeasure *measures;
-    AMProperty *properties;
-} AMCelestialObject;
-
-typedef struct {
-    AMCoordinateSystem coordinateSystem;
-    double minLongitude;
-    double maxLongitude;
-    double minLatitude;
-    double maxLatitude;
-    AMCelestialObject *objects;
-    AMUnit *unit;
-} AMCelestialArea;
-
-typedef struct {
-    AMQuantity *quantity;
-    double *numericalValues;
-    AMCelestialObject *objects;
-    AMUnit *unit;
-} AMMeasureIndex;
+FOUNDATION_EXPORT NSString *const AMIdentifierPropertyKey;
 
 #endif
