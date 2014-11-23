@@ -9,17 +9,22 @@
 #import "AMCatalogueReader.h"
 #import "AMCatalogue.h"
 #import "AMTypes.h"
-#import "AMFunctions.h"
-#import "AMPropertyKeyStack.h"
-#import "AMUnitAndQuantityStack.h"
+#import "AMMeasure.h"
+#import "AMScalarMeasure.h"
+#import "AMQuantity.h"
+#import "AMCelestialObject.h"
+#import "AMUnit.h"
+#import "AMSphericalCoordinates.h"
+#import "AMCoordinateSystem.h"
 
 @interface AMCatalogueReader (private)
 + (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error;
 + (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error;
 + (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end;
 + (NSString*) stringValueOffield:(NSXMLElement*)fieldElement fromLine:(NSString*)line ;
-+ (AMMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
++ (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
 + (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line;
++ (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
 @end
 
 @implementation AMCatalogueReader
@@ -64,6 +69,7 @@
         NSError *objectError = nil;
         if([tline length]>0){
             AMCelestialObject* celestialobject = [self readObjectFromLine:line usingXMLDefinition:elements error:&objectError];
+            [catalogue addCelestialObject:celestialobject];
         }
         if(objectError){
             NSLog(@"Could not read object from line:\n%@\nerror:%@",line,objectError);
@@ -72,7 +78,7 @@
 }
 
 + (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error {
-    AMCelestialObject *object = AMCreateCelestialObject();
+    AMCelestialObject *object = [[AMCelestialObject alloc] init];
     for(NSXMLElement *element in elements){
         if([[element name] isEqualToString:@"parameter"]){
             NSString *key = nil;
@@ -86,19 +92,55 @@
                 }
             }
             if(value){
-                AMPropertyKey *pkey = [[AMPropertyKeyStack sharedPropertyKeyStack] propertyWihtKeyName:key];
-                AMAddPropertyToCelectialObject(object, pkey, value);
+                [object setObjectProperty:value forKey:key];
             }
         }else if([[element name] isEqualToString:@"measure"]){
             AMMeasure *measure = [self measureFromField:element fromLine:line];
-            AMAddMeasureToCelestialObject(object, measure);
+            [object setMeasure:measure];
+        }else if([[element name] isEqualToString:@"spherical-coordinates"]){
+            AMMeasure *measure = [self sphericalCoordinatesFromField:element fromLine:line];
+            [object setMeasure:measure];
         }
     }
-    NSLog(@"Read %@",NSStringFromCelestialObject(*object));
+    NSLog(@"Read %@",object);
     return object;
 }
 
-+ (AMMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
++ (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
+    NSArray *children = [fieldElement children];
+    AMScalarMeasure *longitude = nil;
+    AMScalarMeasure *latitude = nil;
+    AMScalarMeasure *distance = nil;
+    AMCoordinateSystem *system = nil;
+    AMCoordinateSystemType type;
+    NSDate *equinox = nil;
+    NSDate *epoch = nil;
+    for(NSXMLNode *child in children){
+        if([child isKindOfClass:[NSXMLElement class]]){
+            NSXMLElement *element = (NSXMLElement*)child;
+            if([[element name] isEqualToString:@"coordinate-system"]){
+                NSString *stype = [[element attributeForName:@"type"] stringValue];
+                if([stype isEqualToString:@"Equatorial"]){
+                    type = AMEquatortialCoordinateSystem;
+                }else if([stype isEqualToString:@"Galactic"]){
+                    type = AMGalacticCoordinateSystem;
+                }
+                // Read Epoch and Equinox
+            }else if([[element name] isEqualToString:@"longitude"]){
+                longitude = [self measureFromField:element fromLine:line];
+            }else if([[element name] isEqualToString:@"latitude"]){
+                latitude = [self measureFromField:element fromLine:line];
+            }else if([[element name] isEqualToString:@"distance"]){
+                distance = [self measureFromField:element fromLine:line];
+            }
+        }
+    }
+    system = [[AMCoordinateSystem alloc] initWithType:AMEquatortialCoordinateSystem inEquinox:equinox onEpoch:epoch];
+    AMSphericalCoordinates *scord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:longitude latitude:latitude andDistance:distance inCoordinateSystem:system];
+    return scord;
+}
+
++ (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
     AMQuantity *quantity = NULL;
     double value = 0;
     double positiveError = 0;
@@ -109,8 +151,7 @@
         if([child isKindOfClass:[NSXMLElement class]]){
             if([[child name] isEqualToString:@"quantity"]){
                 NSString *qname = [self stringValueOfElement:(NSXMLElement*)child fromLine:line];
-                AMUnitAndQuantityStack *stack = [AMUnitAndQuantityStack sharedUnitAndQuantityStack];
-                quantity = [stack quantityWithName:qname];
+                quantity = [AMQuantity quantityWithName:qname];
             }else if([[child name] isEqualToString:@"value"]){
                 value = [[self stringValueOfElement:(NSXMLElement*)child fromLine:line] doubleValue];
             }else if([[child name] isEqualToString:@"error"]){
@@ -123,11 +164,11 @@
                 negativeError = [[self stringValueOfElement:(NSXMLElement*)child fromLine:line] doubleValue];
             }else if([[child name] isEqualToString:@"unit"]){
                 NSString *uname = [self stringValueOfElement:(NSXMLElement*)child fromLine:line];
-                unit = [[AMUnitAndQuantityStack sharedUnitAndQuantityStack] unitWithName:uname];
+                unit = [AMUnit unitWithName:uname];
             }
         }
     }
-    AMMeasure *measure = AMCreateMeasureWithPositiveAndNegativeError(quantity, value, positiveError, negativeError, unit);
+    AMScalarMeasure *measure = [[AMScalarMeasure alloc] initWithQuantity:quantity numericalValue:value positiveError:positiveError negativeError:negativeError andUnit:unit];
     return measure;
 }
 

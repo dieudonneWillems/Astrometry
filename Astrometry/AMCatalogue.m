@@ -7,39 +7,27 @@
 //
 
 #import "AMCatalogue.h"
-#import "AMFunctions.h"
+#import "AMCelestialObject.h"
 
 @implementation AMCatalogue
 
 - (id) init {
     self = [super init];
     if(self){
-        nObjects = 0;
-        objects = NULL;
-        nProperties = 0;
-        properties = NULL;
-        nQuantities = 0;
-        quantities = NULL;
+        objects = [NSMutableArray array];
+        quantities = [NSMutableArray array];
+        properties = [NSMutableArray array];
     }
     return self;
 }
 
-- (void) dealloc {
-    if(objects!=NULL){
-        NSInteger i;
-        for(i=0;i<nObjects;i++){
-            AMFreeCelestialObject(objects[i]);
-        }
-        free(objects);
-    }
-}
-
 - (void) addCelestialObject:(AMCelestialObject*)object {
-    
+    [objects addObject:object];
+    NSArray *measures = [object measures];
 }
 
 - (NSString *) description {
-    NSString * str = [NSString stringWithFormat:@"CATALOGUE: %@ %ld objects\n%@",[self name],nObjects,[self catalogueDescription]];
+    NSString * str = [NSString stringWithFormat:@"CATALOGUE: %@ %ld objects\n%@",[self name],[objects count],[self catalogueDescription]];
     return str;
 }
 @end

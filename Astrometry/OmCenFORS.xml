@@ -27,16 +27,16 @@
                 <coordinate-system type="Equatorial">
                     <equinox>J2000</equinox>
                 </coordinate-system>
-                <measure>
+                <longitude>
                     <quantity>Right ascension</quantity>
                     <value><field start="46" end="57"/></value>
                     <unit>degree</unit>
-                </measure>
-                <measure>
+                </longitude>
+                <latitude>
                     <quantity>Declination</quantity>
                     <value><field start="60" end="71"/></value>
                     <unit>degree</unit>
-                </measure>
+                </latitude>
             </spherical-coordinates>
         </line>
     </file>

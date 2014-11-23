@@ -9,13 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "AMTypes.h"
 
+@class AMCelestialObject;
+
 @interface AMCatalogue : NSObject {
-    AMCelestialObject **objects;
-    AMQuantity **quantities;
-    AMPropertyKey **properties;
-    NSInteger nObjects;
-    NSInteger nProperties;
-    NSInteger nQuantities;
+    NSMutableArray *objects;
+    NSMutableArray *quantities;
+    NSMutableArray *properties;
 }
 
 @property (readwrite) NSString *name;

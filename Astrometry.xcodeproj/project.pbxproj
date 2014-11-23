@@ -12,12 +12,19 @@
 		0244E4631A1E182A000242D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4621A1E182A000242D3 /* Images.xcassets */; };
 		0244E4661A1E182A000242D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4641A1E182A000242D3 /* MainMenu.xib */; };
 		0244E4721A1E182A000242D3 /* AstrometryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4711A1E182A000242D3 /* AstrometryTests.m */; };
-		0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E47E1A1E2BBA000242D3 /* AMFunctions.m */; };
 		0244E4821A20C4F9000242D3 /* OmCenFORS.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4811A20C4F9000242D3 /* OmCenFORS.xml */; };
 		0244E4861A20CC18000242D3 /* AMCatalogueReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4851A20CC18000242D3 /* AMCatalogueReader.m */; };
 		0244E4891A20CC87000242D3 /* AMCatalogue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4881A20CC87000242D3 /* AMCatalogue.m */; };
-		0244E48C1A20E4CD000242D3 /* AMUnitAndQuantityStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */; };
-		0244E48F1A212591000242D3 /* AMPropertyKeyStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */; };
+		0244E4921A221BA9000242D3 /* AMUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4911A221BA9000242D3 /* AMUnit.m */; };
+		0244E4951A221BBB000242D3 /* AMQuantity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4941A221BBB000242D3 /* AMQuantity.m */; };
+		0244E4981A221BDC000242D3 /* AMMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4971A221BDC000242D3 /* AMMeasure.m */; };
+		0244E49B1A221C44000242D3 /* AMSphericalCoordinates.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E49A1A221C44000242D3 /* AMSphericalCoordinates.m */; };
+		0244E49E1A221C5F000242D3 /* AMCelestialObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E49D1A221C5F000242D3 /* AMCelestialObject.m */; };
+		0244E4A11A221E45000242D3 /* AMCoordinateSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A01A221E45000242D3 /* AMCoordinateSystem.m */; };
+		0244E4A41A22206B000242D3 /* AMScalarMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A31A22206B000242D3 /* AMScalarMeasure.m */; };
+		0244E4A61A2260F7000242D3 /* AMTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A51A2260F7000242D3 /* AMTypes.m */; };
+		0244E4A91A226B64000242D3 /* AMScalarQuantity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A81A226B64000242D3 /* AMScalarQuantity.m */; };
+		0244E4AC1A226C01000242D3 /* AMVectorQuantity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4AB1A226C01000242D3 /* AMVectorQuantity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,17 +49,30 @@
 		0244E4701A1E182A000242D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0244E4711A1E182A000242D3 /* AstrometryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AstrometryTests.m; sourceTree = "<group>"; };
 		0244E47C1A1E1EBE000242D3 /* AMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTypes.h; sourceTree = "<group>"; };
-		0244E47D1A1E2BBA000242D3 /* AMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctions.h; sourceTree = "<group>"; };
-		0244E47E1A1E2BBA000242D3 /* AMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctions.m; sourceTree = "<group>"; };
 		0244E4811A20C4F9000242D3 /* OmCenFORS.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OmCenFORS.xml; sourceTree = "<group>"; };
 		0244E4841A20CC18000242D3 /* AMCatalogueReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueReader.h; sourceTree = "<group>"; };
 		0244E4851A20CC18000242D3 /* AMCatalogueReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueReader.m; sourceTree = "<group>"; };
 		0244E4871A20CC87000242D3 /* AMCatalogue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogue.h; sourceTree = "<group>"; };
 		0244E4881A20CC87000242D3 /* AMCatalogue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogue.m; sourceTree = "<group>"; };
-		0244E48A1A20E4CD000242D3 /* AMUnitAndQuantityStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUnitAndQuantityStack.h; sourceTree = "<group>"; };
-		0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUnitAndQuantityStack.m; sourceTree = "<group>"; };
-		0244E48D1A212591000242D3 /* AMPropertyKeyStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPropertyKeyStack.h; sourceTree = "<group>"; };
-		0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPropertyKeyStack.m; sourceTree = "<group>"; };
+		0244E4901A221BA9000242D3 /* AMUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUnit.h; sourceTree = "<group>"; };
+		0244E4911A221BA9000242D3 /* AMUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUnit.m; sourceTree = "<group>"; };
+		0244E4931A221BBB000242D3 /* AMQuantity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMQuantity.h; sourceTree = "<group>"; };
+		0244E4941A221BBB000242D3 /* AMQuantity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMQuantity.m; sourceTree = "<group>"; };
+		0244E4961A221BDC000242D3 /* AMMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMeasure.h; sourceTree = "<group>"; };
+		0244E4971A221BDC000242D3 /* AMMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMeasure.m; sourceTree = "<group>"; };
+		0244E4991A221C44000242D3 /* AMSphericalCoordinates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSphericalCoordinates.h; sourceTree = "<group>"; };
+		0244E49A1A221C44000242D3 /* AMSphericalCoordinates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSphericalCoordinates.m; sourceTree = "<group>"; };
+		0244E49C1A221C5F000242D3 /* AMCelestialObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCelestialObject.h; sourceTree = "<group>"; };
+		0244E49D1A221C5F000242D3 /* AMCelestialObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCelestialObject.m; sourceTree = "<group>"; };
+		0244E49F1A221E45000242D3 /* AMCoordinateSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCoordinateSystem.h; sourceTree = "<group>"; };
+		0244E4A01A221E45000242D3 /* AMCoordinateSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCoordinateSystem.m; sourceTree = "<group>"; };
+		0244E4A21A22206B000242D3 /* AMScalarMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScalarMeasure.h; sourceTree = "<group>"; };
+		0244E4A31A22206B000242D3 /* AMScalarMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarMeasure.m; sourceTree = "<group>"; };
+		0244E4A51A2260F7000242D3 /* AMTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTypes.m; sourceTree = "<group>"; };
+		0244E4A71A226B64000242D3 /* AMScalarQuantity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScalarQuantity.h; sourceTree = "<group>"; };
+		0244E4A81A226B64000242D3 /* AMScalarQuantity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarQuantity.m; sourceTree = "<group>"; };
+		0244E4AA1A226C01000242D3 /* AMVectorQuantity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVectorQuantity.h; sourceTree = "<group>"; };
+		0244E4AB1A226C01000242D3 /* AMVectorQuantity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVectorQuantity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,12 +156,25 @@
 			isa = PBXGroup;
 			children = (
 				0244E47C1A1E1EBE000242D3 /* AMTypes.h */,
-				0244E47D1A1E2BBA000242D3 /* AMFunctions.h */,
-				0244E47E1A1E2BBA000242D3 /* AMFunctions.m */,
-				0244E48A1A20E4CD000242D3 /* AMUnitAndQuantityStack.h */,
-				0244E48B1A20E4CD000242D3 /* AMUnitAndQuantityStack.m */,
-				0244E48D1A212591000242D3 /* AMPropertyKeyStack.h */,
-				0244E48E1A212591000242D3 /* AMPropertyKeyStack.m */,
+				0244E4A51A2260F7000242D3 /* AMTypes.m */,
+				0244E4901A221BA9000242D3 /* AMUnit.h */,
+				0244E4911A221BA9000242D3 /* AMUnit.m */,
+				0244E4931A221BBB000242D3 /* AMQuantity.h */,
+				0244E4941A221BBB000242D3 /* AMQuantity.m */,
+				0244E4A71A226B64000242D3 /* AMScalarQuantity.h */,
+				0244E4A81A226B64000242D3 /* AMScalarQuantity.m */,
+				0244E4961A221BDC000242D3 /* AMMeasure.h */,
+				0244E4AA1A226C01000242D3 /* AMVectorQuantity.h */,
+				0244E4AB1A226C01000242D3 /* AMVectorQuantity.m */,
+				0244E4971A221BDC000242D3 /* AMMeasure.m */,
+				0244E4A21A22206B000242D3 /* AMScalarMeasure.h */,
+				0244E4A31A22206B000242D3 /* AMScalarMeasure.m */,
+				0244E49F1A221E45000242D3 /* AMCoordinateSystem.h */,
+				0244E4A01A221E45000242D3 /* AMCoordinateSystem.m */,
+				0244E4991A221C44000242D3 /* AMSphericalCoordinates.h */,
+				0244E49A1A221C44000242D3 /* AMSphericalCoordinates.m */,
+				0244E49C1A221C5F000242D3 /* AMCelestialObject.h */,
+				0244E49D1A221C5F000242D3 /* AMCelestialObject.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -266,12 +299,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				0244E4861A20CC18000242D3 /* AMCatalogueReader.m in Sources */,
+				0244E4A91A226B64000242D3 /* AMScalarQuantity.m in Sources */,
+				0244E49E1A221C5F000242D3 /* AMCelestialObject.m in Sources */,
+				0244E4921A221BA9000242D3 /* AMUnit.m in Sources */,
 				0244E4611A1E182A000242D3 /* main.m in Sources */,
-				0244E47F1A1E2BBA000242D3 /* AMFunctions.m in Sources */,
-				0244E48C1A20E4CD000242D3 /* AMUnitAndQuantityStack.m in Sources */,
+				0244E4A41A22206B000242D3 /* AMScalarMeasure.m in Sources */,
+				0244E4A11A221E45000242D3 /* AMCoordinateSystem.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
+				0244E4A61A2260F7000242D3 /* AMTypes.m in Sources */,
+				0244E4981A221BDC000242D3 /* AMMeasure.m in Sources */,
 				0244E4891A20CC87000242D3 /* AMCatalogue.m in Sources */,
-				0244E48F1A212591000242D3 /* AMPropertyKeyStack.m in Sources */,
+				0244E49B1A221C44000242D3 /* AMSphericalCoordinates.m in Sources */,
+				0244E4951A221BBB000242D3 /* AMQuantity.m in Sources */,
+				0244E4AC1A226C01000242D3 /* AMVectorQuantity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
