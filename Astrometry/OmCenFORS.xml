@@ -1,6 +1,6 @@
 <catalogue>
     <name>Deep FORS1 BR photometry of ω Centauri</name>
-    <description>This catalog is based on a deep photometric survey performed in the field of the stellar system omega Centauri with FORS1@VLT, during 6 nights on 2005 March and April. It consists in a mosaic of eight partially overlapping filed covering a wide area from 6' to 26' from the cluster center. The magnitudes of more than 70,000 stars have been measured in the B and R photometric bands. The limiting magnitude is R<24 and the positional accuracy is better than 0.2" for ~99% of the stars.</description>
+    <description>This catalog is based on a deep photometric survey performed in the field of the stellar system omega Centauri with FORS1@VLT, during 6 nights on 2005 March and April. It consists in a mosaic of eight partially overlapping filed covering a wide area from 6' to 26' from the cluster center. The magnitudes of more than 70,000 stars have been measured in the B and R photometric bands. The limiting magnitude is R&lt;24 and the positional accuracy is better than 0.2 arcseconds for ~99% of the stars.</description>
     <file src="~/Catalogues/J_ApJ_654_915/fors1.dat">
         <line>
             <parameter>

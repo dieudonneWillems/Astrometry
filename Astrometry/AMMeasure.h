@@ -16,4 +16,7 @@
 
 @property (readonly) AMQuantity* quantity;
 
+- (NSComparisonResult) ignoreErrorsCompare:(AMMeasure*)measure;
+- (NSComparisonResult) compare:(AMMeasure*)measure;
+
 @end

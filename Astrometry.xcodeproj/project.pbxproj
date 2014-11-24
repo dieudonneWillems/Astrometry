@@ -25,6 +25,14 @@
 		0244E4A61A2260F7000242D3 /* AMTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A51A2260F7000242D3 /* AMTypes.m */; };
 		0244E4A91A226B64000242D3 /* AMScalarQuantity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4A81A226B64000242D3 /* AMScalarQuantity.m */; };
 		0244E4AC1A226C01000242D3 /* AMVectorQuantity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4AB1A226C01000242D3 /* AMVectorQuantity.m */; };
+		0244E4AF1A23526B000242D3 /* AMCatalogueIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4AE1A23526B000242D3 /* AMCatalogueIndex.m */; };
+		0244E4B21A23528E000242D3 /* AMScalarIndexEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4B11A23528E000242D3 /* AMScalarIndexEntry.m */; };
+		0244E4B51A235352000242D3 /* AMQuantityIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4B41A235352000242D3 /* AMQuantityIndex.m */; };
+		0244E4B81A23537B000242D3 /* AMScalarQuantityIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4B71A23537B000242D3 /* AMScalarQuantityIndex.m */; };
+		0244E4BB1A235772000242D3 /* AMCatalogueIndexEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4BA1A235772000242D3 /* AMCatalogueIndexEntry.m */; };
+		0244E4BE1A23D049000242D3 /* AMSearchDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4BD1A23D049000242D3 /* AMSearchDescriptor.m */; };
+		0244E4C11A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4C01A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.m */; };
+		0244E4C61A23D310000242D3 /* AMCompoundSearchDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4C51A23D310000242D3 /* AMCompoundSearchDescriptor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +81,22 @@
 		0244E4A81A226B64000242D3 /* AMScalarQuantity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarQuantity.m; sourceTree = "<group>"; };
 		0244E4AA1A226C01000242D3 /* AMVectorQuantity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVectorQuantity.h; sourceTree = "<group>"; };
 		0244E4AB1A226C01000242D3 /* AMVectorQuantity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVectorQuantity.m; sourceTree = "<group>"; };
+		0244E4AD1A23526B000242D3 /* AMCatalogueIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueIndex.h; sourceTree = "<group>"; };
+		0244E4AE1A23526B000242D3 /* AMCatalogueIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueIndex.m; sourceTree = "<group>"; };
+		0244E4B01A23528E000242D3 /* AMScalarIndexEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScalarIndexEntry.h; sourceTree = "<group>"; };
+		0244E4B11A23528E000242D3 /* AMScalarIndexEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarIndexEntry.m; sourceTree = "<group>"; };
+		0244E4B31A235352000242D3 /* AMQuantityIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMQuantityIndex.h; sourceTree = "<group>"; };
+		0244E4B41A235352000242D3 /* AMQuantityIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMQuantityIndex.m; sourceTree = "<group>"; };
+		0244E4B61A23537B000242D3 /* AMScalarQuantityIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScalarQuantityIndex.h; sourceTree = "<group>"; };
+		0244E4B71A23537B000242D3 /* AMScalarQuantityIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarQuantityIndex.m; sourceTree = "<group>"; };
+		0244E4B91A235772000242D3 /* AMCatalogueIndexEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueIndexEntry.h; sourceTree = "<group>"; };
+		0244E4BA1A235772000242D3 /* AMCatalogueIndexEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueIndexEntry.m; sourceTree = "<group>"; };
+		0244E4BC1A23D049000242D3 /* AMSearchDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSearchDescriptor.h; sourceTree = "<group>"; };
+		0244E4BD1A23D049000242D3 /* AMSearchDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSearchDescriptor.m; sourceTree = "<group>"; };
+		0244E4BF1A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScalarQuantitySearchDescriptor.h; sourceTree = "<group>"; };
+		0244E4C01A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScalarQuantitySearchDescriptor.m; sourceTree = "<group>"; };
+		0244E4C41A23D310000242D3 /* AMCompoundSearchDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCompoundSearchDescriptor.h; sourceTree = "<group>"; };
+		0244E4C51A23D310000242D3 /* AMCompoundSearchDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCompoundSearchDescriptor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,12 +214,44 @@
 		0244E4831A20CBED000242D3 /* Catalogue */ = {
 			isa = PBXGroup;
 			children = (
+				0244E4C21A23D165000242D3 /* Index */,
+				0244E4C31A23D176000242D3 /* Search */,
 				0244E4871A20CC87000242D3 /* AMCatalogue.h */,
 				0244E4881A20CC87000242D3 /* AMCatalogue.m */,
 				0244E4841A20CC18000242D3 /* AMCatalogueReader.h */,
 				0244E4851A20CC18000242D3 /* AMCatalogueReader.m */,
 			);
 			name = Catalogue;
+			sourceTree = "<group>";
+		};
+		0244E4C21A23D165000242D3 /* Index */ = {
+			isa = PBXGroup;
+			children = (
+				0244E4AD1A23526B000242D3 /* AMCatalogueIndex.h */,
+				0244E4AE1A23526B000242D3 /* AMCatalogueIndex.m */,
+				0244E4B31A235352000242D3 /* AMQuantityIndex.h */,
+				0244E4B41A235352000242D3 /* AMQuantityIndex.m */,
+				0244E4B61A23537B000242D3 /* AMScalarQuantityIndex.h */,
+				0244E4B71A23537B000242D3 /* AMScalarQuantityIndex.m */,
+				0244E4B91A235772000242D3 /* AMCatalogueIndexEntry.h */,
+				0244E4BA1A235772000242D3 /* AMCatalogueIndexEntry.m */,
+				0244E4B01A23528E000242D3 /* AMScalarIndexEntry.h */,
+				0244E4B11A23528E000242D3 /* AMScalarIndexEntry.m */,
+			);
+			name = Index;
+			sourceTree = "<group>";
+		};
+		0244E4C31A23D176000242D3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0244E4BC1A23D049000242D3 /* AMSearchDescriptor.h */,
+				0244E4BD1A23D049000242D3 /* AMSearchDescriptor.m */,
+				0244E4BF1A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.h */,
+				0244E4C01A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.m */,
+				0244E4C41A23D310000242D3 /* AMCompoundSearchDescriptor.h */,
+				0244E4C51A23D310000242D3 /* AMCompoundSearchDescriptor.m */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,15 +359,23 @@
 				0244E49E1A221C5F000242D3 /* AMCelestialObject.m in Sources */,
 				0244E4921A221BA9000242D3 /* AMUnit.m in Sources */,
 				0244E4611A1E182A000242D3 /* main.m in Sources */,
+				0244E4B51A235352000242D3 /* AMQuantityIndex.m in Sources */,
 				0244E4A41A22206B000242D3 /* AMScalarMeasure.m in Sources */,
 				0244E4A11A221E45000242D3 /* AMCoordinateSystem.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
 				0244E4A61A2260F7000242D3 /* AMTypes.m in Sources */,
+				0244E4BE1A23D049000242D3 /* AMSearchDescriptor.m in Sources */,
 				0244E4981A221BDC000242D3 /* AMMeasure.m in Sources */,
 				0244E4891A20CC87000242D3 /* AMCatalogue.m in Sources */,
 				0244E49B1A221C44000242D3 /* AMSphericalCoordinates.m in Sources */,
 				0244E4951A221BBB000242D3 /* AMQuantity.m in Sources */,
+				0244E4BB1A235772000242D3 /* AMCatalogueIndexEntry.m in Sources */,
+				0244E4B21A23528E000242D3 /* AMScalarIndexEntry.m in Sources */,
+				0244E4C61A23D310000242D3 /* AMCompoundSearchDescriptor.m in Sources */,
+				0244E4B81A23537B000242D3 /* AMScalarQuantityIndex.m in Sources */,
+				0244E4AF1A23526B000242D3 /* AMCatalogueIndex.m in Sources */,
 				0244E4AC1A226C01000242D3 /* AMVectorQuantity.m in Sources */,
+				0244E4C11A23D14C000242D3 /* AMScalarQuantitySearchDescriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

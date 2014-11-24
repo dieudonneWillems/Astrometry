@@ -25,6 +25,7 @@
 + (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
 + (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line;
 + (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
++ (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue;
 @end
 
 @implementation AMCatalogueReader
@@ -41,6 +42,7 @@
                                                 error:error];
     if(*error) return nil;
     NSXMLElement *root = [xmlDoc rootElement];
+    [AMCatalogueReader findAllQuantitiesAndPropertyKeysIn:root insertInto:catalogue];
     NSArray *children = [root children];
     for(NSXMLNode *child in children){
         if([[child name] isEqualToString:@"name"]) [catalogue setName:[child stringValue]];
@@ -57,6 +59,7 @@
             }
         }
     }
+    [catalogue index];
     return catalogue;
 }
 
@@ -98,11 +101,14 @@
             AMMeasure *measure = [self measureFromField:element fromLine:line];
             [object setMeasure:measure];
         }else if([[element name] isEqualToString:@"spherical-coordinates"]){
-            AMMeasure *measure = [self sphericalCoordinatesFromField:element fromLine:line];
-            [object setMeasure:measure];
+            AMSphericalCoordinates *scmeasure = [self sphericalCoordinatesFromField:element fromLine:line];
+            [object setMeasure:scmeasure];
+            [object setMeasure:[scmeasure longitude]];
+            [object setMeasure:[scmeasure latitude]];
+            if([scmeasure distance]) [object setMeasure:[scmeasure distance]];
         }
     }
-    NSLog(@"Read %@",object);
+    //NSLog(@"Read %@",object);
     return object;
 }
 
@@ -207,6 +213,25 @@
 + (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end {
     if([line length]<end) return nil;
     return [line substringWithRange:NSMakeRange(start-1, end-start+1)];
+}
+
++ (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue {
+    NSArray *children = [baseElement children];
+    for(NSXMLNode *node in children){
+        if([node isKindOfClass:[NSXMLElement class]]){
+            NSXMLElement *element = (NSXMLElement*)node;
+            if([[element name] isEqualToString:@"quantity"]){
+                [catalogue addQuantity:[AMQuantity quantityWithName:[element stringValue]]];
+            }else if([[element name] isEqualToString:@"parameter"]){
+                NSArray *keyes = [element elementsForName:@"key"];
+                for(NSXMLElement *keye in keyes){
+                    [catalogue addPropertyKey:[keye stringValue]];
+                }
+            }else {
+                [AMCatalogueReader findAllQuantitiesAndPropertyKeysIn:element insertInto:catalogue];
+            }
+        }
+    }
 }
 
 @end
