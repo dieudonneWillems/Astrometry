@@ -23,6 +23,11 @@
                 <error><field start="38" end="43"/></error>
                 <unit>magnitude</unit>
             </measure>
+            <measure>
+                <quantity>Colour index</quantity>
+                <value><measure idref="Bmag"/> - <measure idref="Rmag"/></value>
+                <unit>magnitude</unit>
+            </measure>
             <spherical-coordinates>
                 <coordinate-system type="Equatorial">
                     <equinox>J2000</equinox>
