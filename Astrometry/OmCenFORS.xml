@@ -11,13 +11,13 @@
                 <key>ID</key>
                 <value>OCF <field start="3" end="7" trim="yes"/></value>
             </parameter>
-            <measure>
+            <measure id="Bmag">
                 <quantity>Bessel B magnitude</quantity>
                 <value><field start="10" end="16"/></value>
                 <error><field start="20" end="25"/></error>
                 <unit>magnitude</unit>
             </measure>
-            <measure>
+            <measure id="Rmag">
                 <quantity>Bessel R magnitude</quantity>
                 <value><field start="28" end="34"/></value>
                 <error><field start="38" end="43"/></error>
