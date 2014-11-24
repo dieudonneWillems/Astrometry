@@ -13,6 +13,8 @@
 #import "AMScalarMeasure.h"
 #import "AMCatalogue.h"
 #import "AMCatalogueReader.h"
+#import "AMScalarQuantitySearchDescriptor.h"
+#import "AMCompoundSearchDescriptor.h"
 
 @interface AMAppDelegate ()
 
@@ -36,6 +38,15 @@
         NSLog(@"Could not read catalogue file: %@",error);
     }else{
         NSLog(@"Read catalogue\n%@",catalogue);
+        AMCompoundSearchDescriptor *csd = [[AMCompoundSearchDescriptor alloc] initWithOperator:AMAndSearchOperator searchDescriptors:
+                                           [[AMScalarQuantitySearchDescriptor alloc] initForQuantity:[AMQuantity quantityWithName:@"Right ascension"] maxValue:201.54 minValue:201.52 inUnit:[AMUnit unitWithName:@"degree"]],
+                                           [[AMScalarQuantitySearchDescriptor alloc] initForQuantity:[AMQuantity quantityWithName:@"Declination"] maxValue:-47.62 minValue:-47.64 inUnit:[AMUnit unitWithName:@"degree"]], nil];
+        AMCatalogue *subset = [catalogue subsetUsingSearchDescriptor:csd];
+        NSLog(@"Subset catalogue\n%@",subset);
+        NSArray *objects = [subset celestialObjects];
+        for(AMCelestialObject *obj in objects){
+            NSLog(@"%@",obj);
+        }
     }
 }
 

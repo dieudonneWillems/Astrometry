@@ -79,6 +79,21 @@
     return @"";
 }
 
+- (NSComparisonResult) ignoreErrorsCompare:(AMMeasure*)measure {
+    // todo unit conversion
+    if([measure isKindOfClass:[AMScalarMeasure class]]){
+        AMScalarMeasure *scmeas = (AMScalarMeasure*)measure;
+        if([self value]<[scmeas value]) return NSOrderedAscending;
+        if([self value]>[scmeas value]) return NSOrderedDescending;
+    }
+    return NSOrderedSame;
+}
+
+- (NSComparisonResult) compare:(AMMeasure*)measure {
+    // todo unit conversion
+    return [self ignoreErrorsCompare:measure];
+}
+
 - (NSString*) description {
     if([self positiveError] == 0 && [self negativeError]==0){
         return [NSString stringWithFormat:@"%@ = %f%@",[self quantity],[self value],[self unit]];

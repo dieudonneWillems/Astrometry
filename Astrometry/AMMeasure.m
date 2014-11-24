@@ -19,4 +19,15 @@
     return self;
 }
 
+
+- (NSComparisonResult) ignoreErrorsCompare:(AMMeasure*)measure {
+    // todo unit conversion
+    return NSOrderedSame;
+}
+
+- (NSComparisonResult) compare:(AMMeasure*)measure {
+    // todo unit conversion
+    return NSOrderedSame;
+}
+
 @end

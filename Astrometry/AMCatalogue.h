@@ -9,16 +9,30 @@
 #import <Foundation/Foundation.h>
 #import "AMTypes.h"
 
-@class AMCelestialObject;
+@class AMCelestialObject,AMQuantity,AMSearchDescriptor;
 
 @interface AMCatalogue : NSObject {
     NSMutableArray *objects;
     NSMutableArray *quantities;
     NSMutableArray *properties;
+    NSMutableDictionary *indexes;
 }
 
 @property (readwrite) NSString *name;
 @property (readwrite) NSString *catalogueDescription;
 
+- (NSArray*) celestialObjects;
+
 - (void) addCelestialObject:(AMCelestialObject*)object;
+
+- (NSArray*) properties;
+- (void) addPropertyKey:(NSString*)key;
+- (NSArray*) quantities;
+- (void) addQuantity:(AMQuantity*)quantity;
+
+- (void) addCelestialObjectsFromCatalogue:(AMCatalogue*)cat;
+
+- (void) index;
+- (AMCatalogue*) subsetUsingSearchDescriptor:(AMSearchDescriptor*)searchDescriptor;
+- (NSUInteger) maximumObjectCountUsingSearchDescriptor:(AMSearchDescriptor*)searchDescriptor;
 @end
