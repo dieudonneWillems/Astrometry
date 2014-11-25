@@ -16,21 +16,41 @@
 #import "AMUnit.h"
 #import "AMSphericalCoordinates.h"
 #import "AMCoordinateSystem.h"
+#import "AMCalculator.h"
 
 @interface AMCatalogueReader (private)
-+ (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error;
-+ (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error;
-+ (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end;
-+ (NSString*) stringValueOffield:(NSXMLElement*)fieldElement fromLine:(NSString*)line ;
-+ (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
-+ (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line;
-+ (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
-+ (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue;
+- (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error;
+- (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error;
+- (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end;
+- (NSString*) stringValueOffield:(NSXMLElement*)fieldElement fromLine:(NSString*)line ;
+- (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
+- (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line;
+- (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line;
+- (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue;
 @end
 
 @implementation AMCatalogueReader
 
-+ (AMCatalogue*) readCatalogueFromXMLFile:(NSString*)catalogueFile error:(NSError**)error {
+
+- (id) init {
+    self = [super init];
+    if(self){
+        calculators = [NSMutableArray array];
+    }
+    return self;
+}
+
+
+- (void) addCalculator:(AMCalculator*)calculator {
+    [calculators addObject:calculator];
+}
+
+- (void) removeCalculator:(AMCalculator*)calculator {
+    [calculators removeObject:calculator];
+}
+
+
+- (AMCatalogue*) readCatalogueFromXMLFile:(NSString*)catalogueFile error:(NSError**)error {
     AMCatalogue *catalogue = [[AMCatalogue alloc] init];
     catalogueFile = [catalogueFile stringByExpandingTildeInPath];
     NSString *xmlString = [NSString stringWithContentsOfFile:catalogueFile encoding:NSUTF8StringEncoding error:error];
@@ -42,7 +62,7 @@
                                                 error:error];
     if(*error) return nil;
     NSXMLElement *root = [xmlDoc rootElement];
-    [AMCatalogueReader findAllQuantitiesAndPropertyKeysIn:root insertInto:catalogue];
+    [self findAllQuantitiesAndPropertyKeysIn:root insertInto:catalogue];
     NSArray *children = [root children];
     for(NSXMLNode *child in children){
         if([[child name] isEqualToString:@"name"]) [catalogue setName:[child stringValue]];
@@ -54,7 +74,7 @@
             NSXMLElement *linee = nil;
             if([linees count]>0){
                 linee = [linees objectAtIndex:0];
-                [AMCatalogueReader readObjectsFromFile:cfile usingXMLDefinition:[linee children] intoCatalogue:catalogue error:error];
+                [self readObjectsFromFile:cfile usingXMLDefinition:[linee children] intoCatalogue:catalogue error:error];
                 if(*error) return nil;
             }
         }
@@ -63,7 +83,7 @@
     return catalogue;
 }
 
-+ (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error{
+- (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error{
     NSString *catfile = [NSString stringWithContentsOfFile:file encoding:NSASCIIStringEncoding error:error];
     if(*error) return;
     NSArray *lines = [catfile componentsSeparatedByString:@"\n"];
@@ -72,6 +92,11 @@
         NSError *objectError = nil;
         if([tline length]>0){
             AMCelestialObject* celestialobject = [self readObjectFromLine:line usingXMLDefinition:elements error:&objectError];
+            for(AMCalculator *calculator in calculators){
+                AMMeasure *calcmeas = [calculator calculateMeasureForCelestialObject:celestialobject];
+                [celestialobject setMeasure:calcmeas];
+                [catalogue addQuantity:[calcmeas quantity]];
+            }
             [catalogue addCelestialObject:celestialobject];
         }
         if(objectError){
@@ -80,7 +105,7 @@
     }
 }
 
-+ (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error {
+- (AMCelestialObject*) readObjectFromLine:(NSString*)line usingXMLDefinition:(NSArray*)elements error:(NSError**)error {
     AMCelestialObject *object = [[AMCelestialObject alloc] init];
     for(NSXMLElement *element in elements){
         if([[element name] isEqualToString:@"parameter"]){
@@ -112,7 +137,7 @@
     return object;
 }
 
-+ (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
+- (AMSphericalCoordinates*) sphericalCoordinatesFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
     NSArray *children = [fieldElement children];
     AMScalarMeasure *longitude = nil;
     AMScalarMeasure *latitude = nil;
@@ -146,7 +171,7 @@
     return scord;
 }
 
-+ (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
+- (AMScalarMeasure*) measureFromField:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
     AMQuantity *quantity = NULL;
     double value = 0;
     double positiveError = 0;
@@ -178,13 +203,13 @@
     return measure;
 }
 
-+ (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line {
+- (NSString*) stringValueOfElement:(NSXMLElement*)element fromLine:(NSString*)line {
     NSMutableString *value = nil;
     NSArray *children = [element children];
     for(NSXMLNode *cn in children){
         if([cn isKindOfClass:[NSXMLElement class]]){
             if([[cn name] isEqualToString:@"field"]){
-                NSString *field = [AMCatalogueReader stringValueOffield:(NSXMLElement*)cn fromLine:line];
+                NSString *field = [self stringValueOffield:(NSXMLElement*)cn fromLine:line];
                 if(field) {
                     if(!value) value = [NSMutableString string];
                     [value appendString:field];
@@ -201,21 +226,21 @@
     return value;
 }
 
-+ (NSString*) stringValueOffield:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
+- (NSString*) stringValueOffield:(NSXMLElement*)fieldElement fromLine:(NSString*)line {
     NSUInteger start = [[[fieldElement attributeForName:@"start"] stringValue] integerValue];
     NSUInteger end = [[[fieldElement attributeForName:@"end"] stringValue] integerValue];
-    NSString *string = [AMCatalogueReader dataFromLine:line startingAt:start endingAt:end];
+    NSString *string = [self dataFromLine:line startingAt:start endingAt:end];
     NSString *trim = [[fieldElement attributeForName:@"trim"] stringValue];
     if([trim isEqualToString:@"yes"] || [trim isEqualToString:@"true"]) string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return string;
 }
 
-+ (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end {
+- (NSString*) dataFromLine:(NSString*)line startingAt:(NSUInteger)start endingAt:(NSUInteger)end {
     if([line length]<end) return nil;
     return [line substringWithRange:NSMakeRange(start-1, end-start+1)];
 }
 
-+ (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue {
+- (void) findAllQuantitiesAndPropertyKeysIn:(NSXMLElement*)baseElement insertInto:(AMCatalogue*)catalogue {
     NSArray *children = [baseElement children];
     for(NSXMLNode *node in children){
         if([node isKindOfClass:[NSXMLElement class]]){
@@ -228,7 +253,7 @@
                     [catalogue addPropertyKey:[keye stringValue]];
                 }
             }else {
-                [AMCatalogueReader findAllQuantitiesAndPropertyKeysIn:element insertInto:catalogue];
+                [self findAllQuantitiesAndPropertyKeysIn:element insertInto:catalogue];
             }
         }
     }
