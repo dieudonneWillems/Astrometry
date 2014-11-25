@@ -27,8 +27,12 @@ static NSMutableDictionary *__quantities;
 }
 
 + (void) addDefaultQuantities {
-    (void) [[AMScalarQuantity alloc] initWithName:@"Bessel B magnitude" andSymbol:@"B"];
-    (void) [[AMScalarQuantity alloc] initWithName:@"Bessel R magnitude" andSymbol:@"R"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"U magnitude" andSymbol:@"U"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"B magnitude" andSymbol:@"B"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"V magnitude" andSymbol:@"V"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"R magnitude" andSymbol:@"R"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"Colour index B-R" andSymbol:@"B-R"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"Colour index B-V" andSymbol:@"B-V"];
     (void) [[AMScalarQuantity alloc] initWithName:@"Right ascension" andSymbol:@"α"];
     (void) [[AMScalarQuantity alloc] initWithName:@"Declination" andSymbol:@"δ"];
     (void) [[AMVectorQuantity alloc] initWithName:@"Spherical position" andSymbol:@""];

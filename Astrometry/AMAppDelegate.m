@@ -15,6 +15,7 @@
 #import "AMCatalogueReader.h"
 #import "AMScalarQuantitySearchDescriptor.h"
 #import "AMCompoundSearchDescriptor.h"
+#import "AMColourIndexCalculator.h"
 
 @interface AMAppDelegate ()
 
@@ -32,7 +33,9 @@
     
     
     NSError *error = nil;
-    AMCatalogue *catalogue = [AMCatalogueReader readCatalogueFromXMLFile:@"~/Development/Astrometry/Astrometry/OMCenFORS.xml" error:&error];
+    AMCatalogueReader *reader = [[AMCatalogueReader alloc] init];
+    [reader addCalculator:[[AMColourIndexCalculator alloc] initWithColourIndex:[AMQuantity quantityWithName:@"Colour index B-R"] magnitudeQuantities:[AMQuantity quantityWithName:@"B magnitude"] and:[AMQuantity quantityWithName:@"R magnitude"]]];
+    AMCatalogue *catalogue = [reader readCatalogueFromXMLFile:@"~/Development/Astrometry/Astrometry/OMCenFORS.xml" error:&error];
     
     if(error){
         NSLog(@"Could not read catalogue file: %@",error);

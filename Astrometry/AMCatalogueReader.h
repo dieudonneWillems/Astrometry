@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class AMCatalogue;
+@class AMCatalogue,AMCalculator;
 
-@interface AMCatalogueReader : NSObject
+@interface AMCatalogueReader : NSObject {
+    NSMutableArray *calculators;
+}
 
-+ (AMCatalogue*) readCatalogueFromXMLFile:(NSString*)catalogueFile error:(NSError**)error;
+- (id) init;
+
+- (void) addCalculator:(AMCalculator*)calculator;
+- (void) removeCalculator:(AMCalculator*)calculator;
+
+- (AMCatalogue*) readCatalogueFromXMLFile:(NSString*)catalogueFile error:(NSError**)error;
 @end

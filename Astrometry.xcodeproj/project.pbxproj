@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020466751A249ACE004974D0 /* AMCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 020466741A249ACE004974D0 /* AMCalculator.m */; };
+		020466781A249AE6004974D0 /* AMColourIndexCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 020466771A249AE6004974D0 /* AMColourIndexCalculator.m */; };
 		0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E45E1A1E182A000242D3 /* AMAppDelegate.m */; };
 		0244E4611A1E182A000242D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0244E4601A1E182A000242D3 /* main.m */; };
 		0244E4631A1E182A000242D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0244E4621A1E182A000242D3 /* Images.xcassets */; };
@@ -46,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020466731A249ACE004974D0 /* AMCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCalculator.h; sourceTree = "<group>"; };
+		020466741A249ACE004974D0 /* AMCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCalculator.m; sourceTree = "<group>"; };
+		020466761A249AE6004974D0 /* AMColourIndexCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColourIndexCalculator.h; sourceTree = "<group>"; };
+		020466771A249AE6004974D0 /* AMColourIndexCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColourIndexCalculator.m; sourceTree = "<group>"; };
 		0244E4581A1E182A000242D3 /* Astrometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Astrometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0244E45C1A1E182A000242D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0244E45D1A1E182A000242D3 /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
@@ -117,6 +123,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020466721A249AB3004974D0 /* Calculators */ = {
+			isa = PBXGroup;
+			children = (
+				020466731A249ACE004974D0 /* AMCalculator.h */,
+				020466741A249ACE004974D0 /* AMCalculator.m */,
+				020466761A249AE6004974D0 /* AMColourIndexCalculator.h */,
+				020466771A249AE6004974D0 /* AMColourIndexCalculator.m */,
+			);
+			name = Calculators;
+			sourceTree = "<group>";
+		};
 		0244E44F1A1E182A000242D3 = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +233,7 @@
 			children = (
 				0244E4C21A23D165000242D3 /* Index */,
 				0244E4C31A23D176000242D3 /* Search */,
+				020466721A249AB3004974D0 /* Calculators */,
 				0244E4871A20CC87000242D3 /* AMCatalogue.h */,
 				0244E4881A20CC87000242D3 /* AMCatalogue.m */,
 				0244E4841A20CC18000242D3 /* AMCatalogueReader.h */,
@@ -354,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020466781A249AE6004974D0 /* AMColourIndexCalculator.m in Sources */,
 				0244E4861A20CC18000242D3 /* AMCatalogueReader.m in Sources */,
 				0244E4A91A226B64000242D3 /* AMScalarQuantity.m in Sources */,
 				0244E49E1A221C5F000242D3 /* AMCelestialObject.m in Sources */,
@@ -362,6 +381,7 @@
 				0244E4B51A235352000242D3 /* AMQuantityIndex.m in Sources */,
 				0244E4A41A22206B000242D3 /* AMScalarMeasure.m in Sources */,
 				0244E4A11A221E45000242D3 /* AMCoordinateSystem.m in Sources */,
+				020466751A249ACE004974D0 /* AMCalculator.m in Sources */,
 				0244E45F1A1E182A000242D3 /* AMAppDelegate.m in Sources */,
 				0244E4A61A2260F7000242D3 /* AMTypes.m in Sources */,
 				0244E4BE1A23D049000242D3 /* AMSearchDescriptor.m in Sources */,
