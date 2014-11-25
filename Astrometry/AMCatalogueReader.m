@@ -93,7 +93,9 @@
         if([tline length]>0){
             AMCelestialObject* celestialobject = [self readObjectFromLine:line usingXMLDefinition:elements error:&objectError];
             for(AMCalculator *calculator in calculators){
-                [calculator calculateAndInsertMeasureForCelestialObject:celestialobject];
+                AMMeasure *calcmeas = [calculator calculateMeasureForCelestialObject:celestialobject];
+                [celestialobject setMeasure:calcmeas];
+                [catalogue addQuantity:[calcmeas quantity]];
             }
             [catalogue addCelestialObject:celestialobject];
         }

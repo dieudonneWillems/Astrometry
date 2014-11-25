@@ -15,15 +15,30 @@
 #import "AMScalarQuantitySearchDescriptor.h"
 #import "AMCompoundSearchDescriptor.h"
 
+static NSMutableDictionary *__catalogues;
+
 @interface AMCatalogue (private)
 
 @end
 
 @implementation AMCatalogue
 
++ (NSArray*) catalogues {
+    if(!__catalogues) return [NSArray array];
+    return [__catalogues allKeys];
+}
+
++ (AMCatalogue*) catalogueForName:(NSString*)name {
+    if(!__catalogues) return nil;
+    return [__catalogues objectForKey:name];
+}
+
 - (id) init {
     self = [super init];
     if(self){
+        if(!__catalogues){
+            __catalogues = [NSMutableDictionary dictionary];
+        }
         objects = [NSMutableArray array];
         quantities = [NSMutableArray array];
         properties = [NSMutableArray array];
@@ -32,6 +47,10 @@
     return self;
 }
 
+- (void) setName:(NSString *)name {
+    _name = name;
+    [__catalogues setObject:self forKey:name];
+}
 
 - (NSArray*) celestialObjects {
     return objects;

@@ -1,5 +1,5 @@
 //
-//  main.m
+//  Document.h
 //  Astrometry
 //
 //  Created by Don Willems on 25/11/14.
@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, const char * argv[]) {
-    return NSApplicationMain(argc, argv);
-}
+@interface AMDocument : NSDocument
+
+
+@end
+

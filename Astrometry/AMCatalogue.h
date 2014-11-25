@@ -18,8 +18,13 @@
     NSMutableDictionary *indexes;
 }
 
-@property (readwrite) NSString *name;
++ (NSArray*) catalogues;
++ (AMCatalogue*) catalogueForName:(NSString*)name;
+
+@property (readonly) NSString *name;
 @property (readwrite) NSString *catalogueDescription;
+
+- (void) setName:(NSString *)name;
 
 - (NSArray*) celestialObjects;
 
