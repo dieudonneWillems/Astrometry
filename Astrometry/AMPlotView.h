@@ -1,5 +1,5 @@
 //
-//  Document.h
+//  AMPlotView.h
 //  Astrometry
 //
 //  Created by Don Willems on 25/11/14.
@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMDocument : NSDocument
+@class AMPlot,AMLayer;
 
+@interface AMPlotView : NSView {
+}
+
+@property (readwrite) AMPlot *plot;
 
 @end
-

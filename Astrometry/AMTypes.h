@@ -26,7 +26,8 @@ typedef enum {
     AMEquatortialCoordinateSystem,
     AMGalacticCoordinateSystem,
     AMElipticCoordinateSystem,
-    AMHorizontalCoordinateSytem
+    AMHorizontalCoordinateSytem,
+    AMLocalCoordinateSystem
 } AMCoordinateSystemType;
 
 

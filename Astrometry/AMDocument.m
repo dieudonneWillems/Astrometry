@@ -8,6 +8,15 @@
 
 #import "AMDocument.h"
 
+#import "AMCatalogue.h"
+#import "AMLayer.h"
+#import "AMPlot.h"
+#import "AMPlotView.h"
+#import "AMAstrometricMap.h"
+#import "AMCoordinateRulesLayer.h"
+#import "AMListDatasource.h"
+#import "AMListView.h"
+
 @interface AMDocument ()
 
 @end
@@ -17,14 +26,58 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
+        catalogues = [NSMutableArray array];
+        plots = [NSMutableArray array];
     }
     return self;
 }
 
+- (NSArray*) catalogues {
+    return catalogues;
+}
+
+- (void) addCatalogueWithName:(NSString*)name {
+    [self addCatalogue:[AMCatalogue catalogueForName:name]];
+}
+
+- (void) addCatalogue:(AMCatalogue*)catalogue {
+    if(catalogue){
+        [catalogues addObject:catalogue];
+        [itemList reloadData];
+    }
+}
+
+
+- (void) addPlot:(AMPlot*)plot {
+    [plots addObject:plot];
+    [plotview setPlot:plot];
+    [itemList reloadData];
+}
+
+- (void) removePlot:(AMPlot*)plot {
+    [plots removeObject:plot];
+    [itemList reloadData];
+}
+
+- (NSArray*) plots {
+    return plots;
+}
+
+- (AMPlot*) selectedPlot {
+    return selectedPlot;
+}
+
+- (void) setSelectedPlot:(AMPlot *)plot {
+    selectedPlot = plot;
+    [plotview setPlot:selectedPlot];
+}
+
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
+    AMAstrometricMap *plot = [[AMAstrometricMap alloc] init];
+    [plot setScale:10.];
+    [plot addLayer:[[AMCoordinateRulesLayer alloc] init]];
+    [self addPlot:plot];
 }
 
 + (BOOL)autosavesInPlace {

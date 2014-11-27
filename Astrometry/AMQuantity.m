@@ -35,6 +35,8 @@ static NSMutableDictionary *__quantities;
     (void) [[AMScalarQuantity alloc] initWithName:@"Colour index B-V" andSymbol:@"B-V"];
     (void) [[AMScalarQuantity alloc] initWithName:@"Right ascension" andSymbol:@"α"];
     (void) [[AMScalarQuantity alloc] initWithName:@"Declination" andSymbol:@"δ"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"Longitude" andSymbol:@"l"];
+    (void) [[AMScalarQuantity alloc] initWithName:@"Latitude" andSymbol:@"b"];
     (void) [[AMVectorQuantity alloc] initWithName:@"Spherical position" andSymbol:@""];
 }
 

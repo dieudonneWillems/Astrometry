@@ -13,6 +13,8 @@
 
 @interface AMSphericalCoordinates : AMMeasure
 
++ (AMSphericalCoordinates*) equatorialCoordinatesWithRightAscension:(double)lon declination:(double)lat;
+
 - (id) initWithCoordinateLongitude:(AMScalarMeasure*)longitude latitude:(AMScalarMeasure*)latitude inCoordinateSystem:(AMCoordinateSystem*)system;
 
 - (id) initWithCoordinateLongitude:(AMScalarMeasure*)longitude latitude:(AMScalarMeasure*)latitude andDistance:(AMScalarMeasure*)distance inCoordinateSystem:(AMCoordinateSystem*)system;
