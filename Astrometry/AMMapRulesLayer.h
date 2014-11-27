@@ -8,11 +8,10 @@
 
 #import "AMLayer.h"
 
-@interface AMCoordinateRulesLayer : AMLayer {
+@interface AMMapRulesLayer : AMLayer {
     IBOutlet NSImageView *imageView;
     IBOutlet NSTextField *nameField;
     IBOutlet NSTextField *descriptionField;
-    IBOutlet NSButton *visibilityCB;
 }
 
 @end

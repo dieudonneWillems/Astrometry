@@ -16,7 +16,7 @@
 - (id) init {
     self = [super init];
     if(self){
-        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:0 declination:45]];
+        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:230 declination:30]];
         [self setScale:1.];
         [self setProjection:[[AMEquirectangularMapProjection alloc] init]];
     }

@@ -10,12 +10,18 @@
 
 #import "AMListItemController.h"
 
+FOUNDATION_EXPORT NSString *const AMLayerChangedVisibilityNotification;
+
 @class AMPlotView,AMPlot;
 
 @interface AMLayer : AMListItemController {
+    IBOutlet NSButton *visibilityCB;
 }
 
-@property (readwrite) BOOL visible;
+- (IBAction) setVisibility:(id)sender;
+
+@property (readonly) BOOL visible;
+- (void) setVisible:(BOOL)visible;
 
 - (void) drawRect:(NSRect)rect
            onPlot:(AMPlot*)plot

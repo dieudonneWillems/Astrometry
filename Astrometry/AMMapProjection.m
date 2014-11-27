@@ -15,6 +15,11 @@
 
 @implementation AMMapProjection
 
+
+- (NSString*) name {
+    return @"";
+}
+
 - (NSPoint) pointForSphericalCoordinates:(AMSphericalCoordinates*)coordinates
                    withCentreCoordinates:(AMSphericalCoordinates*)centre {
     return NSZeroPoint;
@@ -38,10 +43,10 @@
     double z = sin(lat);
     double x1 = cos(-clon)*x-sin(-clon)*y; // rotation about z
     double y1 = sin(-clon)*x+cos(-clon)*y;
-    double x2 = cos(-clat)*x1+sin(-clat)*z; // rotation about y
-    double z2 = -sin(-clat)*x1+cos(-clat)*z;
+    double x2 = cos(clat)*x1+sin(clat)*z; // rotation about y
+    double z2 = -sin(clat)*x1+cos(clat)*z;
     double nlat = asin(z2)*180/M_PI;
-    double nlon = asin(y1/cos(lat))*180/M_PI;
+    double nlon = atan2(y1, x2)*180/M_PI;
     AMScalarMeasure *nlongitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"longitude"] numericalValue:nlon andUnit:[AMUnit unitWithName:@"degree"]];
     AMScalarMeasure *nlatitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"latitude"] numericalValue:nlat andUnit:[AMUnit unitWithName:@"degree"]];
     AMSphericalCoordinates *ncoord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:nlongitude latitude:nlatitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:AMLocalCoordinateSystem inEquinox:nil onEpoch:nil]];
