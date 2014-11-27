@@ -26,7 +26,7 @@
 @implementation AMAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    
+    /*
     NSError *error = nil;
     AMCatalogueReader *reader = [[AMCatalogueReader alloc] init];
     [reader addCalculator:[[AMColourIndexCalculator alloc] initWithColourIndex:[AMQuantity quantityWithName:@"Colour index B-R"] magnitudeQuantities:[AMQuantity quantityWithName:@"B magnitude"] and:[AMQuantity quantityWithName:@"R magnitude"]]];
@@ -36,7 +36,7 @@
         NSLog(@"Could not read catalogue file: %@",error);
     }else{
         NSLog(@"Read catalogue\n%@",catalogue);
-        /*
+     
         AMCompoundSearchDescriptor *csd = [[AMCompoundSearchDescriptor alloc] initWithOperator:AMAndSearchOperator searchDescriptors:
                                            [[AMScalarQuantitySearchDescriptor alloc] initForQuantity:[AMQuantity quantityWithName:@"Right ascension"] maxValue:201.54 minValue:201.52 inUnit:[AMUnit unitWithName:@"degree"]],
                                            [[AMScalarQuantitySearchDescriptor alloc] initForQuantity:[AMQuantity quantityWithName:@"Declination"] maxValue:-47.62 minValue:-47.64 inUnit:[AMUnit unitWithName:@"degree"]], nil];
@@ -46,8 +46,9 @@
         for(AMCelestialObject *obj in objects){
             NSLog(@"%@",obj);
         }
-         */
+     
     }
+     */
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

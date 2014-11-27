@@ -8,8 +8,29 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMDocument : NSDocument
+@class AMCatalogue,AMLayer,AMPlotView,AMPlot,AMListDatasource,AMListView;
 
+@interface AMDocument : NSDocument {
+    NSMutableArray *catalogues;
+    NSMutableArray *plots;
+    AMPlot *selectedPlot;
+    IBOutlet AMPlotView *plotview;
+    IBOutlet AMListView *itemList;
+}
+
+#pragma mark Catalogues part of the document
+
+- (NSArray*) catalogues;
+- (void) addCatalogueWithName:(NSString*)name;
+- (void) addCatalogue:(AMCatalogue*)catalogue;
+
+#pragma mark Plots
+
+- (void) addPlot:(AMPlot*)plot;
+- (void) removePlot:(AMPlot*)plot;
+- (NSArray*) plots;
+- (AMPlot*) selectedPlot;
+- (void) setSelectedPlot:(AMPlot *)plot;
 
 @end
 

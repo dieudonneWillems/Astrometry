@@ -11,11 +11,13 @@
 @implementation AMCoordinateSystem
 
 + (AMCoordinateSystem*) equatorialCoordinateSystemJ2000 {
-    return nil;
+    AMCoordinateSystem *system = [[AMCoordinateSystem alloc] initWithType:AMEquatortialCoordinateSystem inEquinox:nil onEpoch:nil];
+    return system;
 }
 
 + (AMCoordinateSystem*) equatorialCoordinateSystemJ2000AtEpoch:(NSDate*)epoch {
-    return nil;
+    AMCoordinateSystem *system = [[AMCoordinateSystem alloc] initWithType:AMEquatortialCoordinateSystem inEquinox:nil onEpoch:epoch];
+    return system;
 }
 
 + (AMCoordinateSystem*) galacticCoordinateSystem {
