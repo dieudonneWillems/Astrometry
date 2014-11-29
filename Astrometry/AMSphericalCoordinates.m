@@ -40,6 +40,26 @@
     return self;
 }
 
+- (BOOL) isEqual:(id)object {
+    if([object isKindOfClass:[AMSphericalCoordinates class]]){
+        AMSphericalCoordinates *spc = (AMSphericalCoordinates*)object;
+        BOOL eq1 = [[self longitude] isEqual:[spc longitude]];
+        if(!eq1) return NO;
+        eq1 = [[self latitude] isEqual:[spc latitude]];
+        if(!eq1) return NO;
+        eq1 = [[self coordinateSystem] isEqual:[spc coordinateSystem]];
+        if(!eq1) return NO;
+        if([self distance] && [spc distance]){
+            eq1 = [[self distance] isEqual:[spc distance]];
+            if(!eq1) return NO;
+        }
+        if([self distance] && ![spc distance]) return NO;
+        if(![self distance] && [spc distance]) return NO;
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString*) description {
     if([self distance]==nil){
         return [NSString stringWithFormat:@"(%@,%@)",[self longitude],[self latitude]];

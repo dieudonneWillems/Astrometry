@@ -30,4 +30,14 @@
     return NSOrderedSame;
 }
 
+- (BOOL) isEqual:(id)object {
+    if([object isKindOfClass:[AMMeasure class]]){
+        AMMeasure *measure = (AMMeasure*) object;
+        if([self compare:measure] == NSOrderedSame){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

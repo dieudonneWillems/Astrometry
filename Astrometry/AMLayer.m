@@ -11,6 +11,7 @@
 #import "AMPlot.h"
 
 NSString *const AMLayerChangedVisibilityNotification = @"AMLayerChangedVisibilityNotification";
+NSString *const AMLayerChangedNotification = @"AMLayerChangedNotification";
 
 @implementation AMLayer
 
@@ -18,8 +19,14 @@ NSString *const AMLayerChangedVisibilityNotification = @"AMLayerChangedVisibilit
     self = [super init];
     if(self){
         [self setVisible:YES];
+        [self setName:@"Default Layer"];
+        _layerIdentifier = [[NSUUID UUID] UUIDString];
     }
     return self;
+}
+
+- (BOOL) allowAdditionOfLayerToPlot:(AMPlot*)plot {
+    return NO;
 }
 
 #pragma mark Actions

@@ -13,7 +13,6 @@
 #import "AMPlot.h"
 #import "AMPlotView.h"
 #import "AMAstrometricMap.h"
-#import "AMMapRulesLayer.h"
 #import "AMMapGridLayer.h"
 #import "AMListDatasource.h"
 #import "AMListView.h"
@@ -48,7 +47,6 @@
     }
 }
 
-
 - (void) addPlot:(AMPlot*)plot {
     [plots addObject:plot];
     [plotview setPlot:plot];
@@ -76,10 +74,9 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
     AMAstrometricMap *plot = [[AMAstrometricMap alloc] init];
-    [plot setScale:50.];
-    [plot addLayer:[[AMMapRulesLayer alloc] init]];
-    [plot addLayer:[[AMMapGridLayer alloc] init]];
     [self addPlot:plot];
+    [plot setScale:50.];
+    [plot addLayer:[[AMMapGridLayer alloc] init]];
 }
 
 + (BOOL)autosavesInPlace {

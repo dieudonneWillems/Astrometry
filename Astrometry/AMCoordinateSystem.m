@@ -33,4 +33,14 @@
     }
     return self;
 }
+
+- (BOOL) isEqual:(id)object {
+    if([object isKindOfClass:[AMCoordinateSystem class]]){
+        AMCoordinateSystem *cs = (AMCoordinateSystem*)object;
+        if([cs type] != [self type]) return NO;
+        if(![[self epoch] isEqualToDate:[cs epoch]]) return NO;
+        if(![[self equinox] isEqualToDate:[cs equinox]]) return NO;
+    }
+    return NO;
+}
 @end

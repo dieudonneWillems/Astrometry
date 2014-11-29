@@ -10,6 +10,11 @@
 
 #import "AMListItemController.h"
 
+FOUNDATION_EXPORT NSString *const AMLayerAddedToPlotNotification;
+FOUNDATION_EXPORT NSString *const AMLayerRemovedFromPlotNotification;
+
+FOUNDATION_EXPORT NSString *const AMPlotPropertiesChangedNotification;
+
 @class AMPlotView,AMCelestialObject,AMLayer;
 
 @interface AMPlot : AMListItemController {

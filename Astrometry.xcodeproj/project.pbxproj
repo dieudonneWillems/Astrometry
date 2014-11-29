@@ -43,7 +43,6 @@
 		029587C11A24F05000DAAD5F /* AMLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587C01A24F05000DAAD5F /* AMLayer.m */; };
 		029587C41A24F16500DAAD5F /* AMPlotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587C31A24F16500DAAD5F /* AMPlotView.m */; };
 		029587C71A24F39C00DAAD5F /* AMPlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587C61A24F39C00DAAD5F /* AMPlot.m */; };
-		029587CA1A25013F00DAAD5F /* AMMapRulesLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587C91A25013F00DAAD5F /* AMMapRulesLayer.m */; };
 		029587CD1A251D9400DAAD5F /* AMAstrometricMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587CC1A251D9400DAAD5F /* AMAstrometricMap.m */; };
 		029587D11A25C02100DAAD5F /* AMListDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587D01A25C02100DAAD5F /* AMListDatasource.m */; };
 		029587D41A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029587D31A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib */; };
@@ -136,8 +135,6 @@
 		029587C31A24F16500DAAD5F /* AMPlotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPlotView.m; sourceTree = "<group>"; };
 		029587C51A24F39C00DAAD5F /* AMPlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPlot.h; sourceTree = "<group>"; };
 		029587C61A24F39C00DAAD5F /* AMPlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPlot.m; sourceTree = "<group>"; };
-		029587C81A25013F00DAAD5F /* AMMapRulesLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMapRulesLayer.h; sourceTree = "<group>"; };
-		029587C91A25013F00DAAD5F /* AMMapRulesLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMapRulesLayer.m; sourceTree = "<group>"; };
 		029587CB1A251D9400DAAD5F /* AMAstrometricMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAstrometricMap.h; sourceTree = "<group>"; };
 		029587CC1A251D9400DAAD5F /* AMAstrometricMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMAstrometricMap.m; sourceTree = "<group>"; };
 		029587CF1A25C02100DAAD5F /* AMListDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMListDatasource.h; sourceTree = "<group>"; };
@@ -342,8 +339,6 @@
 			children = (
 				029587BF1A24F05000DAAD5F /* AMLayer.h */,
 				029587C01A24F05000DAAD5F /* AMLayer.m */,
-				029587C81A25013F00DAAD5F /* AMMapRulesLayer.h */,
-				029587C91A25013F00DAAD5F /* AMMapRulesLayer.m */,
 				02184B691A27C4640046B723 /* AMMapGridLayer.h */,
 				02184B6A1A27C4640046B723 /* AMMapGridLayer.m */,
 			);
@@ -535,7 +530,6 @@
 				029587541A24E1B400DAAD5F /* main.m in Sources */,
 				029587941A24E33C00DAAD5F /* AMUnit.m in Sources */,
 				02184B6B1A27C4640046B723 /* AMMapGridLayer.m in Sources */,
-				029587CA1A25013F00DAAD5F /* AMMapRulesLayer.m in Sources */,
 				029587B11A24E3A200DAAD5F /* AMCompoundSearchDescriptor.m in Sources */,
 				029587521A24E1B400DAAD5F /* AMAppDelegate.m in Sources */,
 				0295878F1A24E33C00DAAD5F /* AMQuantity.m in Sources */,
