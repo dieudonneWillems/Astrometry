@@ -154,6 +154,11 @@ NSString *const AMMapGridLayerChangedMinorGridLineSpacing = @"AMMapGridLayerChan
     double clon = [[[(AMAstrometricMap*)plot centre] longitude] value];
     double clat = [[[(AMAstrometricMap*)plot centre] latitude] value];
     
+    [[NSColor blackColor] set];
+    NSRect vr = [[self plot] viewRect];
+    NSBezierPath *rbp = [NSBezierPath bezierPathWithRect:vr];
+    [rbp stroke];
+    
     [[self minorGridLineColor] set];
     for(lon=minlon;lon<=maxlon;lon+=1){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
@@ -171,7 +176,7 @@ NSString *const AMMapGridLayerChangedMinorGridLineSpacing = @"AMMapGridLayerChan
     }
     for(lat=minlat;lat<=maxlat;lat+=1){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lon=clon-10;lon<=clon+10;lon+=0.1){
+        for(lon=minlon;lon<=maxlon;lon+=0.1){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [plot locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if([gridline elementCount] <=0){
@@ -189,7 +194,6 @@ NSString *const AMMapGridLayerChangedMinorGridLineSpacing = @"AMMapGridLayerChan
         for(lat=minlat;lat<=maxlat;lat+=0.1){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [plot locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
-            NSLog(@"Drawing Grid to point: %@ for measure: %@",NSStringFromPoint(point),coord);
             if([gridline elementCount] <=0){
                 [gridline moveToPoint:point];
             }else {
@@ -201,7 +205,7 @@ NSString *const AMMapGridLayerChangedMinorGridLineSpacing = @"AMMapGridLayerChan
     }
     for(lat=minlat;lat<=maxlat;lat+=5){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lon=clon-10;lon<=clon+10;lon+=0.1){
+        for(lon=maxlon;lon<=minlon;lon+=0.1){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [plot locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if([gridline elementCount] <=0){

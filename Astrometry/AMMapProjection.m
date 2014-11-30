@@ -47,7 +47,7 @@
     double z2 = -sin(clat)*x1+cos(clat)*z;
     double nlat = asin(z2)*180/M_PI;
     double nlon = atan2(y1, x2)*180/M_PI;
-    if(nlon<0) nlon+=360;
+    //if(nlon<0) nlon+=360;
     AMScalarMeasure *nlongitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"longitude"] numericalValue:nlon andUnit:[AMUnit unitWithName:@"degree"]];
     AMScalarMeasure *nlatitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"latitude"] numericalValue:nlat andUnit:[AMUnit unitWithName:@"degree"]];
     AMSphericalCoordinates *ncoord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:nlongitude latitude:nlatitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:AMLocalCoordinateSystem inEquinox:nil onEpoch:nil]];
