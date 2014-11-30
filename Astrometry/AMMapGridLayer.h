@@ -11,10 +11,11 @@
 
 @class AMCoordinateSystem;
 
-FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMajorGridLineProperties;
-FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLineProperties;
-FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMajorGridLineSpacing;
-FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLineSpacing;
+FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMajorGridLinePropertiesNotification;
+FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLinePropertiesNotification;
+FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMajorGridLineSpacingNotification;
+FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLineSpacingNotification;
+FOUNDATION_EXPORT NSString *const AMMapGridVisibilityChangedNotification;
 
 @interface AMMapGridLayer : AMLayer{
     IBOutlet NSImageView *imageView;
@@ -25,6 +26,8 @@ FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLineSpacing;
 
 @property (readonly) AMCoordinateSystem* coordinateSystem;
 
+@property (readonly) BOOL drawGrid;
+- (void) setDrawGrid:(BOOL)drawGrid;
 @property (readonly) double relativeMajorGridLineSpacing; // relative to scale.
 - (void) setRelativeMajorGridLineSpacing:(double)relSpacing;
 @property (readonly) double relativeMinorGridLineSpacing; // relative to scale.
@@ -34,10 +37,14 @@ FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLineSpacing;
 @property (readonly) double minorGridLineSpacing; // in degrees
 - (void) setMinorGridLineSpacing:(double) spacing;
 
+@property (readonly) NSColor *axisLineColor;
+- (void) setAxisLineColor:(NSColor*) color;
 @property (readonly) NSColor *majorGridLineColor;
 - (void) setMajorGridLineColor:(NSColor*) color;
 @property (readonly) NSColor *minorGridLineColor;
 - (void) setMinorGridLineColor:(NSColor*) color;
+@property (readonly) CGFloat axisLineWidth;
+- (void) setAxisLineWidth:(CGFloat) width;
 @property (readonly) CGFloat majorGridLineWidth;
 - (void) setMajorGridLineWidth:(CGFloat) width;
 @property (readonly) CGFloat minorGridLineWidth;
