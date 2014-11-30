@@ -11,6 +11,10 @@
 #import "AMCelestialObject.h"
 #import "AMLayer.h"
 
+NSString *const AMLayerAddedToPlotNotification = @"AMLayerAddedToPlotNotification";
+NSString *const AMLayerRemovedFromPlotNotification = @"AMLayerRemovedFromPlotNotification";
+NSString *const AMPlotPropertiesChangedNotification = @"AMPlotPropertiesChangedNotification";
+
 @implementation AMPlot
 
 - (id) init {
@@ -27,6 +31,7 @@
 
 - (void) setViewRect:(NSRect)nrect {
     _viewRect = nrect;
+    [[NSNotificationCenter defaultCenter] postNotificationName:AMPlotPropertiesChangedNotification object:self];
 }
 
 - (NSArray*) layers {
@@ -34,12 +39,21 @@
 }
 
 - (void) addLayer:(AMLayer*)layer {
-    if(!layers) layers = [NSMutableArray array];
-    [layers insertObject:layer atIndex:0];
+    if([layer allowAdditionOfLayerToPlot:self]){
+        if([layer plot]) [[layer plot] removeLayer:layer];
+        if(!layers) layers = [NSMutableArray array];
+        [layers insertObject:layer atIndex:0];
+        [layer setPlot:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerAddedToPlotNotification object:layer];
+    }
 }
 
 - (void) removeLayer:(AMLayer*)layer {
-    [layers removeObject:layer];
+    if([[layer plot] isEqualTo:self]){
+        [layers removeObject:layer];
+        [layer setPlot:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerRemovedFromPlotNotification object:layer];
+    }
 }
 
 - (NSArray*) measuresForLocation:(NSPoint)location inView:(AMPlotView*)view {

@@ -47,6 +47,7 @@
     double z2 = -sin(clat)*x1+cos(clat)*z;
     double nlat = asin(z2)*180/M_PI;
     double nlon = atan2(y1, x2)*180/M_PI;
+    //if(nlon<0) nlon+=360;
     AMScalarMeasure *nlongitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"longitude"] numericalValue:nlon andUnit:[AMUnit unitWithName:@"degree"]];
     AMScalarMeasure *nlatitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"latitude"] numericalValue:nlat andUnit:[AMUnit unitWithName:@"degree"]];
     AMSphericalCoordinates *ncoord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:nlongitude latitude:nlatitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:AMLocalCoordinateSystem inEquinox:nil onEpoch:nil]];
@@ -65,12 +66,13 @@
     double x = cos(lon)*cos(lat);
     double y = sin(lon)*cos(lat);
     double z = sin(lat);
-    x = cos(clon)*x-sin(clon)*y; // rotation about z
-    y = sin(clon)*x+cos(clon)*y;
-    x = cos(clat)*x+sin(clat)*z; // rotation about y
-    z = -sin(clat)*x+cos(clat)*z;
-    double nlat = asin(z);
-    double nlon = acos(x/z);
+    double x2 = cos(-clat)*x+sin(-clat)*z; // rotation about y
+    double z2 = -sin(-clat)*x+cos(-clat)*z;
+    double x1 = cos(clon)*x2-sin(clon)*y; // rotation about z
+    double y1 = sin(clon)*x2+cos(clon)*y;
+    double nlat = asin(z2)*180/M_PI;
+    double nlon = atan2(y1, x1)*180/M_PI;
+    if(nlon<0) nlon+=360;
     AMScalarMeasure *nlongitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"longitude"] numericalValue:nlon andUnit:[AMUnit unitWithName:@"degree"]];
     AMScalarMeasure *nlatitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"latitude"] numericalValue:nlat andUnit:[AMUnit unitWithName:@"degree"]];
     AMSphericalCoordinates *ncoord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:nlongitude latitude:nlatitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:AMLocalCoordinateSystem inEquinox:nil onEpoch:nil]];

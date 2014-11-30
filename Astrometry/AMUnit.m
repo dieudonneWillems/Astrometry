@@ -141,6 +141,15 @@ static NSMutableDictionary *__units;
     return self;
 }
 
+- (BOOL) isEqual:(id)object {
+    if([object isKindOfClass:[AMUnit class]]){
+        if([[(AMUnit*)object name] isEqualToString:[self name]]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (NSString*) description {
     return [NSString stringWithFormat:@"%@",[self symbol]];
 }

@@ -54,6 +54,15 @@ static NSMutableDictionary *__quantities;
     return self;
 }
 
+- (BOOL) isEqual:(id)object {
+    if([object isKindOfClass:[AMQuantity class]]){
+        if([[(AMQuantity*)object name] isEqualToString:[self name]]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (NSString*) description {
     return [NSString stringWithFormat:@"%@",[self symbol]];
 }

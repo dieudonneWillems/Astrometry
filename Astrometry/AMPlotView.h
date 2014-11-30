@@ -11,8 +11,12 @@
 @class AMPlot,AMLayer;
 
 @interface AMPlotView : NSView {
+    NSMutableDictionary *layerImages;
 }
 
-@property (readwrite) AMPlot *plot;
+@property (readonly) AMPlot *plot;
+- (void) setPlot:(AMPlot *)plot;
+
+- (void) setNeedsDisplayLayer:(AMLayer*)layer;
 
 @end
