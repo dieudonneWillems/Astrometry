@@ -12,12 +12,17 @@
 #import "AMCoordinateSystem.h"
 #import "AMQuantity.h"
 #import "AMUnit.h"
+#import "AMScalarMeasure.h"
+#import "AMAstrometricMap.h"
 
 @implementation AMMapProjection
 
 
 - (NSString*) name {
     return @"";
+}
+
+- (void) calculateMinimumLongitude:(AMScalarMeasure**)minlon maximumLongitude:(AMScalarMeasure**)maxlon minimumLatitude:(AMScalarMeasure**)minlat maximumLatitude:(AMScalarMeasure**)maxlat inMap:(AMAstrometricMap*)map {
 }
 
 - (NSPoint) pointForSphericalCoordinates:(AMSphericalCoordinates*)coordinates

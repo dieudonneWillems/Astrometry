@@ -12,11 +12,168 @@
 #import "AMCoordinateSystem.h"
 #import "AMQuantity.h"
 #import "AMUnit.h"
+#import "AMAstrometricMap.h"
+
+@interface AMEquirectangularMapProjection (private)
+- (AMSphericalCoordinates*) sphericalCoordinatesForLocation:(NSPoint)location inViewRect:(NSRect)viewRect withScale:(double)scale andCentre:(AMSphericalCoordinates*)centre;
+- (double) findRealMinimumLongitudeAtLatitude:(double)lat
+                         withMinimumLongitude:(double)minlon
+                          andMaximumLongitude:(double)maxlon
+                                        inMap:(AMAstrometricMap*)map;
+- (double) findRealMinimumLatitudeAtLongitude:(double)lon
+                          withMinimumLatitude:(double)minlat
+                           andMaximumLatitude:(double)maxlat
+                                        inMap:(AMAstrometricMap*)map;
+- (double) findRealMaximumLatitudeAtLongitude:(double)lon
+                          withMinimumLatitude:(double)minlat
+                           andMaximumLatitude:(double)maxlat
+                                        inMap:(AMAstrometricMap*)map;
+@end
 
 @implementation AMEquirectangularMapProjection
 
 - (NSString*) name {
     return @"Equirectangular";
+}
+
+- (void) calculateMinimumLongitude:(AMScalarMeasure**)minimumLongitude
+                  maximumLongitude:(AMScalarMeasure**)maximumLongitude
+                   minimumLatitude:(AMScalarMeasure**)minimumLatitude
+                   maximumLatitude:(AMScalarMeasure**)maximumLatitude
+                             inMap:(AMAstrometricMap*)map {
+    double clon = [[[map centre] longitude] value];
+    double clat = [[[map centre] latitude] value];
+    NSPoint p1 = [map viewRect].origin;
+    NSPoint p2 = [map viewRect].origin;
+    p2.y = p2.y+[map viewRect].size.height;
+    NSPoint p3 = [map viewRect].origin;
+    p3.y = p3.y+[map viewRect].size.height/2;
+    NSPoint p4 = [map viewRect].origin;
+    p4.x = p4.x+[map viewRect].size.width/2;
+    NSPoint p5 = [map viewRect].origin;
+    p5.y = p5.y+[map viewRect].size.height;
+    p5.x = p5.x+[map viewRect].size.width/2;
+    AMSphericalCoordinates *sc1 = [self sphericalCoordinatesForLocation:p1 inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+    AMSphericalCoordinates *sc2 = [self sphericalCoordinatesForLocation:p2 inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+    AMSphericalCoordinates *sc3 = [self sphericalCoordinatesForLocation:p3 inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+    AMSphericalCoordinates *sc4 = [self sphericalCoordinatesForLocation:p4 inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+    AMSphericalCoordinates *sc5 = [self sphericalCoordinatesForLocation:p5 inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+    NSLog(@"%@ --> %@",NSStringFromPoint(p1),sc1);
+    NSLog(@"%@ --> %@",NSStringFromPoint(p2),sc2);
+    NSLog(@"%@ --> %@",NSStringFromPoint(p3),sc3);
+    NSLog(@"%@ --> %@",NSStringFromPoint(p4),sc4);
+    NSLog(@"%@ --> %@",NSStringFromPoint(p5),sc5);
+    if([map useRectangularViewPort]){
+        // spherical bounds should be outside viewport
+        *maximumLongitude = [sc1 longitude];
+        if([[sc2 longitude] value]>[*maximumLongitude value]) *maximumLongitude = [sc2 longitude];
+        if([[sc3 longitude] value]>[*maximumLongitude value]) *maximumLongitude = [sc3 longitude];
+        double minlon = clon-([*maximumLongitude value]-clon);
+        *minimumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLongitude quantity] numericalValue:minlon andUnit:[*maximumLongitude unit]];
+        *minimumLatitude = [sc1 latitude];
+        if([[sc4 latitude] value]<[*minimumLatitude value]) *minimumLatitude = [sc4 latitude];
+        *maximumLatitude = [sc2 latitude];
+        if([[sc5 latitude] value]>[*maximumLatitude value]) *maximumLatitude = [sc5 latitude];
+    }else{
+        // spherical bounds should be inside viewport
+        if([[sc4 latitude] value]>0){
+            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc4 latitude] value] withMinimumLongitude:clon-([[sc1 longitude] value]-clon) andMaximumLongitude:clon-([[sc1 longitude] value]-clon) inMap:map];
+            double maxlon = clon+(clon-minlon);
+            *minimumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLongitude quantity] numericalValue:minlon andUnit:[*maximumLongitude unit]];
+            *maximumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLongitude quantity] numericalValue:maxlon andUnit:[*maximumLongitude unit]];
+            *minimumLatitude = [sc4 latitude];
+            double maxlat = [self findRealMaximumLatitudeAtLongitude:[*minimumLongitude value] withMinimumLatitude:[[sc1 latitude] value] andMaximumLatitude:[[sc1 latitude] value] inMap:map];
+            *maximumLatitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLatitude quantity] numericalValue:maxlat andUnit:[*maximumLatitude unit]];
+        }else if([[sc5 latitude] value]<0){
+            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc5 latitude] value] withMinimumLongitude:clon-([[sc2 longitude] value]-clon) andMaximumLongitude:clon-([[sc2 longitude] value]-clon) inMap:map];
+            double maxlon = clon+(clon-minlon);
+            *minimumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLongitude quantity] numericalValue:minlon andUnit:[*maximumLongitude unit]];
+            *maximumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLongitude quantity] numericalValue:maxlon andUnit:[*maximumLongitude unit]];
+            *maximumLatitude = [sc5 latitude];
+            double minlat = [self findRealMinimumLatitudeAtLongitude:[*minimumLongitude value] withMinimumLatitude:[[sc1 latitude] value] andMaximumLatitude:[[sc1 latitude] value] inMap:map];
+            *minimumLatitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLatitude quantity] numericalValue:minlat andUnit:[*maximumLatitude unit]];
+        }else {
+            AMSphericalCoordinates *s0 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[map centre] longitude] latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:0 andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
+            NSPoint c0g = [self pointForSphericalCoordinates:s0 withCentreCoordinates:[map centre]];
+            c0g.x = [map viewRect].origin.x;
+            AMSphericalCoordinates *s1 = [self sphericalCoordinatesForLocation:c0g inViewRect:[map viewRect] withScale:[map scale] andCentre:[map centre]];
+            *maximumLongitude = [s1 longitude];
+            *minimumLongitude = [[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:clon-([[s1 longitude] value] - clon) andUnit:[[[map centre] longitude] unit]];
+            double minlat = [self findRealMinimumLatitudeAtLongitude:[*minimumLongitude value] withMinimumLatitude:[[sc1 latitude] value] andMaximumLatitude:[[sc1 latitude] value] inMap:map];
+            *minimumLatitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLatitude quantity] numericalValue:minlat andUnit:[*maximumLatitude unit]];
+            double maxlat = [self findRealMaximumLatitudeAtLongitude:[*minimumLongitude value] withMinimumLatitude:[[sc1 latitude] value] andMaximumLatitude:[[sc1 latitude] value] inMap:map];
+            *maximumLatitude = [[AMScalarMeasure alloc] initWithQuantity:[*maximumLatitude quantity] numericalValue:maxlat andUnit:[*maximumLatitude unit]];
+        }
+    }
+}
+
+- (double) findRealMinimumLongitudeAtLatitude:(double)lat
+                         withMinimumLongitude:(double)minlon
+                          andMaximumLongitude:(double)maxlon
+                                        inMap:(AMAstrometricMap*)map {
+    double lon = maxlon-([[[map centre] longitude] value]-maxlon)*.1;
+    if(minlon<maxlon) lon = (maxlon-minlon)/2.+minlon;
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]] latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
+    NSPoint p = [map locationInView:nil forSphericalCoordinates:coord];
+    CGFloat leftb =[map viewRect].origin.x+[map viewRect].size.width;
+    if(fabs(p.x-leftb)<0.2) return lon;
+    if(p.x>leftb){
+        return [self findRealMinimumLongitudeAtLatitude:lat withMinimumLongitude:lon andMaximumLongitude:maxlon inMap:map];
+    }
+    if(p.x<leftb){
+        return [self findRealMinimumLongitudeAtLatitude:lat withMinimumLongitude:minlon andMaximumLongitude:lon inMap:map];
+    }
+    return lon;
+}
+- (double) findRealMinimumLatitudeAtLongitude:(double)lon
+                          withMinimumLatitude:(double)minlat
+                           andMaximumLatitude:(double)maxlat
+                                        inMap:(AMAstrometricMap*)map {
+    double lat = maxlat-([[[map centre] latitude] value]-maxlat)*.1;
+    if(minlat<maxlat) lat = (maxlat-minlat)/2.+minlat;
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]] latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
+    NSPoint p = [map locationInView:nil forSphericalCoordinates:coord];
+    CGFloat leftb =[map viewRect].origin.y;
+    if(fabs(p.y-leftb)<0.2) return lat;
+    if(p.y<leftb){
+        return [self findRealMinimumLatitudeAtLongitude:lon withMinimumLatitude:lat andMaximumLatitude:maxlat inMap:map];
+    }
+    if(p.y>leftb){
+        return [self findRealMinimumLatitudeAtLongitude:lon withMinimumLatitude:minlat andMaximumLatitude:lat inMap:map];
+    }
+    return lat;
+}
+
+- (double) findRealMaximumLatitudeAtLongitude:(double)lon
+                          withMinimumLatitude:(double)minlat
+                           andMaximumLatitude:(double)maxlat
+                                        inMap:(AMAstrometricMap*)map {
+    double lat = minlat+([[[map centre] latitude] value]-maxlat)*.1;
+    if(minlat<maxlat) lat = (maxlat-minlat)/2.+minlat;
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]] latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
+    NSPoint p = [map locationInView:nil forSphericalCoordinates:coord];
+    NSLog(@"p: %@ --> %@",NSStringFromPoint(p),coord);
+    CGFloat leftb =[map viewRect].origin.y+[map viewRect].size.height;
+    NSLog(@"leftb=%f",leftb);
+    if(fabs(p.y-leftb)<0.2) return lat;
+    if(p.y<leftb){
+        return [self findRealMaximumLatitudeAtLongitude:lon withMinimumLatitude:lat andMaximumLatitude:maxlat inMap:map];
+    }
+    if(p.y>leftb){
+        return [self findRealMaximumLatitudeAtLongitude:lon withMinimumLatitude:minlat andMaximumLatitude:lat inMap:map];
+    }
+    return lat;
+}
+
+- (AMSphericalCoordinates*) sphericalCoordinatesForLocation:(NSPoint)location inViewRect:(NSRect)viewRect withScale:(double)scale andCentre:(AMSphericalCoordinates*)centre {
+    NSPoint centrePoint;
+    centrePoint.x = viewRect.origin.x + (viewRect.size.width/2.);
+    centrePoint.y = viewRect.origin.y + (viewRect.size.height/2.);
+    CGFloat dx = (location.x-centrePoint.x)/scale;
+    CGFloat dy = (location.y-centrePoint.y)/scale;
+    NSPoint point = NSMakePoint(dx, dy);
+    AMSphericalCoordinates *sc = [self sphericalCoordinatesForPoint:point withCentreCoordinates:centre];
+    return sc;
 }
 
 - (NSPoint) pointForSphericalCoordinates:(AMSphericalCoordinates*)coordinates

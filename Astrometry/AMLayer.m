@@ -59,4 +59,20 @@ NSString *const AMLayerChangedNotification = @"AMLayerChangedNotification";
     
 }
 
+- (void) drawLabelsInRect:(NSRect)rect
+                   onPlot:(AMPlot*)plot
+                   inView:(AMPlotView*)view {
+    
+}
+
+- (void) drawAttributedString:(NSAttributedString*)string atPoint:(NSPoint)point relativeToPivot:(NSPoint)pivot withAngle:(double)angle {
+    NSAffineTransform *transform = [[NSAffineTransform alloc] init];
+    [transform translateXBy:pivot.x yBy:pivot.y];
+    [transform rotateByDegrees:angle];
+    [transform concat];
+    [string drawAtPoint:point];
+    [transform invert];
+    [transform concat];
+}
+
 @end
