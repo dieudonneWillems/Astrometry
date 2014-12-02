@@ -75,7 +75,7 @@
     [super windowControllerDidLoadNib:aController];
     AMAstrometricMap *plot = [[AMAstrometricMap alloc] init];
     [self addPlot:plot];
-    [plot setScale:50.];
+    [plot setScale:500.];
     [plot addLayer:[[AMMapGridLayer alloc] init]];
 }
 

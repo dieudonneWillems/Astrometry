@@ -21,6 +21,7 @@ NSString *const AMPlotPropertiesChangedNotification = @"AMPlotPropertiesChangedN
     self = [super init];
     if(self){
         layers = [NSMutableArray array];
+        displayRectangles = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -36,6 +37,15 @@ NSString *const AMPlotPropertiesChangedNotification = @"AMPlotPropertiesChangedN
 
 - (NSArray*) layers {
     return layers;
+}
+
+- (AMLayer*) layerForIdentifier:(NSString*)layerid {
+    for(AMLayer *layer in layers){
+        if([[layer layerIdentifier] isEqualToString:layerid]){
+            return layer;
+        }
+    }
+    return nil;
 }
 
 - (void) addLayer:(AMLayer*)layer {
@@ -66,6 +76,42 @@ NSString *const AMPlotPropertiesChangedNotification = @"AMPlotPropertiesChangedN
 
 - (NSPoint) locationInView:(AMPlotView*)view forCelestialObject:(AMCelestialObject*) object {
     return [self locationInView:view forMeasures:[object measures]];
+}
+
+
+
+#pragma mark Determining Free areas for drawing
+
+- (BOOL) freeForDrawingInRect:(NSRect)rect {
+    NSArray *layerids = [displayRectangles allKeys];
+    for(NSString *layerid in layerids){
+        AMLayer *layer = [self layerForIdentifier:layerid];
+        if([layer visible]){
+            NSArray *layerrects = [displayRectangles objectForKey:layerid];
+            for(NSValue *value in layerrects){
+                NSRect testRect = [value rectValue];
+                if(NSIntersectsRect(rect, testRect)) return NO;
+            }
+        }
+    }
+    return YES;
+}
+
+- (void) addDrawingRect:(NSRect)rect fromLayer:(AMLayer*)layer {
+    NSMutableArray *layerrects = [displayRectangles objectForKey:[layer layerIdentifier]];
+    if(!layerrects){
+        layerrects = [NSMutableArray array];
+        [displayRectangles setObject:layerrects forKey:[layer layerIdentifier]];
+    }
+    [layerrects addObject:[NSValue valueWithRect:rect]];
+}
+
+- (void) removeAllDrawingRectsForLayer:(AMLayer*)layer {
+    [displayRectangles removeObjectForKey:[layer layerIdentifier]];
+}
+
+- (void) resetDrawingRects {
+    return [displayRectangles removeAllObjects];
 }
 
 @end

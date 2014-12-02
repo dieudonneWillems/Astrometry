@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class AMSphericalCoordinates;
+@class AMSphericalCoordinates,AMScalarMeasure,AMAstrometricMap;
 
 @interface AMMapProjection : NSObject
 
 - (NSString*) name;
+
+- (void) calculateMinimumLongitude:(AMScalarMeasure**)minlon maximumLongitude:(AMScalarMeasure**)maxlon minimumLatitude:(AMScalarMeasure**)minlat maximumLatitude:(AMScalarMeasure**)maxlat inMap:(AMAstrometricMap*)map;
 
 - (NSPoint) pointForSphericalCoordinates:(AMSphericalCoordinates*)coordinates
                    withCentreCoordinates:(AMSphericalCoordinates*)centre;

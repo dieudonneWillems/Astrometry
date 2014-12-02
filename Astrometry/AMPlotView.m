@@ -95,6 +95,7 @@
 #pragma mark Drawing layers
 
 - (void) createLayerImages {
+    [[self plot] resetDrawingRects];
     [layerImages removeAllObjects];
     NSArray *layers = [[self plot] layers];
     for(AMLayer *layer in layers){
@@ -103,6 +104,7 @@
 }
 
 - (void) createImageForLayer:(AMLayer*)layer {
+    [[self plot] removeAllDrawingRectsForLayer:layer];
     NSRect rect = [self frame];
     rect.origin = NSZeroPoint;
     NSImage *image = [[NSImage alloc] initWithSize:rect.size];
@@ -130,6 +132,11 @@
         if([layer visible]){
             NSImage *image = [layerImages objectForKey:[layer layerIdentifier]];
             [image drawInRect:dirtyRect fromRect:dirtyRect operation:NSCompositeSourceOver fraction:0.5];
+        }
+    }
+    for(AMLayer *layer in layers){
+        if([layer visible]){
+            [layer drawLabelsInRect:dirtyRect onPlot:[self plot] inView:self];
         }
     }
 }

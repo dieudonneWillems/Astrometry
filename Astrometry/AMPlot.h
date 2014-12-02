@@ -20,6 +20,7 @@ FOUNDATION_EXPORT NSString *const AMPlotPropertiesChangedNotification;
 @interface AMPlot : AMListItemController {
     NSMutableArray *layers;
     NSRect _viewRect;
+    NSMutableDictionary *displayRectangles;
 }
 
 - (id) init;
@@ -30,6 +31,7 @@ FOUNDATION_EXPORT NSString *const AMPlotPropertiesChangedNotification;
 #pragma mark Layers
 
 - (NSArray*) layers;
+- (AMLayer*) layerForIdentifier:(NSString*)layerid;
 - (void) addLayer:(AMLayer*)layer;
 - (void) removeLayer:(AMLayer*)layer;
 
@@ -39,4 +41,13 @@ FOUNDATION_EXPORT NSString *const AMPlotPropertiesChangedNotification;
 - (NSArray*) measuresForLocation:(NSPoint)location inView:(AMPlotView*)view;
 - (NSPoint) locationInView:(AMPlotView*)view forMeasures:(NSArray*)measures;
 - (NSPoint) locationInView:(AMPlotView*)view forCelestialObject:(AMCelestialObject*) object;
+
+
+#pragma mark Determining Free areas for drawing
+
+- (BOOL) freeForDrawingInRect:(NSRect)rect;
+- (void) addDrawingRect:(NSRect)rect fromLayer:(AMLayer*)layer;
+- (void) removeAllDrawingRectsForLayer:(AMLayer*)layer;
+- (void) resetDrawingRects;
+
 @end
