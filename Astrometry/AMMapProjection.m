@@ -22,6 +22,10 @@
     return @"";
 }
 
+- (BOOL) fullGlobeProjection {
+    return NO;
+}
+
 - (void) calculateMinimumLongitude:(AMScalarMeasure**)minlon maximumLongitude:(AMScalarMeasure**)maxlon minimumLatitude:(AMScalarMeasure**)minlat maximumLatitude:(AMScalarMeasure**)maxlat inMap:(AMAstrometricMap*)map {
 }
 
@@ -39,10 +43,13 @@
             toLocalSystemWithCentre:(AMSphericalCoordinates*)centre {
     // todo convert units
     // todo convert coordinate systems
+    if([[coordinates latitude] value]<-90 || [[coordinates latitude] value]>90) return nil;
     double lon = [[coordinates longitude] value]/180.*M_PI;
     double lat = [[coordinates latitude] value]/180.*M_PI;
     double clon = [[centre longitude] value]/180.*M_PI;
     double clat = [[centre latitude] value]/180.*M_PI;
+    while(clon>2*M_PI) clon-=2*M_PI;
+    while(clon<0) clon+=2*M_PI;
     double x = cos(lon)*cos(lat);
     double y = sin(lon)*cos(lat);
     double z = sin(lat);
@@ -64,9 +71,12 @@
           fromLocalSystemWithCentre:(AMSphericalCoordinates*)centre {
     // todo convert units
     // todo convert coordinate systems
+    if([[coordinates latitude] value]<-90 || [[coordinates latitude] value]>90) return nil;
     double lon = [[coordinates longitude] value]/180.*M_PI;
     double lat = [[coordinates latitude] value]/180.*M_PI;
     double clon = [[centre longitude] value]/180.*M_PI;
+    while(clon>2*M_PI) clon-=2*M_PI;
+    while(clon<0) clon+=2*M_PI;
     double clat = [[centre latitude] value]/180.*M_PI;
     double x = cos(lon)*cos(lat);
     double y = sin(lon)*cos(lat);

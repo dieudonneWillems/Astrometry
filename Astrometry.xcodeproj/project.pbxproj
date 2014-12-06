@@ -10,6 +10,7 @@
 		02184B6B1A27C4640046B723 /* AMMapGridLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02184B6A1A27C4640046B723 /* AMMapGridLayer.m */; };
 		02184B6D1A27C54E0046B723 /* AMMapGridLayerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02184B6C1A27C54E0046B723 /* AMMapGridLayerTableCell.xib */; };
 		02184B6F1A27D0FA0046B723 /* ABGridLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 02184B6E1A27D0FA0046B723 /* ABGridLayer.png */; };
+		023512B91A31B2E500D1F9F2 /* AMMollweideMapProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */; };
 		029587521A24E1B400DAAD5F /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587511A24E1B400DAAD5F /* AMAppDelegate.m */; };
 		029587541A24E1B400DAAD5F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587531A24E1B400DAAD5F /* main.m */; };
 		029587571A24E1B400DAAD5F /* AMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587561A24E1B400DAAD5F /* AMDocument.m */; };
@@ -71,6 +72,8 @@
 		02184B6A1A27C4640046B723 /* AMMapGridLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMapGridLayer.m; sourceTree = "<group>"; };
 		02184B6C1A27C54E0046B723 /* AMMapGridLayerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMMapGridLayerTableCell.xib; sourceTree = "<group>"; };
 		02184B6E1A27D0FA0046B723 /* ABGridLayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ABGridLayer.png; path = Images.xcassets/ABGridLayer.png; sourceTree = "<group>"; };
+		023512B71A31B2E500D1F9F2 /* AMMollweideMapProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMollweideMapProjection.h; sourceTree = "<group>"; };
+		023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMollweideMapProjection.m; sourceTree = "<group>"; };
 		0295874B1A24E1B400DAAD5F /* Astrometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Astrometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0295874F1A24E1B400DAAD5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		029587501A24E1B400DAAD5F /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				02E504761A2678E80070E381 /* AMMapProjection.m */,
 				02E504781A2679280070E381 /* AMEquirectangularMapProjection.h */,
 				02E504791A2679280070E381 /* AMEquirectangularMapProjection.m */,
+				023512B71A31B2E500D1F9F2 /* AMMollweideMapProjection.h */,
+				023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */,
 			);
 			name = "Map Projections";
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				029587571A24E1B400DAAD5F /* AMDocument.m in Sources */,
 				02E5047A1A2679280070E381 /* AMEquirectangularMapProjection.m in Sources */,
 				0295879B1A24E35B00DAAD5F /* AMCatalogueReader.m in Sources */,
+				023512B91A31B2E500D1F9F2 /* AMMollweideMapProjection.m in Sources */,
 				029587901A24E33C00DAAD5F /* AMScalarMeasure.m in Sources */,
 				029587C11A24F05000DAAD5F /* AMLayer.m in Sources */,
 				029587A91A24E38B00DAAD5F /* AMScalarIndexEntry.m in Sources */,

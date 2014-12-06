@@ -54,10 +54,10 @@
     if([self plot]){
         NSRect vr = [[self plot] viewRect];
         NSRect frame = [self frame];
-        frame.origin.x =40;
-        frame.origin.y =80;
-        frame.size.width -=80;
-        frame.size.height -=120;
+        frame.origin.x =80;
+        frame.origin.y =160;
+        frame.size.width -=160;
+        frame.size.height -=240;
         if(vr.size.width!=frame.size.width || vr.size.height!=frame.size.height
            || vr.origin.x != frame.origin.x || vr.origin.y!=frame.origin.y){
             [[self plot] setViewRect:frame];

@@ -41,6 +41,9 @@ FOUNDATION_EXPORT NSString *const AMLayerChangedNotification;
                    onPlot:(AMPlot*)plot
                    inView:(AMPlotView*)view;
 
-- (void) drawAttributedString:(NSAttributedString*)string atPoint:(NSPoint)point relativeToPivot:(NSPoint)pivot withAngle:(double)angle;
+- (void) drawAttributedString:(NSAttributedString*)string
+                      atPoint:(NSPoint)point
+              relativeToPivot:(NSPoint)pivot
+                    withAngle:(double)angle;
 
 @end
