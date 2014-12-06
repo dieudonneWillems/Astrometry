@@ -22,8 +22,8 @@
     self = [super init];
     if(self){
         [self setUseRectangularViewPort:NO];
-        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:180 declination:50]];
-        [self setScale:0.];
+        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:3 declination:0]];
+        [self setScale:100.];
         AMMapProjection *mapproj =[[AMEquirectangularMapProjection alloc] init];
         [self setMapProjection:mapproj];
         /* // test
@@ -141,10 +141,12 @@
 
 - (AMSphericalCoordinates*) sphericalCoordinatesForLocation:(NSPoint)location inViewRect:(NSRect)viewRect {
     NSPoint centrePoint;
+    double scale = [self scale];
+    if([[self projection] fullGlobeProjection]) scale = viewRect.size.width/2;
     centrePoint.x = viewRect.origin.x + (viewRect.size.width/2.);
     centrePoint.y = viewRect.origin.y + (viewRect.size.height/2.);
-    CGFloat dx = (location.x-centrePoint.x)/[self scale];
-    CGFloat dy = (location.y-centrePoint.y)/[self scale];
+    CGFloat dx = (location.x-centrePoint.x)/scale;
+    CGFloat dy = (location.y-centrePoint.y)/scale;
     NSPoint point = NSMakePoint(dx, dy);
     AMSphericalCoordinates *sc = [[self projection] sphericalCoordinatesForPoint:point withCentreCoordinates:[self centre]];
     return sc;
@@ -163,12 +165,14 @@
 
 - (NSPoint) locationInView:(AMPlotView *)view forSphericalCoordinates:(AMSphericalCoordinates*) sc {
     NSRect viewRect = [self viewRect];
+    double scale = [self scale];
+    if([[self projection] fullGlobeProjection]) scale = viewRect.size.width/2;
     NSPoint centrePoint;
     centrePoint.x = viewRect.origin.x + (viewRect.size.width/2.);
     centrePoint.y = viewRect.origin.y + (viewRect.size.height/2.);
     NSPoint point = [[self projection] pointForSphericalCoordinates:sc withCentreCoordinates:[self centre]];
-    point.x = centrePoint.x+point.x*[self scale];
-    point.y = centrePoint.y+point.y*[self scale];
+    point.x = centrePoint.x+point.x*scale;
+    point.y = centrePoint.y+point.y*scale;
     return point;
 }
 

@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "AMMeasure.h"
+#import "AMTypes.h"
 
 @class AMCoordinateSystem,AMScalarMeasure;
 
 @interface AMSphericalCoordinates : AMMeasure
+
++ (AMSphericalCoordinates*) northPoleInCoordinateSystemType:(AMCoordinateSystemType)system;
+
++ (AMSphericalCoordinates*) southPoleInCoordinateSystemType:(AMCoordinateSystemType)system;
 
 + (AMSphericalCoordinates*) equatorialCoordinatesWithRightAscension:(double)lon declination:(double)lat;
 

@@ -14,6 +14,22 @@
 
 @implementation AMSphericalCoordinates
 
++ (AMSphericalCoordinates*) northPoleInCoordinateSystemType:(AMCoordinateSystemType)system {
+    if(system==AMEquatortialCoordinateSystem) return [self equatorialCoordinatesWithRightAscension:0 declination:90];
+    AMScalarMeasure *longitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Longitude"] numericalValue:0 andUnit:[AMUnit unitWithName:@"degree"]];
+    AMScalarMeasure *latitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Latitude"] numericalValue:90 andUnit:[AMUnit unitWithName:@"degree"]];
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:longitude latitude:latitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:system inEquinox:[NSDate date] onEpoch:[NSDate date]]];
+    return coord;
+}
+
++ (AMSphericalCoordinates*) southPoleInCoordinateSystemType:(AMCoordinateSystemType)system {
+    if(system==AMEquatortialCoordinateSystem) return [self equatorialCoordinatesWithRightAscension:0 declination:-90];
+    AMScalarMeasure *longitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Longitude"] numericalValue:0 andUnit:[AMUnit unitWithName:@"degree"]];
+    AMScalarMeasure *latitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Latitude"] numericalValue:-90 andUnit:[AMUnit unitWithName:@"degree"]];
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:longitude latitude:latitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:system inEquinox:[NSDate date] onEpoch:[NSDate date]]];
+    return coord;
+}
+
 + (AMSphericalCoordinates*) equatorialCoordinatesWithRightAscension:(double)lon declination:(double)lat {
     AMScalarMeasure *longitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Right ascension"] numericalValue:lon andUnit:[AMUnit unitWithName:@"degree"]];
     AMScalarMeasure *latitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Declination"] numericalValue:lat andUnit:[AMUnit unitWithName:@"degree"]];

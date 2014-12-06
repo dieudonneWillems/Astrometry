@@ -70,6 +70,14 @@ NSString *const AMLayerChangedNotification = @"AMLayerChangedNotification";
     [transform translateXBy:pivot.x yBy:pivot.y];
     [transform rotateByDegrees:angle];
     [transform concat];
+    /*
+    NSBezierPath *bp1 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(-1, -1, 2, 2)];
+    NSBezierPath *bp2 = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(point.x-1, point.y-1, 2, 2)];
+    [[NSColor redColor] set];
+    [bp1 fill];
+    [[NSColor greenColor] set];
+    [bp2 fill];
+     */
     [string drawAtPoint:point];
     [transform invert];
     [transform concat];

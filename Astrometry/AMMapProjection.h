@@ -14,6 +14,9 @@
 
 - (NSString*) name;
 
+// if YES the whole globe is shown and the scale is ignored.
+- (BOOL) fullGlobeProjection;
+
 - (void) calculateMinimumLongitude:(AMScalarMeasure**)minlon maximumLongitude:(AMScalarMeasure**)maxlon minimumLatitude:(AMScalarMeasure**)minlat maximumLatitude:(AMScalarMeasure**)maxlat inMap:(AMAstrometricMap*)map;
 
 - (NSPoint) pointForSphericalCoordinates:(AMSphericalCoordinates*)coordinates
