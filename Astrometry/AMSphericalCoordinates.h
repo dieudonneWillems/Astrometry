@@ -20,6 +20,8 @@
 
 + (AMSphericalCoordinates*) equatorialCoordinatesWithRightAscension:(double)lon declination:(double)lat;
 
++ (AMSphericalCoordinates*) sphericalCoordinatesWithLongitude:(double)lon latitude:(double)lat inCoordinateSystemOfType:(AMCoordinateSystemType)system;
+
 - (id) initWithCoordinateLongitude:(AMScalarMeasure*)longitude latitude:(AMScalarMeasure*)latitude inCoordinateSystem:(AMCoordinateSystem*)system;
 
 - (id) initWithCoordinateLongitude:(AMScalarMeasure*)longitude latitude:(AMScalarMeasure*)latitude andDistance:(AMScalarMeasure*)distance inCoordinateSystem:(AMCoordinateSystem*)system;
