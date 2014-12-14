@@ -17,6 +17,7 @@
 @interface AMEquirectangularMapProjection (private)
 - (AMSphericalCoordinates*) sphericalCoordinatesForLocation:(NSPoint)location inViewRect:(NSRect)viewRect withScale:(double)scale andCentre:(AMSphericalCoordinates*)centre;
 - (double) findRealMinimumLongitudeAtLatitude:(double)lat
+                                 andLongitude:(double)clon
                          withMinimumLongitude:(double)minlon
                           andMaximumLongitude:(double)maxlon
                                         inMap:(AMAstrometricMap*)map;
@@ -113,7 +114,7 @@
             double startminlon = clon-([[sc1 longitude] value]-clon);
             while(startminlon>=360) startminlon-=360;
             while(startminlon<0) startminlon+=360;
-            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc4 latitude] value] withMinimumLongitude:startminlon andMaximumLongitude:startminlon inMap:map];
+            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc4 latitude] value] andLongitude:clon withMinimumLongitude:startminlon andMaximumLongitude:startminlon inMap:map];
             double maxlon = clon+(clon-minlon);
             while(maxlon>=360) maxlon-=360;
             while(maxlon<0) maxlon+=360;
@@ -131,7 +132,7 @@
             double startminlon = clon-([[sc2 longitude] value]-clon);
             while(startminlon>=360) startminlon-=360;
             while(startminlon<0) startminlon+=360;
-            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc5 latitude] value] withMinimumLongitude:startminlon andMaximumLongitude:clon-([[sc2 longitude] value]-clon) inMap:map];
+            double minlon = [self findRealMinimumLongitudeAtLatitude:[[sc5 latitude] value] andLongitude:clon withMinimumLongitude:startminlon andMaximumLongitude:clon-([[sc2 longitude] value]-clon) inMap:map];
             double maxlon = clon+(clon-minlon);
             while(maxlon>=360) maxlon-=360;
             while(maxlon<0) maxlon+=360;
@@ -165,6 +166,7 @@
 }
 
 - (double) findRealMinimumLongitudeAtLatitude:(double)lat
+                                 andLongitude:(double)clon
                          withMinimumLongitude:(double)minlon
                           andMaximumLongitude:(double)maxlon
                                         inMap:(AMAstrometricMap*)map {
@@ -174,16 +176,23 @@
     if(p2.x<leftb) minlon = minlon-5/[map scale];
     
     if(minlon>maxlon) return minlon;
-    double lon = maxlon-([[[map centre] longitude] value]-maxlon)*.1;
+    //double clon = [[[map centre] longitude] value];
+    double dlon = fabs(clon-maxlon);
+    if(dlon>185) dlon = 360-dlon;
+    double lon = maxlon+dlon*.1;
     if(minlon<maxlon) lon = (maxlon-minlon)/2.+minlon;
     AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]] latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
     NSPoint p = [map locationInView:nil forSphericalCoordinates:coord];
     if(fabs(p.x-leftb)<0.2) return lon;
+    NSLog(@"p.x= %f  lon = %f  clon=%f dif=%f",p.x,lon,clon,fabs(clon-lon));
+    if(fabs(clon-lon)>90) return lon;
     if(p.x>leftb){
-        return [self findRealMinimumLongitudeAtLatitude:lat withMinimumLongitude:lon andMaximumLongitude:maxlon inMap:map];
+        double nlon = [self findRealMinimumLongitudeAtLatitude:lat andLongitude:clon withMinimumLongitude:lon andMaximumLongitude:maxlon inMap:map];
+        return nlon;
     }
     if(p.x<leftb){
-        return [self findRealMinimumLongitudeAtLatitude:lat withMinimumLongitude:minlon andMaximumLongitude:lon inMap:map];
+        double nlon =  [self findRealMinimumLongitudeAtLatitude:lat andLongitude:clon withMinimumLongitude:minlon andMaximumLongitude:lon inMap:map];
+        return nlon;
     }
     return lon;
 }

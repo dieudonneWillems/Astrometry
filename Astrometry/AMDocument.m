@@ -77,7 +77,7 @@
     AMAstrometricMap *plot = [[AMAstrometricMap alloc] init];
     //[plot setMapProjection:[[AMMollweideMapProjection alloc] init]];
     [self addPlot:plot];
-    [plot setScale:20000];
+    [plot setScale:20];
    // [plot setUseRectangularViewPort:YES];
     [plot addLayer:[[AMMapGridLayer alloc] init]];
 }

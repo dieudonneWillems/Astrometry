@@ -179,7 +179,9 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     double scale = [map scale];
     double spac = [self relativeMajorLatitudeGridLineSpacing];
     NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
-    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:[[coord latitude] value]+1./scale inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    double lat2 = [[coord latitude] value]+1./scale;
+    if(lat2>90) lat2 -= 2./scale;
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:lat2 inCoordinateSystemOfType:[[coord coordinateSystem] type]];
     NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
     double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
     double spacing = spac/scale/d;
@@ -204,7 +206,9 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     double scale = [map scale];
     double spac = [self relativeMinorLatitudeGridLineSpacing];
     NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
-    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:[[coord latitude] value]+1./scale inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    double lat2 = [[coord latitude] value]+1./scale;
+    if(lat2>90) lat2 -= 2./scale;
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:lat2 inCoordinateSystemOfType:[[coord coordinateSystem] type]];
     NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
     double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
     double spacing = spac/scale/d;
@@ -809,23 +813,25 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
             AMSphericalCoordinates *sc1 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]]  latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
             AMSphericalCoordinates *sc2 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon+minorLonSP/100 andUnit:[[[map centre] longitude] unit]]  latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
             NSPoint point = [map locationInView:view forSphericalCoordinates:sc1];
-            NSPoint point2 = [map locationInView:view forSphericalCoordinates:sc2];
-            NSPoint p = NSZeroPoint;
-            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
-            NSSize size = [string size];
-            p.x = -size.width/2;
-            p.y = -size.height/2;
-            double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
-            if(angle>135){
-                angle-=180;
-            }else if(angle<-135){
-                angle+=180;
-            }else if(angle>45){
-                angle-=90;
-            }else if(angle<-45){
-                angle+=90;
+            if(NSPointInRect(point, viewRect)){
+                NSPoint point2 = [map locationInView:view forSphericalCoordinates:sc2];
+                NSPoint p = NSZeroPoint;
+                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
+                NSSize size = [string size];
+                p.x = -size.width/2;
+                p.y = -size.height/2;
+                double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
+                if(angle>135){
+                    angle-=180;
+                }else if(angle<-135){
+                    angle+=180;
+                }else if(angle>45){
+                    angle-=90;
+                }else if(angle<-45){
+                    angle+=90;
+                }
+                [self drawAttributedString:string atPoint:p relativeToPivot:point withAngle:angle];
             }
-            [self drawAttributedString:string atPoint:p relativeToPivot:point withAngle:angle];
         }
     }
     for(i=0;i<10;i++){

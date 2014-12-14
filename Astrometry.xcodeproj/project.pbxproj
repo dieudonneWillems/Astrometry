@@ -11,6 +11,7 @@
 		02184B6D1A27C54E0046B723 /* AMMapGridLayerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02184B6C1A27C54E0046B723 /* AMMapGridLayerTableCell.xib */; };
 		02184B6F1A27D0FA0046B723 /* ABGridLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 02184B6E1A27D0FA0046B723 /* ABGridLayer.png */; };
 		023512B91A31B2E500D1F9F2 /* AMMollweideMapProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */; };
+		023512BB1A3DE36800D1F9F2 /* Hipparcos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 023512BA1A3DE36800D1F9F2 /* Hipparcos.xml */; };
 		029587521A24E1B400DAAD5F /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587511A24E1B400DAAD5F /* AMAppDelegate.m */; };
 		029587541A24E1B400DAAD5F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587531A24E1B400DAAD5F /* main.m */; };
 		029587571A24E1B400DAAD5F /* AMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587561A24E1B400DAAD5F /* AMDocument.m */; };
@@ -74,6 +75,7 @@
 		02184B6E1A27D0FA0046B723 /* ABGridLayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ABGridLayer.png; path = Images.xcassets/ABGridLayer.png; sourceTree = "<group>"; };
 		023512B71A31B2E500D1F9F2 /* AMMollweideMapProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMollweideMapProjection.h; sourceTree = "<group>"; };
 		023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMollweideMapProjection.m; sourceTree = "<group>"; };
+		023512BA1A3DE36800D1F9F2 /* Hipparcos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Hipparcos.xml; sourceTree = "<group>"; };
 		0295874B1A24E1B400DAAD5F /* Astrometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Astrometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0295874F1A24E1B400DAAD5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		029587501A24E1B400DAAD5F /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				029587BB1A24E47A00DAAD5F /* OmCenFORS.xml */,
+				023512BA1A3DE36800D1F9F2 /* Hipparcos.xml */,
 				0295874F1A24E1B400DAAD5F /* Info.plist */,
 				029587531A24E1B400DAAD5F /* main.m */,
 			);
@@ -481,6 +484,7 @@
 				029587BC1A24E47A00DAAD5F /* OmCenFORS.xml in Resources */,
 				029587D41A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib in Resources */,
 				0295875A1A24E1B400DAAD5F /* AMDocument.xib in Resources */,
+				023512BB1A3DE36800D1F9F2 /* Hipparcos.xml in Resources */,
 				02E504631A25F2670070E381 /* ABRulersLayer.png in Resources */,
 				0295875C1A24E1B400DAAD5F /* Images.xcassets in Resources */,
 				0295875F1A24E1B400DAAD5F /* MainMenu.xib in Resources */,
