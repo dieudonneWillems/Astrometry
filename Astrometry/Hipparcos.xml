@@ -1,0 +1,96 @@
+<catalogue>
+    <name>Deep FORS1 BR photometry of ω Centauri</name>
+    <description>The Hipparcos and Tycho Catalogues are the primary products of the
+        European Space Agency's astrometric mission, Hipparcos. The satellite,
+        which operated for four years, returned high quality scientific data
+        from November 1989 to March 1993.
+        
+        Each of the catalogues contains a large quantity of very high quality
+        astrometric and photometric data. In addition there are associated
+        annexes featuring variability and double/multiple star data, and solar
+        system astrometric and photometric measurements. In the case of the
+        Hipparcos Catalogue, the principal parts are provided in both printed
+        and machine-readable form (on CDROM). In the case of the Tycho
+        Catalogue, results are provided in machine-readable form only (on
+        CDROM). Although in general only the final reduced and calibrated
+        astrometric and photometric data are provided, some auxiliary files
+        containing results from intermediate stages of the data processing, of
+        relevance for the more-specialised user, have also been retained for
+        publication. (Some, but not all, data files are available from the
+        Centre de Donnees astronomiques de Strasbourg.)
+        
+        The global data analysis tasks, proceeding from nearly 1000 Gbit of
+        raw satellite data to the final catalogues, was a lengthy and complex
+        process, and was undertaken by the NDAC and FAST Consortia, together
+        responsible for the production of the Hipparcos Catalogue, and the
+        Tycho Consortium, responsible for the production of the Tycho
+        Catalogue. A fourth scientific consortium, the INCA Consortium, was
+        responsible for the construction of the Hipparcos observing programme,
+        compiling the best-available data for the selected stars before launch
+        into the Hipparcos Input Catalogue. The production of the Hipparcos
+        and Tycho Catalogues marks the formal end of the involvement in the
+        mission by the European Space Agency and the four scientific
+        consortia.</description>
+    <file src="~/Catalogues/Hipparcos/hip_main.dat">
+        <line>
+            <parameter>
+                <key>type</key>
+                <value>star</value>
+            </parameter>
+            <parameter>
+                <key>ID</key>
+                <value>HIP <field start="9" end="14" trim="yes"/></value>
+            </parameter>
+            <spherical-coordinates>
+                <coordinate-system type="Equatorial">
+                    <equinox>J2000</equinox>
+                    <epoch>J1991.25</epoch>
+                </coordinate-system>
+                <longitude>
+                    <quantity>Right ascension</quantity>
+                    <value><field start="52" end="63"/></value>
+                    <unit>degree</unit>
+                </longitude>
+                <latitude>
+                    <quantity>Declination</quantity>
+                    <value><field start="65" end="76"/></value>
+                    <unit>degree</unit>
+                </latitude>
+            </spherical-coordinates>
+            <measure id="Plx">
+                <quantity>Trigonometric Parallax</quantity>
+                <value><field start="80" end="86"/></value>
+                <error><field start="120" end="125"/></error>
+                <unit>milliarcsecond</unit>
+            </measure>
+            <measure id="pmRA">
+                <quantity>Poper motion in right ascension (*cos(dec))</quantity>
+                <value><field start="88" end="95"/></value>
+                <error><field start="127" end="132"/></error>
+                <unit>milliarcsecond/year</unit>
+            </measure>
+            <measure id="pmRA">
+                <quantity>Poper motion in declination</quantity>
+                <value><field start="97" end="104"/></value>
+                <error><field start="134" end="139"/></error>
+                <unit>milliarcsecond/year</unit>
+            </measure>
+            <measure id="BTmag">
+                <quantity>B magnitude</quantity>
+                <value><field start="218" end="223"/></value>
+                <error><field start="225" end="229"/></error>
+                <unit>magnitude</unit>
+            </measure>
+            <measure id="VTmag">
+                <quantity>V magnitude</quantity>
+                <value><field start="231" end="236"/></value>
+                <error><field start="238" end="242"/></error>
+                <unit>magnitude</unit>
+            </measure>
+            <parameter id="SpType">
+                <key>Spectral Type</key>
+                <value><field start="436" end="447"/></value>
+            </parameter>
+        </line>
+    </file>
+</catalogue>

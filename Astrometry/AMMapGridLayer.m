@@ -24,6 +24,10 @@ NSString *const AMMapGridLayerChangedMinorGridLineSpacingNotification = @"AMMapG
 NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityChangedNotification";
 
 @interface AMMapGridLayer (private)
+- (double) majorLongitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map;
+- (double) minorLongitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map;
+- (double) majorLatitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map;
+- (double) minorLatitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map;
 - (AMSphericalCoordinates*) coordinatesForLongitude:(double)lon latitude:(double)lat inCoordinateSystems:(AMCoordinateSystem*)cs;
 - (void) drawGridInRect:(NSRect)rect onPlot:(AMAstrometricMap*)map inView:(AMPlotView*)view  withMinimumLongitude:(double)minlon maximumLongitude:(double)maxlon  minimumLatitude:(double)minlat maximumLatitude:(double)maxlat inCoordinateSystem:(AMCoordinateSystem*)eqcs;
 - (void) drawAxesInRect:(NSRect)rect onPlot:(AMAstrometricMap*)map inView:(AMPlotView*)view  withMinimumLongitude:(double)minlon maximumLongitude:(double)maxlon  minimumLatitude:(double)minlat maximumLatitude:(double)maxlat inCoordinateSystem:(AMCoordinateSystem*)eqcs;
@@ -58,14 +62,14 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
         _majorGridLineWidth = 0.5;
         _minorGridLineWidth = 0.3;
         _drawGrid = YES;
-        _minorLongitudeGridLineSpacing = 0.25;//15./360.;
-        _minorLatitudeGridLineSpacing = 0.25;
-        _majorLongitudeGridLineSpacing = 1.25;//0.25;
-        _majorLatitudeGridLineSpacing = 1;
         _coordinateSystem = cs;
         _coordinateFont = [NSFont systemFontOfSize:11];
         _coordinateColor = [NSColor blackColor];
         _alwaysDrawFullCoordinateString = NO;
+        _relativeMajorLatitudeGridLineSpacing = 100;
+        _relativeMajorLongitudeGridLineSpacing = 100;
+        _relativeMinorLatitudeGridLineSpacing = 20;
+        _relativeMinorLongitudeGridLineSpacing = 20;
     }
     return self;
 }
@@ -105,18 +109,6 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
 }
 
-- (void) setMajorLongitudeGridLineSpacing:(double) spacing {
-    _majorLongitudeGridLineSpacing = spacing;
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMMapGridLayerChangedMajorGridLineSpacingNotification object:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
-}
-
-- (void) setMinorLongitudeGridLineSpacing:(double) spacing {
-    _minorLongitudeGridLineSpacing = spacing;
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMMapGridLayerChangedMinorGridLineSpacingNotification object:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
-}
-
 - (void) setRelativeMajorLatitudeGridLineSpacing:(double)relSpacing {
     _relativeMajorLatitudeGridLineSpacing = relSpacing;
     double scale = 1;
@@ -137,16 +129,104 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
 }
 
-- (void) setMajorLatitudeGridLineSpacing:(double) spacing {
-    _majorLatitudeGridLineSpacing = spacing;
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMMapGridLayerChangedMajorGridLineSpacingNotification object:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
+- (double) majorLongitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map {
+    double scale = [map scale];
+    double spac = [self relativeMajorLongitudeGridLineSpacing];
+    NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value]+1./scale latitude:[[coord latitude] value] inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
+    double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
+    double spacing = spac/scale/d;
+    if(spacing >10) spacing = 15.;
+    else if(spacing >7) spacing = 7.5;
+    else if(spacing >3) spacing = 3.75;
+    else if(spacing >2) spacing = 2.5;
+    else if(spacing >1) spacing = 1.25;
+    else if(spacing >0.2) spacing = 0.25;
+    else if(spacing >0.1) spacing = 0.125;
+    else if(spacing >0.04) spacing = 0.041666666666667;
+    else if(spacing >0.02) spacing = 0.02083333333333;
+    else if(spacing >0.004) spacing = 0.0041666666666667;
+    else if(spacing >0.002) spacing = 0.0002083333333333;
+    else spacing = 0.00041666666666667;
+    return spacing;
 }
 
-- (void) setMinorLatitudeGridLineSpacing:(double) spacing {
-    _minorLatitudeGridLineSpacing = spacing;
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMMapGridLayerChangedMinorGridLineSpacingNotification object:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMLayerChangedNotification object:self];
+- (double) minorLongitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map {
+    double scale = [map scale];
+    double spac = [self relativeMinorLatitudeGridLineSpacing];
+    NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value]+1./scale latitude:[[coord latitude] value] inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
+    double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
+    double spacing = spac/scale/d;
+    if(spacing >10) spacing = 15.;
+    else if(spacing >7) spacing = 7.5;
+    else if(spacing >3) spacing = 3.75;
+    else if(spacing >2) spacing = 2.5;
+    else if(spacing >1) spacing = 1.25;
+    else if(spacing >0.2) spacing = 0.25;
+    else if(spacing >0.1) spacing = 0.125;
+    else if(spacing >0.04) spacing = 0.041666666666667;
+    else if(spacing >0.02) spacing = 0.02083333333333;
+    else if(spacing >0.004) spacing = 0.0041666666666667;
+    else if(spacing >0.002) spacing = 0.0002083333333333;
+    else spacing = 0.00041666666666667;
+    return spacing;
+}
+
+- (double) majorLatitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map {
+    double scale = [map scale];
+    double spac = [self relativeMajorLatitudeGridLineSpacing];
+    NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
+    double lat2 = [[coord latitude] value]+1./scale;
+    if(lat2>90) lat2 -= 2./scale;
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:lat2 inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
+    double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
+    double spacing = spac/scale/d;
+    if(spacing >8) spacing = 10.;
+    else if(spacing >4) spacing = 5.;
+    else if(spacing >1.5) spacing = 2.;
+    else if(spacing > 0.8) spacing = 1.;
+    else if(spacing > 0.4) spacing = 30./60.;
+    else if(spacing > 0.2) spacing = 15./60.;
+    else if(spacing > 0.1) spacing = 10./60.;
+    else if(spacing > 0.08) spacing = 5./60.;
+    else if(spacing > 0.01) spacing = 1./60.;
+    else if(spacing > 0.008) spacing = 30./3600.;
+    else if(spacing > 0.004) spacing = 15./3600.;
+    else if(spacing > 0.002) spacing = 10./3600.;
+    else if(spacing > 0.001) spacing = 5./3600.;
+    else spacing = 1./3600.;
+    return spacing;
+}
+
+- (double) minorLatitudeSpacingAtPosition:(AMSphericalCoordinates*)coord inMap:(AMAstrometricMap*)map {
+    double scale = [map scale];
+    double spac = [self relativeMinorLatitudeGridLineSpacing];
+    NSPoint p1 = [map locationInView:nil forSphericalCoordinates:coord];
+    double lat2 = [[coord latitude] value]+1./scale;
+    if(lat2>90) lat2 -= 2./scale;
+    AMSphericalCoordinates *coord2 = [AMSphericalCoordinates sphericalCoordinatesWithLongitude:[[coord longitude] value] latitude:lat2 inCoordinateSystemOfType:[[coord coordinateSystem] type]];
+    NSPoint p2 = [map locationInView:nil forSphericalCoordinates:coord2];
+    double d = sqrt(pow(p1.x-p2.x, 2)+pow(p1.y-p2.y, 2));
+    double spacing = spac/scale/d;
+    if(spacing >8) spacing = 10.;
+    else if(spacing >4) spacing = 5.;
+    else if(spacing >1.5) spacing = 2.;
+    else if(spacing > 0.8) spacing = 1.;
+    else if(spacing > 0.4) spacing = 30./60.;
+    else if(spacing > 0.2) spacing = 15./60.;
+    else if(spacing > 0.1) spacing = 10./60.;
+    else if(spacing > 0.08) spacing = 5./60.;
+    else if(spacing > 0.01) spacing = 1./60.;
+    else if(spacing > 0.008) spacing = 30./3600.;
+    else if(spacing > 0.004) spacing = 15./3600.;
+    else if(spacing > 0.002) spacing = 10./3600.;
+    else if(spacing > 0.001) spacing = 5./3600.;
+    else spacing = 1./3600.;
+    return spacing;
 }
 
 - (void) setAxisLineColor:(NSColor*) color {
@@ -265,13 +345,18 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
    // NSBezierPath *rbp = [NSBezierPath bezierPathWithRect:[map viewRect]];
    // [rbp stroke];
     
+    double majorLonSP = [self majorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double minorLonSP = [self minorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    double minorLatSP = [self minorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
     [[self minorGridLineColor] set];
-    double startlon = (double)((NSInteger) (minlon/[self minorLongitudeGridLineSpacing])+1)*[self minorLongitudeGridLineSpacing];
-    double endlon = (double)((NSInteger) (maxlon/[self minorLongitudeGridLineSpacing]))*[self minorLongitudeGridLineSpacing];
+    double startlon = (double)((NSInteger) (minlon/minorLonSP)+1)*minorLonSP;
+    double endlon = (double)((NSInteger) (maxlon/minorLonSP))*minorLonSP;
     if(endlon<=startlon) endlon+=360;
-    for(lon=startlon;lon<=endlon;lon+=[self minorLongitudeGridLineSpacing]){
+    for(lon=startlon;lon<=endlon;lon+=minorLonSP){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lat=minlat;lat<=maxlat;lat+=[self minorLatitudeGridLineSpacing]/50){
+        for(lat=minlat;lat<=maxlat;lat+=minorLatSP/10.){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,[map viewRect])){
@@ -296,17 +381,17 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
             [gridline stroke];
         }
     }
-    double startlat = (double)((NSInteger) (minlat/[self minorLatitudeGridLineSpacing])+1)*[self minorLatitudeGridLineSpacing];
-    double endlat = (double)((NSInteger) (maxlat/[self minorLatitudeGridLineSpacing]))*[self minorLatitudeGridLineSpacing];
+    double startlat = (double)((NSInteger) (minlat/minorLatSP)+1)*minorLatSP;
+    double endlat = (double)((NSInteger) (maxlat/minorLatSP))*minorLatSP;
     if(minlat<0){
-        startlat = (double)((NSInteger) (minlat/[self minorLatitudeGridLineSpacing]))*[self minorLatitudeGridLineSpacing];
+        startlat = (double)((NSInteger) (minlat/minorLatSP))*minorLatSP;
     }
     if(maxlat<0){
-        endlat = (double)((NSInteger) (maxlat/[self minorLatitudeGridLineSpacing])-1)*[self minorLatitudeGridLineSpacing];
+        endlat = (double)((NSInteger) (maxlat/minorLatSP)-1)*minorLatSP;
     }
-    for(lat=startlat;lat<=endlat;lat+=[self minorLatitudeGridLineSpacing]){
+    for(lat=startlat;lat<=endlat;lat+=minorLatSP){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lon=minlon;lon<=maxlon;lon+=[self minorLongitudeGridLineSpacing]/50){
+        for(lon=minlon;lon<=maxlon;lon+=minorLonSP/10.){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,[map viewRect])){
@@ -332,12 +417,12 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
         }
     }
     [[self majorGridLineColor] set];
-    startlon = (double)((NSInteger) (minlon/[self majorLongitudeGridLineSpacing])+1)*[self majorLongitudeGridLineSpacing];
-    endlon = (double)((NSInteger) (maxlon/[self majorLongitudeGridLineSpacing]))*[self majorLongitudeGridLineSpacing];
+    startlon = (double)((NSInteger) (minlon/majorLonSP)+1)*majorLonSP;
+    endlon = (double)((NSInteger) (maxlon/majorLonSP))*majorLonSP;
     if(endlon<=startlon) endlon+=360;
-    for(lon=startlon;lon<=endlon;lon+=[self majorLongitudeGridLineSpacing]){
+    for(lon=startlon;lon<=endlon;lon+=majorLonSP){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lat=minlat;lat<=maxlat;lat+=[self minorLatitudeGridLineSpacing]/50){
+        for(lat=minlat;lat<=maxlat;lat+=minorLatSP/10.){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,[map viewRect])){
@@ -362,17 +447,17 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
             [gridline stroke];
         }
     }
-    startlat = (double)((NSInteger) (minlat/[self majorLatitudeGridLineSpacing])+1)*[self majorLatitudeGridLineSpacing];
-    endlat = (double)((NSInteger) (maxlat/[self majorLatitudeGridLineSpacing]))*[self majorLatitudeGridLineSpacing];
+    startlat = (double)((NSInteger) (minlat/majorLatSP)+1)*majorLatSP;
+    endlat = (double)((NSInteger) (maxlat/majorLatSP))*majorLatSP;
     if(minlat<0){
-        startlat = (double)((NSInteger) (minlat/[self majorLatitudeGridLineSpacing]))*[self majorLatitudeGridLineSpacing];
+        startlat = (double)((NSInteger) (minlat/majorLatSP))*majorLatSP;
     }
     if(maxlat<0){
-        endlat = (double)((NSInteger) (maxlat/[self majorLatitudeGridLineSpacing])-1)*[self majorLatitudeGridLineSpacing];
+        endlat = (double)((NSInteger) (maxlat/majorLatSP)-1)*majorLatSP;
     }
-    for(lat=startlat;lat<=endlat;lat+=[self majorLatitudeGridLineSpacing]){
+    for(lat=startlat;lat<=endlat;lat+=majorLatSP){
         NSBezierPath *gridline = [NSBezierPath bezierPath];
-        for(lon=minlon;lon<=maxlon;lon+=[self minorLongitudeGridLineSpacing]/50){
+        for(lon=minlon;lon<=maxlon;lon+=minorLonSP/10.){
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,[map viewRect])){
@@ -518,19 +603,25 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     double minlon = [[map minimumLongitude] value];
     double maxlat = [[map maximumLatitude] value];
     double minlat = [[map minimumLatitude] value];
-    double startlon = (double)((NSInteger) (minlon/[self majorLongitudeGridLineSpacing])+1)*[self majorLongitudeGridLineSpacing];
-    double endlon = (double)((NSInteger) (maxlon/[self majorLongitudeGridLineSpacing]))*[self majorLongitudeGridLineSpacing];
+    
+    double majorLonSP = [self majorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double minorLonSP = [self minorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    double minorLatSP = [self minorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    double startlon = (double)((NSInteger) (minlon/majorLonSP)+1)*majorLonSP;
+    double endlon = (double)((NSInteger) (maxlon/majorLonSP))*majorLonSP;
     if(endlon<=startlon) endlon+=360;
     double lon,lat;
     if(minlat>-90){
-        for(lon=startlon;lon<=endlon;lon+=[self majorLongitudeGridLineSpacing]){
+        for(lon=startlon;lon<=endlon;lon+=majorLonSP){
             lat = minlat;
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,rect)){
-                NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lon==startlon || lon==endlon)];
+                NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lon==startlon || lon==endlon) inMap:map];
                 NSSize size = [string size];
-                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:lon latitude:minlat-[self minorLatitudeGridLineSpacing]/10. inCoordinateSystems:eqcs];
+                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:lon latitude:minlat-minorLatSP/10. inCoordinateSystems:eqcs];
                 NSPoint point2 = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord2]];
                 double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
                 NSPoint p = NSZeroPoint;
@@ -559,14 +650,14 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
         }
     }
     if(maxlat<90){
-        for(lon=startlon;lon<=endlon;lon+=[self majorLongitudeGridLineSpacing]){
+        for(lon=startlon;lon<=endlon;lon+=majorLonSP){
             lat = maxlat;
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,rect)){
-                NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lon==startlon || lon==endlon)];
+                NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lon==startlon || lon==endlon) inMap:map];
                 NSSize size = [string size];
-                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:lon latitude:maxlat+[self minorLatitudeGridLineSpacing]/10. inCoordinateSystems:eqcs];
+                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:lon latitude:maxlat+minorLatSP/10. inCoordinateSystems:eqcs];
                 NSPoint point2 = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord2]];
                 double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
                 NSPoint p = NSZeroPoint;
@@ -594,26 +685,26 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
             }
         }
     }
-    double startlat = (double)((NSInteger) (minlat/[self majorLatitudeGridLineSpacing])+1)*[self majorLatitudeGridLineSpacing];
-    double endlat = (double)((NSInteger) (maxlat/[self majorLatitudeGridLineSpacing]))*[self majorLatitudeGridLineSpacing];
+    double startlat = (double)((NSInteger) (minlat/majorLatSP)+1)*majorLatSP;
+    double endlat = (double)((NSInteger) (maxlat/majorLatSP))*majorLatSP;
     if(minlat<0){
-        startlat = (double)((NSInteger) (minlat/[self majorLatitudeGridLineSpacing]))*[self majorLatitudeGridLineSpacing];
+        startlat = (double)((NSInteger) (minlat/majorLatSP))*majorLatSP;
     }
     if(maxlat<0){
-        endlat = (double)((NSInteger) (maxlat/[self majorLatitudeGridLineSpacing])-1)*[self majorLatitudeGridLineSpacing];
+        endlat = (double)((NSInteger) (maxlat/majorLatSP)-1)*majorLatSP;
     }
     
     // Prevent double latitude axes when one of the poles is included.
     BOOL singleLatAxes = ![self needsLatitudeAxesInMap:map];
     if(!singleLatAxes){
-        for(lat=startlat;lat<=endlat;lat+=[self majorLatitudeGridLineSpacing]){
+        for(lat=startlat;lat<=endlat;lat+=majorLatSP){
             lon = minlon;
             AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
             NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
             if(NSPointInRect(point,rect)){
-                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lat==startlat || lat==endlat)];
+                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lat==startlat || lat==endlat) inMap:map];
                 NSSize size = [string size];
-                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:minlon-[self minorLongitudeGridLineSpacing]/10. latitude:lat inCoordinateSystems:eqcs];
+                AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:minlon-minorLonSP/10. latitude:lat inCoordinateSystems:eqcs];
                 NSPoint point2 = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord2]];
                 double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
                 NSPoint p = NSZeroPoint;
@@ -641,14 +732,14 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
             }
         }
     }
-    for(lat=startlat;lat<=endlat;lat+=[self majorLatitudeGridLineSpacing]){
+    for(lat=startlat;lat<=endlat;lat+=majorLatSP){
         lon = maxlon;
         AMSphericalCoordinates *coord = [self coordinatesForLongitude:lon latitude:lat inCoordinateSystems:eqcs];
         NSPoint point = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord]];
         if(NSPointInRect(point,rect)){
-            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lat==startlat || lat==endlat)];
+            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[eqcs type] forceShowCompleteString:(lat==startlat || lat==endlat) inMap:map];
             NSSize size = [string size];
-            AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:maxlon+[self minorLongitudeGridLineSpacing]/10. latitude:lat inCoordinateSystems:eqcs];
+            AMSphericalCoordinates *coord2 = [self coordinatesForLongitude:maxlon+minorLonSP/10. latitude:lat inCoordinateSystems:eqcs];
             NSPoint point2 = [map locationInView:view forMeasures:[NSArray arrayWithObject:coord2]];
             double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
             NSPoint p = NSZeroPoint;
@@ -704,6 +795,10 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     AMSphericalCoordinates *southpole = [AMSphericalCoordinates southPoleInCoordinateSystemType:[[[map centre] coordinateSystem] type]];
     NSPoint np = [map locationInView:view forSphericalCoordinates:northpole];
     NSPoint sp = [map locationInView:view forSphericalCoordinates:southpole];
+    
+    double minorLonSP = [self minorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
     BOOL includePole = NO;
     // Poles are included - latitude is drawn within map
     if(NSPointInRect(np, viewRect) || NSPointInRect(sp, viewRect)){
@@ -712,29 +807,31 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
         double lon = [[[map centre] longitude] value];
         double minlat = [[map minimumLatitude] value];
         double maxlat = [[map maximumLatitude] value];
-        minlat = (double)[self majorLatitudeGridLineSpacing]*((NSInteger)(minlat/[self majorLatitudeGridLineSpacing]));
-        maxlat = (double)[self majorLatitudeGridLineSpacing]*((NSInteger)(maxlat/[self majorLatitudeGridLineSpacing]));
-        for(lat=minlat ; lat<=maxlat;lat+=[self majorLatitudeGridLineSpacing]){
+        minlat = (double)majorLatSP*((NSInteger)(minlat/majorLatSP));
+        maxlat = (double)majorLatSP*((NSInteger)(maxlat/majorLatSP));
+        for(lat=minlat ; lat<=maxlat;lat+=majorLatSP){
             AMSphericalCoordinates *sc1 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon andUnit:[[[map centre] longitude] unit]]  latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
-            AMSphericalCoordinates *sc2 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon+[self minorLongitudeGridLineSpacing]/100 andUnit:[[[map centre] longitude] unit]]  latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
+            AMSphericalCoordinates *sc2 = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] longitude] quantity] numericalValue:lon+minorLonSP/100 andUnit:[[[map centre] longitude] unit]]  latitude:[[AMScalarMeasure alloc] initWithQuantity:[[[map centre] latitude] quantity] numericalValue:lat andUnit:[[[map centre] latitude] unit]] inCoordinateSystem:[[map centre] coordinateSystem]];
             NSPoint point = [map locationInView:view forSphericalCoordinates:sc1];
-            NSPoint point2 = [map locationInView:view forSphericalCoordinates:sc2];
-            NSPoint p = NSZeroPoint;
-            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES];
-            NSSize size = [string size];
-            p.x = -size.width/2;
-            p.y = -size.height/2;
-            double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
-            if(angle>135){
-                angle-=180;
-            }else if(angle<-135){
-                angle+=180;
-            }else if(angle>45){
-                angle-=90;
-            }else if(angle<-45){
-                angle+=90;
+            if(NSPointInRect(point, viewRect)){
+                NSPoint point2 = [map locationInView:view forSphericalCoordinates:sc2];
+                NSPoint p = NSZeroPoint;
+                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
+                NSSize size = [string size];
+                p.x = -size.width/2;
+                p.y = -size.height/2;
+                double angle = 180./M_PI*atan2((point2.y-point.y),(point2.x-point.x));
+                if(angle>135){
+                    angle-=180;
+                }else if(angle<-135){
+                    angle+=180;
+                }else if(angle>45){
+                    angle-=90;
+                }else if(angle<-45){
+                    angle+=90;
+                }
+                [self drawAttributedString:string atPoint:p relativeToPivot:point withAngle:angle];
             }
-            [self drawAttributedString:string atPoint:p relativeToPivot:point withAngle:angle];
         }
     }
     for(i=0;i<10;i++){
@@ -762,16 +859,19 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     NSPoint p2 = NSMakePoint(labelx, ymax);
     AMSphericalCoordinates *sc1 = [map sphericalCoordinatesForLocation:p1 inViewRect:[map viewRect]];
     AMSphericalCoordinates *sc2 = [map sphericalCoordinatesForLocation:p2 inViewRect:[map viewRect]];
-    NSInteger i1 = (NSInteger)([[sc1 latitude] value]/[self majorLatitudeGridLineSpacing]);
+    
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    NSInteger i1 = (NSInteger)([[sc1 latitude] value]/majorLatSP);
     if([[sc1 latitude] value]<0) i1--;
-    NSInteger i2 = (NSInteger)([[sc2 latitude] value]/[self majorLatitudeGridLineSpacing]);
+    NSInteger i2 = (NSInteger)([[sc2 latitude] value]/majorLatSP);
     if([[sc2 latitude] value]<0) i2--;
     if(i1!=i2){
         if(fabs(ymax-ymin)<0.5){
-            double lat = [self majorLatitudeGridLineSpacing]*(double)((NSInteger)([[sc1 latitude] value]/[self majorLatitudeGridLineSpacing]+0.5));
-            if([[sc1 latitude] value]<-[self majorLatitudeGridLineSpacing]*.1) lat-=[self majorLatitudeGridLineSpacing];
+            double lat = majorLatSP*(double)((NSInteger)([[sc1 latitude] value]/majorLatSP+0.5));
+            if([[sc1 latitude] value]<-majorLatSP*.1) lat-=majorLatSP;
             NSLog(@"found lat: %f",lat);
-            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES];
+            NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
             NSSize size = [string size];
             NSPoint sp = NSZeroPoint;
             if(left) sp.x -= size.width;
@@ -792,12 +892,15 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     NSPoint p2 = NSMakePoint(labelx, ymax);
     AMSphericalCoordinates *sc1 = [map sphericalCoordinatesForLocation:p1 inViewRect:[map viewRect]];
     AMSphericalCoordinates *sc2 = [map sphericalCoordinatesForLocation:p2 inViewRect:[map viewRect]];
-    NSInteger i1 = (NSInteger)([[sc1 longitude] value]/[self majorLongitudeGridLineSpacing]);
-    NSInteger i2 = (NSInteger)([[sc2 longitude] value]/[self majorLongitudeGridLineSpacing]);
+    
+    double majorLonSP = [self majorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    NSInteger i1 = (NSInteger)([[sc1 longitude] value]/majorLonSP);
+    NSInteger i2 = (NSInteger)([[sc2 longitude] value]/majorLonSP);
     if(i1!=i2){
         if(fabs(ymax-ymin)<0.5){
-            double lon = [self majorLongitudeGridLineSpacing]*(double)((NSInteger)([[sc1 longitude] value]/[self majorLongitudeGridLineSpacing]+0.5));
-            NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES];
+            double lon = majorLonSP*(double)((NSInteger)([[sc1 longitude] value]/majorLonSP+0.5));
+            NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
             NSSize size = [string size];
             NSPoint sp = NSZeroPoint;
             if(left) sp.x -= size.width;
@@ -818,12 +921,15 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     NSPoint p2 = NSMakePoint(xmax,labely);
     AMSphericalCoordinates *sc1 = [map sphericalCoordinatesForLocation:p1 inViewRect:[map viewRect]];
     AMSphericalCoordinates *sc2 = [map sphericalCoordinatesForLocation:p2 inViewRect:[map viewRect]];
-    NSInteger i1 = (NSInteger)([[sc1 longitude] value]/[self majorLongitudeGridLineSpacing]);
-    NSInteger i2 = (NSInteger)([[sc2 longitude] value]/[self majorLongitudeGridLineSpacing]);
+    
+    double majorLonSP = [self majorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    NSInteger i1 = (NSInteger)([[sc1 longitude] value]/majorLonSP);
+    NSInteger i2 = (NSInteger)([[sc2 longitude] value]/majorLonSP);
     if(i1!=i2){
         if(fabs(xmax-xmin)<0.5){
-            double lon = [self majorLongitudeGridLineSpacing]*(double)((NSInteger)([[sc1 longitude] value]/[self majorLongitudeGridLineSpacing]+0.5));
-            NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES];
+            double lon = majorLonSP*(double)((NSInteger)([[sc1 longitude] value]/majorLonSP+0.5));
+            NSAttributedString *string = [self attributedStringForLongitude:lon forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
             NSSize size = [string size];
             NSPoint sp = NSZeroPoint;
             if(bottom) sp.y -= size.height;
@@ -844,17 +950,20 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     NSPoint p2 = NSMakePoint(xmax,labely);
     AMSphericalCoordinates *sc1 = [map sphericalCoordinatesForLocation:p1 inViewRect:[map viewRect]];
     AMSphericalCoordinates *sc2 = [map sphericalCoordinatesForLocation:p2 inViewRect:[map viewRect]];
-    NSInteger i1 = (NSInteger)([[sc1 latitude] value]/[self majorLatitudeGridLineSpacing]);
+    
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    NSInteger i1 = (NSInteger)([[sc1 latitude] value]/majorLatSP);
     if([[sc1 latitude] value]<0) i1--;
-    NSInteger i2 = (NSInteger)([[sc2 latitude] value]/[self majorLatitudeGridLineSpacing]);
+    NSInteger i2 = (NSInteger)([[sc2 latitude] value]/majorLatSP);
     if([[sc2 latitude] value]<0) i2--;
     if(i1!=i2){
         if(fabs(xmax-xmin)<0.5){
-            double lat = [self majorLatitudeGridLineSpacing]*(double)((NSInteger)([[sc1 latitude] value]/[self majorLatitudeGridLineSpacing]+0.5));
-            if([[sc1 latitude] value]<-[self majorLatitudeGridLineSpacing]*.1) lat-=[self majorLatitudeGridLineSpacing];
+            double lat = majorLatSP*(double)((NSInteger)([[sc1 latitude] value]/majorLatSP+0.5));
+            if([[sc1 latitude] value]<-majorLatSP*.1) lat-=majorLatSP;
             if(lat>[[map minimumLatitude] value] && lat<[[map maximumLatitude] value]){
                 NSLog(@"found lat: %f",lat);
-                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES];
+                NSAttributedString *string = [self attributedStringForLatitude:lat forCoordinateSystemType:[[[map centre] coordinateSystem] type] forceShowCompleteString:YES inMap:map];
                 NSSize size = [string size];
                 NSPoint sp = NSZeroPoint;
                 if(bottom) sp.y -= size.height;
@@ -912,14 +1021,18 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
 
 #pragma mark Creating Attributed strings for angles (latitude and longitude)
 
-- (NSAttributedString*) attributedStringForLongitude:(double)lon forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete {
+- (NSAttributedString*) attributedStringForLongitude:(double)lon forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete inMap:(AMAstrometricMap*)map {
     while(lon>=360) lon-=360;
     while(lon<0) lon+=360;
+    
+    double majorLonSP = [self majorLongitudeSpacingAtPosition:[map centre] inMap:map];
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
     if(type==AMEquatortialCoordinateSystem){
         NSFont *superScriptFont = [[NSFontManager sharedFontManager] convertFont:[self coordinateFont] toSize:[[self coordinateFont] pointSize]-2];
         NSDictionary *coordAttr = [NSDictionary dictionaryWithObjectsAndKeys:[self coordinateFont],NSFontAttributeName, nil];
         NSDictionary *superscriptAttr = [NSDictionary dictionaryWithObjectsAndKeys:superScriptFont,NSFontAttributeName,[NSNumber numberWithInteger:1],NSSuperscriptAttributeName, nil];
-        double dh = [self majorLongitudeGridLineSpacing]/15.;
+        double dh = majorLonSP/15.;
         if(dh>=1){
             int h = (int)(lon/15.+0.5);
             NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
@@ -972,7 +1085,7 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
         }
     }else{
         NSDictionary *coordAttr = [NSDictionary dictionaryWithObjectsAndKeys:[self coordinateFont],NSFontAttributeName, nil];
-        double dg = [self majorLatitudeGridLineSpacing];
+        double dg = majorLatSP;
         if(dg>=1){
             int deg = (int)(lon+0.5);
             NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
@@ -1020,9 +1133,12 @@ NSString *const AMMapGridVisibilityChangedNotification = @"AMMapGridVisibilityCh
     return nil;
 }
 
-- (NSAttributedString*) attributedStringForLatitude:(double)lat forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete {
+- (NSAttributedString*) attributedStringForLatitude:(double)lat forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete inMap:(AMAstrometricMap*)map {
     NSDictionary *coordAttr = [NSDictionary dictionaryWithObjectsAndKeys:[self coordinateFont],NSFontAttributeName, nil];
-    double dg = [self majorLatitudeGridLineSpacing];
+    
+    double majorLatSP = [self majorLatitudeSpacingAtPosition:[map centre] inMap:map];
+    
+    double dg = majorLatSP;
     NSString *sign = @"+";
     if(lat<0) sign = @"-";
     if(lat==0) sign = @"";

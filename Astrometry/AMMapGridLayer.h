@@ -10,7 +10,7 @@
 #import "AMLayer.h"
 #import "AMTypes.h"
 
-@class AMCoordinateSystem;
+@class AMCoordinateSystem,AMSphericalCoordinates,AMAstrometricMap;
 
 FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMajorGridLinePropertiesNotification;
 FOUNDATION_EXPORT NSString *const AMMapGridLayerChangedMinorGridLinePropertiesNotification;
@@ -33,18 +33,10 @@ FOUNDATION_EXPORT NSString *const AMMapGridVisibilityChangedNotification;
 - (void) setRelativeMajorLongitudeGridLineSpacing:(double)relSpacing;
 @property (readonly) double relativeMinorLongitudeGridLineSpacing; // relative to scale.
 - (void) setRelativeMinorLongitudeGridLineSpacing:(double)relSpacing;
-@property (readonly) double majorLongitudeGridLineSpacing; // in degrees
-- (void) setMajorLongitudeGridLineSpacing:(double) spacing;
-@property (readonly) double minorLongitudeGridLineSpacing; // in degrees
-- (void) setMinorLongitudeGridLineSpacing:(double) spacing;
 @property (readonly) double relativeMajorLatitudeGridLineSpacing; // relative to scale.
 - (void) setRelativeMajorLatitudeGridLineSpacing:(double)relSpacing;
 @property (readonly) double relativeMinorLatitudeGridLineSpacing; // relative to scale.
 - (void) setRelativeMinorLatitudeGridLineSpacing:(double)relSpacing;
-@property (readonly) double majorLatitudeGridLineSpacing; // in degrees
-- (void) setMajorLatitudeGridLineSpacing:(double) spacing;
-@property (readonly) double minorLatitudeGridLineSpacing; // in degrees
-- (void) setMinorLatitudeGridLineSpacing:(double) spacing;
 
 @property (readonly) NSColor *axisLineColor;
 - (void) setAxisLineColor:(NSColor*) color;
@@ -69,6 +61,6 @@ FOUNDATION_EXPORT NSString *const AMMapGridVisibilityChangedNotification;
 - (IBAction) changeMajorGridLineColor:(id)sender;
 - (IBAction) changeMinorGridLineColor:(id)sender;
 
-- (NSAttributedString*) attributedStringForLongitude:(double)lon forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete;
-- (NSAttributedString*) attributedStringForLatitude:(double)lat forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete;
+- (NSAttributedString*) attributedStringForLongitude:(double)lon forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete inMap:(AMAstrometricMap*)map;
+- (NSAttributedString*) attributedStringForLatitude:(double)lat forCoordinateSystemType:(AMCoordinateSystemType)type forceShowCompleteString:(BOOL)complete inMap:(AMAstrometricMap*)map;
 @end

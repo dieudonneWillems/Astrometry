@@ -37,6 +37,15 @@
     return coord;
 }
 
+
++ (AMSphericalCoordinates*) sphericalCoordinatesWithLongitude:(double)lon latitude:(double)lat inCoordinateSystemOfType:(AMCoordinateSystemType)system {
+    if(system==AMEquatortialCoordinateSystem) return [self equatorialCoordinatesWithRightAscension:lon declination:lat];
+    AMScalarMeasure *longitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Longitude"] numericalValue:lon andUnit:[AMUnit unitWithName:@"degree"]];
+    AMScalarMeasure *latitude = [[AMScalarMeasure alloc] initWithQuantity:[AMQuantity quantityWithName:@"Latitude"] numericalValue:lat andUnit:[AMUnit unitWithName:@"degree"]];
+    AMSphericalCoordinates *coord = [[AMSphericalCoordinates alloc] initWithCoordinateLongitude:longitude latitude:latitude inCoordinateSystem:[[AMCoordinateSystem alloc] initWithType:system inEquinox:[NSDate date] onEpoch:[NSDate date]]];
+    return coord;
+}
+
 - (id) initWithCoordinateLongitude:(AMScalarMeasure*)longitude latitude:(AMScalarMeasure*)latitude inCoordinateSystem:(AMCoordinateSystem*)system {
     self = [self initWithCoordinateLongitude:longitude latitude:latitude andDistance:nil inCoordinateSystem:system];
     if(self){
