@@ -19,5 +19,8 @@
 - (void) addCalculator:(AMCalculator*)calculator;
 - (void) removeCalculator:(AMCalculator*)calculator;
 
+- (NSArray*) cataloguesFromFolder:(NSString*)path;
+
 - (AMCatalogue*) readCatalogueFromXMLFile:(NSString*)catalogueFile error:(NSError**)error;
+- (void) loadObjectDataFromCatalogue:(AMCatalogue*)catalogue error:(NSError**)error;
 @end

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AMCatalogue,AMLayer,AMPlotView,AMPlot,AMListDatasource,AMListView;
+@class AMCatalogue,AMLayer,AMPlotView,AMPlot,AMListDatasource,AMListView,AMCatalogueSelectionSheetController;
 
 @interface AMDocument : NSDocument {
     NSMutableArray *catalogues;
@@ -16,7 +16,13 @@
     AMPlot *selectedPlot;
     IBOutlet AMPlotView *plotview;
     IBOutlet AMListView *itemList;
+    IBOutlet NSWindow *documentWindow;
+    AMCatalogueSelectionSheetController *catalogueSelectionSheet;
 }
+
+#pragma mark Actions
+
+- (IBAction) showCatalogueSelectionSheet:(id)sender;
 
 #pragma mark Catalogues part of the document
 

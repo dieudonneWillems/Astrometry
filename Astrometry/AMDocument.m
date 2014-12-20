@@ -17,6 +17,7 @@
 #import "AMListDatasource.h"
 #import "AMListView.h"
 #import "AMMollweideMapProjection.h"
+#import "AMCatalogueSelectionSheetController.h"
 
 @interface AMDocument ()
 
@@ -32,6 +33,25 @@
     }
     return self;
 }
+
+#pragma mark Actions
+
+- (IBAction) showCatalogueSelectionSheet:(id)sender {
+    NSLog(@"Show Catalogue selection sheet");
+    if(!catalogueSelectionSheet){
+        catalogueSelectionSheet = [[AMCatalogueSelectionSheetController alloc] init];
+        [[NSBundle mainBundle] loadNibNamed:@"AMCatalogueSelectionSheet" owner:catalogueSelectionSheet topLevelObjects:nil];
+    }
+    [documentWindow beginSheet:[catalogueSelectionSheet sheetWindow] completionHandler:^(NSInteger returnCode) {
+        if (returnCode == NSModalResponseOK) {
+            AMCatalogue *selectedCatalogue = [catalogueSelectionSheet selectedCatalogue];
+            NSLog(@"sheet completed with selected catalogue: %@",selectedCatalogue);
+            [self addCatalogue:selectedCatalogue];
+        }
+    }];
+}
+
+#pragma mark Catalogues part of the document
 
 - (NSArray*) catalogues {
     return catalogues;

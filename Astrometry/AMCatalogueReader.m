@@ -31,7 +31,6 @@
 
 @implementation AMCatalogueReader
 
-
 - (id) init {
     self = [super init];
     if(self){
@@ -47,6 +46,32 @@
 
 - (void) removeCalculator:(AMCalculator*)calculator {
     [calculators removeObject:calculator];
+}
+
+- (NSArray*) cataloguesFromFolder:(NSString*)path {
+    NSMutableArray *catalogues = [NSMutableArray array];
+    path = [path stringByExpandingTildeInPath];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *files = [fm contentsOfDirectoryAtPath:path error:&error];
+    if(error){
+        NSLog(@"Could not read catalogue files from directory: %@ -- error:%@",path,error);
+        return nil;
+    }
+    for(NSString *file in files){
+        if([[file pathExtension] isEqualToString:@"xml"]){
+            NSLog(@"Start parsing catalogue file: %@",file);
+            NSString *fpath = [path stringByAppendingPathComponent:file];
+            error = nil;
+            AMCatalogue *catalogue = [self readCatalogueFromXMLFile:fpath error:&error];
+            if(error){
+                NSLog(@"Apparently %@ is not a catalogue file.",fpath);
+            }else{
+                [catalogues addObject:catalogue];
+            }
+        }
+    }
+    return catalogues;
 }
 
 
@@ -68,6 +93,8 @@
         if([[child name] isEqualToString:@"name"]) [catalogue setName:[child stringValue]];
         if([[child name] isEqualToString:@"description"]) [catalogue setCatalogueDescription:[child stringValue]];
         if([[child name] isEqualToString:@"file"]){
+            [catalogue addFileDefinition:(NSXMLElement*)child];
+            /*
             NSString *cfile = [[(NSXMLElement*)child attributeForName:@"src"] stringValue];
             cfile = [cfile stringByExpandingTildeInPath];
             NSArray *linees = [child nodesForXPath:@"line" error:error];
@@ -77,10 +104,27 @@
                 [self readObjectsFromFile:cfile usingXMLDefinition:[linee children] intoCatalogue:catalogue error:error];
                 if(*error) return nil;
             }
+             */
+        }
+    }
+    //[catalogue index];
+    return catalogue;
+}
+
+- (void) loadObjectDataFromCatalogue:(AMCatalogue*)catalogue error:(NSError**)error {
+    NSArray *definitions = [catalogue fileDefinitions];
+    for(NSXMLElement *fileE in definitions){
+        NSString *cfile = [[fileE attributeForName:@"src"] stringValue];
+        cfile = [cfile stringByExpandingTildeInPath];
+        NSArray *linees = [fileE nodesForXPath:@"line" error:error];
+        NSXMLElement *linee = nil;
+        if([linees count]>0){
+            linee = [linees objectAtIndex:0];
+            [self readObjectsFromFile:cfile usingXMLDefinition:[linee children] intoCatalogue:catalogue error:error];
+            if(*error) return;
         }
     }
     [catalogue index];
-    return catalogue;
 }
 
 - (void) readObjectsFromFile:(NSString*)file usingXMLDefinition:(NSArray*)elements intoCatalogue:(AMCatalogue*)catalogue error:(NSError**)error{
@@ -246,6 +290,7 @@
         if([node isKindOfClass:[NSXMLElement class]]){
             NSXMLElement *element = (NSXMLElement*)node;
             if([[element name] isEqualToString:@"quantity"]){
+                NSLog(@"quantity: %@",[element stringValue]);
                 [catalogue addQuantity:[AMQuantity quantityWithName:[element stringValue]]];
             }else if([[element name] isEqualToString:@"parameter"]){
                 NSArray *keyes = [element elementsForName:@"key"];
