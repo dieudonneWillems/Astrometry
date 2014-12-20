@@ -12,6 +12,8 @@
 		02184B6F1A27D0FA0046B723 /* ABGridLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 02184B6E1A27D0FA0046B723 /* ABGridLayer.png */; };
 		023512B91A31B2E500D1F9F2 /* AMMollweideMapProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */; };
 		023512BB1A3DE36800D1F9F2 /* Hipparcos.xml in Resources */ = {isa = PBXBuildFile; fileRef = 023512BA1A3DE36800D1F9F2 /* Hipparcos.xml */; };
+		023512BD1A3DEA7A00D1F9F2 /* AMCatalogueSelectionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 023512BC1A3DEA7A00D1F9F2 /* AMCatalogueSelectionSheet.xib */; };
+		023512C11A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023512C01A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.m */; };
 		029587521A24E1B400DAAD5F /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587511A24E1B400DAAD5F /* AMAppDelegate.m */; };
 		029587541A24E1B400DAAD5F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587531A24E1B400DAAD5F /* main.m */; };
 		029587571A24E1B400DAAD5F /* AMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587561A24E1B400DAAD5F /* AMDocument.m */; };
@@ -48,6 +50,12 @@
 		029587CD1A251D9400DAAD5F /* AMAstrometricMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587CC1A251D9400DAAD5F /* AMAstrometricMap.m */; };
 		029587D11A25C02100DAAD5F /* AMListDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 029587D01A25C02100DAAD5F /* AMListDatasource.m */; };
 		029587D41A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029587D31A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib */; };
+		02CBB6CE1A41F88D00E13597 /* AMCatalogueSelectionDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CBB6CD1A41F88D00E13597 /* AMCatalogueSelectionDatasource.m */; };
+		02CBB6D51A4249C000E13597 /* AMCatalogueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CBB6D31A4249C000E13597 /* AMCatalogueViewController.m */; };
+		02CBB6D61A4249C000E13597 /* AMCatalogueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02CBB6D41A4249C000E13597 /* AMCatalogueViewController.xib */; };
+		02CBB6D91A42DF3C00E13597 /* AMCatalogueCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CBB6D81A42DF3C00E13597 /* AMCatalogueCellView.m */; };
+		02CBB6DC1A45D1AC00E13597 /* AMObjectLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CBB6DB1A45D1AC00E13597 /* AMObjectLayer.m */; };
+		02E2969D1A409FAA00B1D24A /* AMCatalogue.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02E2969C1A409FAA00B1D24A /* AMCatalogue.pdf */; };
 		02E504631A25F2670070E381 /* ABRulersLayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 02E504621A25F2670070E381 /* ABRulersLayer.png */; };
 		02E504681A26113C0070E381 /* AMDefaultListItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E504661A26113C0070E381 /* AMDefaultListItemViewController.xib */; };
 		02E5046C1A2618090070E381 /* AMListItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5046B1A2618090070E381 /* AMListItemController.m */; };
@@ -76,6 +84,9 @@
 		023512B71A31B2E500D1F9F2 /* AMMollweideMapProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMollweideMapProjection.h; sourceTree = "<group>"; };
 		023512B81A31B2E500D1F9F2 /* AMMollweideMapProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMollweideMapProjection.m; sourceTree = "<group>"; };
 		023512BA1A3DE36800D1F9F2 /* Hipparcos.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Hipparcos.xml; sourceTree = "<group>"; };
+		023512BC1A3DEA7A00D1F9F2 /* AMCatalogueSelectionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCatalogueSelectionSheet.xib; sourceTree = "<group>"; };
+		023512BF1A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueSelectionSheetController.h; sourceTree = "<group>"; };
+		023512C01A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueSelectionSheetController.m; sourceTree = "<group>"; };
 		0295874B1A24E1B400DAAD5F /* Astrometry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Astrometry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0295874F1A24E1B400DAAD5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		029587501A24E1B400DAAD5F /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
@@ -145,6 +156,16 @@
 		029587CF1A25C02100DAAD5F /* AMListDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMListDatasource.h; sourceTree = "<group>"; };
 		029587D01A25C02100DAAD5F /* AMListDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMListDatasource.m; sourceTree = "<group>"; };
 		029587D31A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCoordinateRulesLayerTableCell.xib; sourceTree = "<group>"; };
+		02CBB6CC1A41F88D00E13597 /* AMCatalogueSelectionDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueSelectionDatasource.h; sourceTree = "<group>"; };
+		02CBB6CD1A41F88D00E13597 /* AMCatalogueSelectionDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueSelectionDatasource.m; sourceTree = "<group>"; };
+		02CBB6D21A4249C000E13597 /* AMCatalogueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueViewController.h; sourceTree = "<group>"; };
+		02CBB6D31A4249C000E13597 /* AMCatalogueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueViewController.m; sourceTree = "<group>"; };
+		02CBB6D41A4249C000E13597 /* AMCatalogueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCatalogueViewController.xib; sourceTree = "<group>"; };
+		02CBB6D71A42DF3C00E13597 /* AMCatalogueCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCatalogueCellView.h; sourceTree = "<group>"; };
+		02CBB6D81A42DF3C00E13597 /* AMCatalogueCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCatalogueCellView.m; sourceTree = "<group>"; };
+		02CBB6DA1A45D1AC00E13597 /* AMObjectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMObjectLayer.h; sourceTree = "<group>"; };
+		02CBB6DB1A45D1AC00E13597 /* AMObjectLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMObjectLayer.m; sourceTree = "<group>"; };
+		02E2969C1A409FAA00B1D24A /* AMCatalogue.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = AMCatalogue.pdf; path = Images.xcassets/AMCatalogue.pdf; sourceTree = "<group>"; };
 		02E504621A25F2670070E381 /* ABRulersLayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ABRulersLayer.png; path = Images.xcassets/ABRulersLayer.png; sourceTree = "<group>"; };
 		02E504661A26113C0070E381 /* AMDefaultListItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMDefaultListItemViewController.xib; sourceTree = "<group>"; };
 		02E5046A1A2618090070E381 /* AMListItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMListItemController.h; sourceTree = "<group>"; };
@@ -336,6 +357,8 @@
 				029587CC1A251D9400DAAD5F /* AMAstrometricMap.m */,
 				02E504711A263BF30070E381 /* AMListView.h */,
 				02E504721A263BF30070E381 /* AMListView.m */,
+				02CBB6D71A42DF3C00E13597 /* AMCatalogueCellView.h */,
+				02CBB6D81A42DF3C00E13597 /* AMCatalogueCellView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -345,6 +368,8 @@
 			children = (
 				029587BF1A24F05000DAAD5F /* AMLayer.h */,
 				029587C01A24F05000DAAD5F /* AMLayer.m */,
+				02CBB6DA1A45D1AC00E13597 /* AMObjectLayer.h */,
+				02CBB6DB1A45D1AC00E13597 /* AMObjectLayer.m */,
 				02184B691A27C4640046B723 /* AMMapGridLayer.h */,
 				02184B6A1A27C4640046B723 /* AMMapGridLayer.m */,
 			);
@@ -356,6 +381,8 @@
 			children = (
 				029587CF1A25C02100DAAD5F /* AMListDatasource.h */,
 				029587D01A25C02100DAAD5F /* AMListDatasource.m */,
+				02CBB6CC1A41F88D00E13597 /* AMCatalogueSelectionDatasource.h */,
+				02CBB6CD1A41F88D00E13597 /* AMCatalogueSelectionDatasource.m */,
 			);
 			name = "Datasources and Delegates";
 			sourceTree = "<group>";
@@ -363,13 +390,16 @@
 		029587D21A25D70F00DAAD5F /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				02E2969C1A409FAA00B1D24A /* AMCatalogue.pdf */,
 				02184B6E1A27D0FA0046B723 /* ABGridLayer.png */,
 				02E5046F1A2639440070E381 /* AMAstrometricPlotItem.png */,
 				02E504621A25F2670070E381 /* ABRulersLayer.png */,
 				02E504661A26113C0070E381 /* AMDefaultListItemViewController.xib */,
+				02CBB6D41A4249C000E13597 /* AMCatalogueViewController.xib */,
 				029587D31A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib */,
 				02184B6C1A27C54E0046B723 /* AMMapGridLayerTableCell.xib */,
 				02E5046D1A262D290070E381 /* AMAstrometricMapTableCell.xib */,
+				023512BC1A3DEA7A00D1F9F2 /* AMCatalogueSelectionSheet.xib */,
 				0295875D1A24E1B400DAAD5F /* MainMenu.xib */,
 				029587581A24E1B400DAAD5F /* AMDocument.xib */,
 				0295875B1A24E1B400DAAD5F /* Images.xcassets */,
@@ -382,6 +412,10 @@
 			children = (
 				02E5046A1A2618090070E381 /* AMListItemController.h */,
 				02E5046B1A2618090070E381 /* AMListItemController.m */,
+				02CBB6D21A4249C000E13597 /* AMCatalogueViewController.h */,
+				02CBB6D31A4249C000E13597 /* AMCatalogueViewController.m */,
+				023512BF1A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.h */,
+				023512C01A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -482,11 +516,14 @@
 				02E504681A26113C0070E381 /* AMDefaultListItemViewController.xib in Resources */,
 				02184B6D1A27C54E0046B723 /* AMMapGridLayerTableCell.xib in Resources */,
 				029587BC1A24E47A00DAAD5F /* OmCenFORS.xml in Resources */,
+				02CBB6D61A4249C000E13597 /* AMCatalogueViewController.xib in Resources */,
 				029587D41A25D74000DAAD5F /* AMCoordinateRulesLayerTableCell.xib in Resources */,
+				02E2969D1A409FAA00B1D24A /* AMCatalogue.pdf in Resources */,
 				0295875A1A24E1B400DAAD5F /* AMDocument.xib in Resources */,
 				023512BB1A3DE36800D1F9F2 /* Hipparcos.xml in Resources */,
 				02E504631A25F2670070E381 /* ABRulersLayer.png in Resources */,
 				0295875C1A24E1B400DAAD5F /* Images.xcassets in Resources */,
+				023512BD1A3DEA7A00D1F9F2 /* AMCatalogueSelectionSheet.xib in Resources */,
 				0295875F1A24E1B400DAAD5F /* MainMenu.xib in Resources */,
 				02E504701A2639440070E381 /* AMAstrometricPlotItem.png in Resources */,
 				02184B6F1A27D0FA0046B723 /* ABGridLayer.png in Resources */,
@@ -508,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02CBB6CE1A41F88D00E13597 /* AMCatalogueSelectionDatasource.m in Sources */,
 				029587C71A24F39C00DAAD5F /* AMPlot.m in Sources */,
 				0295878E1A24E33C00DAAD5F /* AMMeasure.m in Sources */,
 				029587B91A24E3BA00DAAD5F /* AMCalculator.m in Sources */,
@@ -521,6 +559,7 @@
 				029587C11A24F05000DAAD5F /* AMLayer.m in Sources */,
 				029587A91A24E38B00DAAD5F /* AMScalarIndexEntry.m in Sources */,
 				02E504731A263BF30070E381 /* AMListView.m in Sources */,
+				023512C11A3DEE5D00D1F9F2 /* AMCatalogueSelectionSheetController.m in Sources */,
 				029587D11A25C02100DAAD5F /* AMListDatasource.m in Sources */,
 				029587A71A24E38B00DAAD5F /* AMCatalogueIndexEntry.m in Sources */,
 				029587931A24E33C00DAAD5F /* AMTypes.m in Sources */,
@@ -528,6 +567,7 @@
 				02E5046C1A2618090070E381 /* AMListItemController.m in Sources */,
 				029587B31A24E3A200DAAD5F /* AMSearchDescriptor.m in Sources */,
 				029587911A24E33C00DAAD5F /* AMScalarQuantity.m in Sources */,
+				02CBB6D91A42DF3C00E13597 /* AMCatalogueCellView.m in Sources */,
 				029587951A24E33C00DAAD5F /* AMVectorQuantity.m in Sources */,
 				029587A61A24E38B00DAAD5F /* AMCatalogueIndex.m in Sources */,
 				029587921A24E33C00DAAD5F /* AMSphericalCoordinates.m in Sources */,
@@ -541,7 +581,9 @@
 				029587941A24E33C00DAAD5F /* AMUnit.m in Sources */,
 				02184B6B1A27C4640046B723 /* AMMapGridLayer.m in Sources */,
 				029587B11A24E3A200DAAD5F /* AMCompoundSearchDescriptor.m in Sources */,
+				02CBB6D51A4249C000E13597 /* AMCatalogueViewController.m in Sources */,
 				029587521A24E1B400DAAD5F /* AMAppDelegate.m in Sources */,
+				02CBB6DC1A45D1AC00E13597 /* AMObjectLayer.m in Sources */,
 				0295878F1A24E33C00DAAD5F /* AMQuantity.m in Sources */,
 				02E504771A2678E80070E381 /* AMMapProjection.m in Sources */,
 			);

@@ -16,6 +16,7 @@
     NSMutableArray *quantities;
     NSMutableArray *properties;
     NSMutableDictionary *indexes;
+    NSMutableArray *fileDefinitions;
 }
 
 + (NSArray*) catalogues;
@@ -40,4 +41,7 @@
 - (void) index;
 - (AMCatalogue*) subsetUsingSearchDescriptor:(AMSearchDescriptor*)searchDescriptor;
 - (NSUInteger) maximumObjectCountUsingSearchDescriptor:(AMSearchDescriptor*)searchDescriptor;
+
+- (NSArray*) fileDefinitions;
+- (void) addFileDefinition:(NSXMLElement*)fileDefinitionElement;
 @end

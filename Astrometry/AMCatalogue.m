@@ -43,6 +43,7 @@ static NSMutableDictionary *__catalogues;
         quantities = [NSMutableArray array];
         properties = [NSMutableArray array];
         indexes = [NSMutableDictionary dictionary];
+        fileDefinitions = [NSMutableArray array];
     }
     return self;
 }
@@ -187,6 +188,14 @@ static NSMutableDictionary *__catalogues;
         }
     }
     return 0;
+}
+
+- (NSArray*) fileDefinitions {
+    return fileDefinitions;
+}
+
+- (void) addFileDefinition:(NSXMLElement*)fileDefinitionElement {
+    [fileDefinitions addObject:fileDefinitionElement];
 }
 
 - (NSString *) description {

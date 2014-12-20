@@ -1,6 +1,9 @@
 <catalogue>
-    <name>Deep FORS1 BR photometry of ω Centauri</name>
+    <name>Hipparcos</name>
     <description>The Hipparcos and Tycho Catalogues are the primary products of the
+        European Space Agency's astrometric mission, Hipparcos. It consists of a large
+        quantity of very high quality astrometric and photometric data.</description>
+    <full-description>The Hipparcos and Tycho Catalogues are the primary products of the
         European Space Agency's astrometric mission, Hipparcos. The satellite,
         which operated for four years, returned high quality scientific data
         from November 1989 to March 1993.
@@ -30,7 +33,7 @@
         into the Hipparcos Input Catalogue. The production of the Hipparcos
         and Tycho Catalogues marks the formal end of the involvement in the
         mission by the European Space Agency and the four scientific
-        consortia.</description>
+        consortia.</full-description>
     <file src="~/Catalogues/Hipparcos/hip_main.dat">
         <line>
             <parameter>
@@ -64,7 +67,7 @@
                 <unit>milliarcsecond</unit>
             </measure>
             <measure id="pmRA">
-                <quantity>Poper motion in right ascension (*cos(dec))</quantity>
+                <quantity>Poper motion in right ascension</quantity>
                 <value><field start="88" end="95"/></value>
                 <error><field start="127" end="132"/></error>
                 <unit>milliarcsecond/year</unit>

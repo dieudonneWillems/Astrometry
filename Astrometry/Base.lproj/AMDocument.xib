@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMDocument">
             <connections>
+                <outlet property="documentWindow" destination="xOd-HO-29H" id="HeZ-yn-tqA"/>
                 <outlet property="itemList" destination="r2u-6S-zSB" id="Iag-ns-hgs"/>
                 <outlet property="plotview" destination="bxT-dL-5I9" id="t4R-Bs-7FP"/>
                 <outlet property="window" destination="xOd-HO-29H" id="JIz-fz-R2o"/>

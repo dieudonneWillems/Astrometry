@@ -22,7 +22,7 @@
     self = [super init];
     if(self){
         [self setUseRectangularViewPort:NO];
-        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:73 declination:40]];
+        [self setCentre:[AMSphericalCoordinates equatorialCoordinatesWithRightAscension:82.5 declination:-5]];
         [self setScale:100.];
         AMMapProjection *mapproj =[[AMEquirectangularMapProjection alloc] init];
         [self setMapProjection:mapproj];
